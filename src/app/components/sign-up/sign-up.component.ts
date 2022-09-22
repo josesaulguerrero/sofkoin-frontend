@@ -3,13 +3,19 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnInit {
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
+    this.start();
   }
+  start() {}
 
+  async asyncsignupWithGoogle() {}
+
+  async asyncsignupWithGitHube() {}
+
+  async asyncsignupWithEmail() {}
 }

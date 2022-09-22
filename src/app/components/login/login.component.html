@@ -8,21 +8,20 @@
     <label for="password">Password</label><br />
     <input type="password" name="password" /><br />
 
-    <button class="submit-button">Login</button>
+    <button class="submit-button" (click)="asyncloginWithEmail()">Login</button>
   </form>
   <p>or use your social profiles</p>
-  <button class="social-button-git">
+  <button class="social-button-git" (click)="asyncloginWithGitHube()">
     <div>
       <img src="../../../assets/images/github-icon.png" alt="github-icon" />
       GitHub
     </div>
   </button>
-  <button class="social-button-gmail">
+  <button class="social-button-gmail" (click)="asyncloginWithGoogle()">
     <div>
       <img src="../../../assets/images/google-icon.png" alt="google-icon" />
       Gmail
     </div></button
   ><br />
-
   <a routerLink="/signup">Sign Up</a>
 </div>
