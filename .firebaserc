@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "sofkoin": {
+      "hosting": {
+        "frontend": [
+          "sofkoin"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "sofkoin"
+  }
+}
