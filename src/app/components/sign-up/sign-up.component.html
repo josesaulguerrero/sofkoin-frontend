@@ -1,14 +1,21 @@
 <div class="container">
   <h1>Sign Up</h1>
   <p>Hey, nice to meet you! It's time to create a new account</p>
-  <form action="">
+  <form action="" name="signupform">
     <label for="name">Name</label><br />
-    <input required minlength="3" type="text" name="name" id="newName" /><br />
-
-    <label for="lastname">Lastname</label><br />
     <input
       required
       minlength="3"
+      [(ngModel)]="newName"
+      type="text"
+      name="name"
+      id="newName" /><br />
+
+    <label for="lastname">Surname</label><br />
+    <input
+      required
+      minlength="3"
+      [(ngModel)]="newSurname"
       type="text"
       name="lastname"
       id="newLastname" /><br />
@@ -17,6 +24,7 @@
     <input
       required
       pattern="[0-9]{10}"
+      [(ngModel)]="newPhoneNumber"
       type="number"
       name="phone"
       id="newphoneNumber" />
@@ -24,14 +32,25 @@
     <br />
 
     <label for="email">Email</label><br />
-    <input required type="email" name="email" id="newEmail" /><br />
+    <input
+      [(ngModel)]="newEmail"
+      required
+      type="email"
+      name="email"
+      id="newEmail" /><br />
 
     <label for="password">Password</label><br />
-    <input required type="password" name="password" id="newPassword" /><br />
+    <input
+      [(ngModel)]="newPassword"
+      required
+      type="password"
+      name="password"
+      id="newPassword" /><br />
 
     <label for="password">Confirm password</label><br />
     <input
       required
+      [(ngModel)]="newConfirmPassword"
       type="password"
       name="password"
       id="newPasswordrentry" /><br />
@@ -42,19 +61,23 @@
         name="avatar"
         id="radio4"
         class="input-hidden"
-        value="//placekitten.com/150/150" />
+        value="https://i.pinimg.com/564x/8c/25/5e/8c255e0f5652f4d9da462c2a521534e2--my-children-cat-pillow.jpg" />
       <label for="radio4">
-        <img src="//placekitten.com/150/150" alt="I'm sad" />
+        <img
+          src="https://i.pinimg.com/564x/8c/25/5e/8c255e0f5652f4d9da462c2a521534e2--my-children-cat-pillow.jpg"
+          alt="I'm sad" />
       </label>
 
       <input
         type="radio"
-        value="//placekitten.com/151/151"
+        value="https://i.pinimg.com/originals/41/f6/c4/41f6c4311135a769716fffa7e40cdefc.jpg"
         name="avatar"
         id="radio3"
         class="input-hidden" />
       <label for="radio3">
-        <img src="//placekitten.com/151/151" alt="I'm happy" />
+        <img
+          src="https://i.pinimg.com/originals/41/f6/c4/41f6c4311135a769716fffa7e40cdefc.jpg"
+          alt="I'm happy" />
       </label>
 
       <input
@@ -84,13 +107,16 @@
     </div>
     <br />
 
-    <button class="submit-button" (click)="asyncsignupWithEmail()">
-      Sing Up
+    <button
+      class="submit-button"
+      type="button"
+      (click)="asyncsignupWithEmail()">
+      Sign Up
     </button>
   </form>
   <p>or use your social profiles</p>
 
-  <button class="social-button-git" (click)="asyncsignupWithGitHube()">
+  <button class="social-button-git" (click)="asyncsignupWithGitHub()">
     <div>
       <img src="../../../assets/images/github-icon.png" alt="github-icon" />
       GitHub
