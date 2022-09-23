@@ -11,6 +11,7 @@ export class RequestService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
   signUpMethod(command: any): Observable<Object> {
+    console.log(command);
     //  return this.client.post<any>('http://localhost:8080/auth/login',
     return this.client
       .post<any>('http://localhost:8070/auth/signup', command, this.httpOptions)

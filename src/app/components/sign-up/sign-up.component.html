@@ -3,24 +3,38 @@
   <p>Hey, nice to meet you! It's time to create a new account</p>
   <form action="">
     <label for="name">Name</label><br />
-    <input required minlength="3" type="text" name="name" /><br />
+    <input required minlength="3" type="text" name="name" id="newName" /><br />
 
     <label for="lastname">Lastname</label><br />
-    <input required minlength="3" type="text" name="lastname" /><br />
+    <input
+      required
+      minlength="3"
+      type="text"
+      name="lastname"
+      id="newLastname" /><br />
 
     <label for="phone">Phone</label><br />
-    <input required pattern="[0-9]{10}" type="number" name="phone" id="" />
+    <input
+      required
+      pattern="[0-9]{10}"
+      type="number"
+      name="phone"
+      id="newphoneNumber" />
 
     <br />
 
     <label for="email">Email</label><br />
-    <input required type="email" name="email" /><br />
+    <input required type="email" name="email" id="newEmail" /><br />
 
     <label for="password">Password</label><br />
-    <input required type="password" name="password" /><br />
+    <input required type="password" name="password" id="newPassword" /><br />
 
     <label for="password">Confirm password</label><br />
-    <input required type="password" name="password" /><br />
+    <input
+      required
+      type="password"
+      name="password"
+      id="newPasswordrentry" /><br />
     <p>please choose your avatar</p>
     <div class="avatarcontainer">
       <input

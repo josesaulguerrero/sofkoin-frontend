@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { RequestService } from 'src/app/services/request/request.service';
 import { Router } from '@angular/router';
@@ -39,15 +39,18 @@ export class SignUpComponent implements OnInit {
 
       if (response) {
         console.log(path.value);
-        this.request.signUpMethod({
-          email: response.user.email,
-          name: response.user.displayName?.split(' ')[0],
-          password: response.user.email,
-          surname: response.user.displayName?.split(' ')[1],
-          phoneNumber: '0000000000',
-          avatarUrl: path.value,
-          authMethod: 'GMAIL',
-        });
+        this.request
+          .signUpMethod({
+            email: response.user.email,
+            name: response.user.displayName?.split(' ')[0],
+            password: response.user.email,
+            surname: response.user.displayName?.split(' ')[1],
+            phoneNumber: '0000000000',
+            avatarUrl: path.value,
+            authMethod: 'GMAIL',
+          })
+          .subscribe((data) => console.log(data));
+        this.router.navigateByUrl('/login');
       }
     }
   }
@@ -87,5 +90,41 @@ export class SignUpComponent implements OnInit {
     }
   }
 
-  async asyncsignupWithEmail() {}
+  async asyncsignupWithEmail() {
+    console.log('hello');
+    var newPassword = document.getElementById(
+      'newPassword'
+    ) as HTMLInputElement;
+    var newPasswordrentry = document.getElementById(
+      'newPasswordrentry'
+    ) as HTMLInputElement;
+
+    if (newPassword.value == newPasswordrentry.value) {
+      var newName = document.getElementById('newName') as HTMLInputElement;
+      var newLastname = document.getElementById(
+        'newLastname'
+      ) as HTMLInputElement;
+      var newphoneNumber = document.getElementById(
+        'newphoneNumber'
+      ) as HTMLInputElement;
+      var newEmail = document.getElementById('newEmail') as HTMLInputElement;
+      var path = document.querySelector(
+        "input[type='radio'][name=avatar]:checked"
+      ) as HTMLInputElement;
+      this.request
+        .signUpMethod({
+          email: newEmail.value,
+          name: newName.value,
+          password: newPassword.value,
+          surname: newLastname.value,
+          phoneNumber: newphoneNumber.value,
+          avatarUrl: path.value,
+          authMethod: 'MANUAL',
+        })
+        .subscribe((data) => console.log(data));
+      this.router.navigateByUrl('/login');
+    } else {
+      alert("password don't match");
+    }
+  }
 }
