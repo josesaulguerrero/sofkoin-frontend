@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { ErrorModel } from 'src/app/models/errorModel';
 import { TokenResponse } from 'src/app/models/tokenResponseModel';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { RequestService } from 'src/app/services/request/request.service';
@@ -48,8 +49,8 @@ export class LoginComponent implements OnInit {
             }
             this.router.navigateByUrl('/login');
           },
-          error: (err: any) => {
-            alert('The user is not registered');
+          error: (err: ErrorModel) => {
+            alert('The user is not registered' + err.error.errorMessage);
           },
         });
     }
@@ -75,8 +76,8 @@ export class LoginComponent implements OnInit {
               this.router.navigateByUrl('/login');
             }
           },
-          error: (err: any) => {
-            alert('The user is not registered');
+          error: (err: ErrorModel) => {
+            alert('The user is not registered: ' + err.error.errorMessage);
           },
         });
     }
@@ -103,8 +104,15 @@ export class LoginComponent implements OnInit {
               this.router.navigateByUrl('/login');
             }
           },
-          error: (err: any) => {
-            alert('Email or password invalid');
+          error: (err: ErrorModel) => {
+            if (
+              err.error.errorMessage === null ||
+              err.error.errorMessage === undefined
+            ) {
+              alert('Email or password invalid: ');
+            } else {
+              alert(err.error.errorMessage);
+            }
           },
         });
     }
