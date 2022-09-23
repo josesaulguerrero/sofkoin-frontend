@@ -116,18 +116,19 @@
   </form>
   <p>or use your social profiles</p>
 
-  <button class="social-button-git" (click)="asyncsignupWithGitHub()">
-    <div>
-      <img src="../../../assets/images/github-icon.png" alt="github-icon" />
-      GitHub
-    </div>
-  </button>
-  <button class="social-button-gmail" (click)="asyncsignupWithGoogle()">
-    <div>
-      <img src="../../../assets/images/google-icon.png" alt="google-icon" />
-      Gmail
-    </div>
-  </button>
-
+  <div class="socialbuttoncontainer">
+    <button class="social-button-git" (click)="asyncsignupWithGitHub()">
+      <div>
+        <img src="../../../assets/images/github-icon.png" alt="github-icon" />
+        GitHub
+      </div>
+    </button>
+    <button class="social-button-gmail" (click)="asyncsignupWithGoogle()">
+      <div>
+        <img src="../../../assets/images/google-icon.png" alt="google-icon" />
+        Gmail
+      </div>
+    </button>
+  </div>
   <a routerLink="/login">Login</a>
 </div>

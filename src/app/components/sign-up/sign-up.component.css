@@ -79,6 +79,9 @@ button div {
   cursor: pointer;
 }
 
+.socialbuttoncontainer {
+  width: 40vw;
+}
 .social-button-git {
   margin-right: 4%;
   background-color: black;
