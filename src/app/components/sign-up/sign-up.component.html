@@ -3,22 +3,72 @@
   <p>Hey, nice to meet you! It's time to create a new account</p>
   <form action="">
     <label for="name">Name</label><br />
-    <input type="text" name="name" /><br />
+    <input required minlength="3" type="text" name="name" /><br />
 
     <label for="lastname">Lastname</label><br />
-    <input type="text" name="lastname" /><br />
+    <input required minlength="3" type="text" name="lastname" /><br />
 
     <label for="phone">Phone</label><br />
-    <input type="number" name="phone" id="" /><br />
+    <input required pattern="[0-9]{10}" type="number" name="phone" id="" />
+
+    <br />
 
     <label for="email">Email</label><br />
-    <input type="email" name="email" /><br />
+    <input required type="email" name="email" /><br />
 
     <label for="password">Password</label><br />
-    <input type="password" name="password" /><br />
+    <input required type="password" name="password" /><br />
 
     <label for="password">Confirm password</label><br />
-    <input type="password" name="password" /><br />
+    <input required type="password" name="password" /><br />
+    <p>please choose your avatar</p>
+    <div class="avatarcontainer">
+      <input
+        type="radio"
+        name="avatar"
+        id="radio4"
+        class="input-hidden"
+        value="//placekitten.com/150/150" />
+      <label for="radio4">
+        <img src="//placekitten.com/150/150" alt="I'm sad" />
+      </label>
+
+      <input
+        type="radio"
+        value="//placekitten.com/151/151"
+        name="avatar"
+        id="radio3"
+        class="input-hidden" />
+      <label for="radio3">
+        <img src="//placekitten.com/151/151" alt="I'm happy" />
+      </label>
+
+      <input
+        type="radio"
+        value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-fwq_F2sReXFnQpdEQTC5B2CcVHEGCpBXnA&usqp=CAU"
+        name="avatar"
+        id="radio1"
+        class="input-hidden" />
+      <label for="radio1">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-fwq_F2sReXFnQpdEQTC5B2CcVHEGCpBXnA&usqp=CAU"
+          alt="I'm angry" />
+      </label>
+
+      <input
+        required
+        type="radio"
+        name="avatar"
+        id="radio2"
+        class="input-hidden"
+        value="https://i.pinimg.com/originals/04/4a/78/044a78f85cfd05892a4381f0d7d0a477.jpg" />
+      <label for="radio2">
+        <img
+          src="https://i.pinimg.com/originals/04/4a/78/044a78f85cfd05892a4381f0d7d0a477.jpg"
+          alt="I'm free" />
+      </label>
+    </div>
+    <br />
 
     <button class="submit-button" (click)="asyncsignupWithEmail()">
       Sing Up
@@ -27,11 +77,16 @@
   <p>or use your social profiles</p>
 
   <button class="social-button-git" (click)="asyncsignupWithGitHube()">
-    <img src="../../../assets/images/github-icon.png" alt="github-icon" />
-    GitHub
+    <div>
+      <img src="../../../assets/images/github-icon.png" alt="github-icon" />
+      GitHub
+    </div>
   </button>
   <button class="social-button-gmail" (click)="asyncsignupWithGoogle()">
-    <img src="../../../assets/images/google-icon.png" alt="google-icon" /> Gmail
+    <div>
+      <img src="../../../assets/images/google-icon.png" alt="google-icon" />
+      Gmail
+    </div>
   </button>
 
   <a routerLink="/login">Login</a>

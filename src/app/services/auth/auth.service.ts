@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import {
+  Auth,
+  signOut,
+  signInWithPopup,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+} from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(public jwtHelper: JwtHelperService) {}
+  constructor(private auth: Auth) {}
 
   /* public isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
@@ -13,4 +20,11 @@ export class AuthService {
     // true or false
     return !this.jwtHelper.isTokenExpired(token);
   }*/
+
+  logInWithGoogle() {
+    return signInWithPopup(this.auth, new GoogleAuthProvider());
+  }
+  logInWithGithub() {
+    return signInWithPopup(this.auth, new GithubAuthProvider());
+  }
 }
