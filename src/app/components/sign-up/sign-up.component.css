@@ -94,3 +94,36 @@ button div {
   width: 48%;
   cursor: pointer;
 }
+
+.avatarcontainer {
+  width: 40vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-hidden {
+  position: absolute;
+  left: -9999px;
+}
+
+input[type='radio']:checked + label > img {
+  border-radius: 50%;
+  border: 1px solid #fff;
+  box-shadow: 0 0 3px 3px var(--e-global-color-text);
+}
+
+/* Stuff after this is only to make things more pretty */
+input[type='radio'] + label > img {
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: 1px dashed #444;
+  width: 8vw;
+  height: 8vw;
+  transition: 500ms all;
+}
+
+input[type='radio']:checked + label > img {
+  transform: rotateZ(-10deg) rotateX(10deg);
+}
