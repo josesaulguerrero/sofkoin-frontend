@@ -9,9 +9,18 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { MainComponent } from './components/main/main.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignUpComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    SignUpComponent,
+    MainComponent,
+    HeaderComponent,
+  ],
+
   imports: [
     FormsModule,
     HttpClientModule,
