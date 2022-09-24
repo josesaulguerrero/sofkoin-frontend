@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
             this.router.navigateByUrl('/main');
           },
           error: (err: ErrorModel) => {
-            alert('The user is not registered' + err.error.errorMessage);
+            alert('The user is not registered: ' + err.error.errorMessage);
           },
         });
     }

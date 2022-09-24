@@ -2,9 +2,12 @@
   <div class="subcommentscontainer" *ngFor="let item of sidebaritems">
     <div id="{{ item }}">
       <li>
-        <a (click)="activeItem(item)" routerLink="/main/user/{{ item }}">{{
-          item
-        }}</a>
+        <button
+          class="button"
+          (click)="activeItem(item)"
+          routerLink="/main/{{ mainitem }}/{{ item }}">
+          {{ item.replace('_', ' ') }}
+        </button>
       </li>
     </div>
   </div>

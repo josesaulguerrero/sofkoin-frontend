@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TradeComponent implements OnInit {
   constructor() {}
+  mainitem?: string;
   sidebaritems?: string[];
   ngOnInit(): void {
+    this.mainitem = 'trade';
     this.sidebaritems = ['Recharge', 'Buy', 'Sell'];
   }
 }

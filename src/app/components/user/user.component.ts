@@ -8,10 +8,12 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
+  mainitem?: string;
   sidebaritems?: string[];
-  constructor(private router: Router) {
+  constructor(private router: Router) {}
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
+  ngOnInit(): void {
+    this.mainitem = 'user';
     this.sidebaritems = ['Profile', 'Transactions', 'Activity', 'Messages'];
   }
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {}
 }

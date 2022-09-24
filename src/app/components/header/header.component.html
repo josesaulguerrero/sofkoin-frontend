@@ -1,14 +1,39 @@
 <header class="site-header">
   <div class="site-identity">
-    <a routerLink="/main">
-      <img src="../../../assets/images/softkinlogo.png"
+    <a routerLink="">
+      <img src="../../../assets/images/softkinlogobar.png"
     /></a>
   </div>
   <nav class="site-navigation">
     <ul class="nav">
-      <li><a routerLink="/main/user/Profile">User</a></li>
-      <li><a routerLink="/main/trade">Trade</a></li>
-      <li><a routerLink="/main/p2p">P2P</a></li>
+      <li>
+        <button
+          id="user"
+          (click)="select('user')"
+          class="mainitembutton"
+          routerLink="/main/user/Profile">
+          User
+        </button>
+      </li>
+      <li>
+        <button
+          id="trade"
+          (click)="select('trade')"
+          class="mainitembutton"
+          routerLink="/main/trade">
+          Trade
+        </button>
+      </li>
+      <li>
+        <button
+          id="p2p"
+          (click)="select('p2p')"
+          class="mainitembutton"
+          routerLink="/main/p2p">
+          P2P
+        </button>
+      </li>
+      <li><button class="logoutbutton" routerLink="">Logout</button></li>
     </ul>
   </nav>
 </header>

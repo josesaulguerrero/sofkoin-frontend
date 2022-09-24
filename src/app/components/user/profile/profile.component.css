@@ -1,0 +1,44 @@
+.avatar {
+  border: 1px solid #fff;
+  box-shadow: 0 0 5px 5px var(--e-global-color-text);
+  margin: 20px;
+  border-radius: 50%;
+  width: 8vw;
+  height: 8vw;
+  transition: 500ms all;
+}
+.usertopcontainer {
+  display: flex;
+}
+.infocontainer {
+  font-size: large;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.infocontainer .rowcontainer {
+  display: flex;
+  flex-direction: row;
+}
+.column {
+  font-size: small;
+  margin: 10px;
+}
+
+.cashavalible {
+  padding: 10px;
+  border-radius: 50px;
+  background-color: var(--e-global-color-secondary);
+}
+
+.cash {
+  margin: 20px;
+  margin-left: 50px;
+}
+.cash p {
+  font-weight: 500;
+}
+.cashavalible {
+  color: aliceblue;
+}

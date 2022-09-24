@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SidebarComponent implements OnInit {
   constructor() {}
 
+  @Input() mainitem?: string;
   @Input() sidebaritems?: string[];
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {}
@@ -27,7 +28,6 @@ export class SidebarComponent implements OnInit {
   start() {
     let selecteditem = document.getElementById(this.sidebaritems![0]);
     selecteditem!.className = 'selected';
-    console.log(this.sidebaritems);
   }
 
   activeItem(item: string) {
