@@ -1,17 +1,19 @@
-<ul>
-  <div class="subcommentscontainer" *ngFor="let item of sidebaritems">
-    <div id="{{ item }}">
-      <li>
-        <button
-          class="button"
-          (click)="activeItem(item)"
-          routerLink="/main/{{ mainitem }}/{{ item }}">
-          {{ item.replace('_', ' ') }}
-        </button>
-      </li>
+<div class="sidebarcontainer">
+  <ul>
+    <div class="subcommentscontainer" *ngFor="let item of sidebaritems">
+      <div id="{{ item }}">
+        <li>
+          <button
+            class="button"
+            (click)="activeItem(item)"
+            routerLink="/main/{{ mainitem }}/{{ item }}">
+            {{ item.replace('_', ' ') }}
+          </button>
+        </li>
+      </div>
     </div>
-  </div>
-  <div *ngIf="sidebaritems">
-    <div *ngIf="doSomething()"></div>
-  </div>
-</ul>
+    <div *ngIf="sidebaritems">
+      <div *ngIf="doSomething()"></div>
+    </div>
+  </ul>
+</div>

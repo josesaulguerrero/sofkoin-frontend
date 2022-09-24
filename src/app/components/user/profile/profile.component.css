@@ -27,6 +27,7 @@
 }
 
 .cashavalible {
+  color: aliceblue;
   padding: 10px;
   border-radius: 50px;
   background-color: var(--e-global-color-secondary);
@@ -38,7 +39,4 @@
 }
 .cash p {
   font-weight: 500;
-}
-.cashavalible {
-  color: aliceblue;
 }

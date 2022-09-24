@@ -42,8 +42,8 @@ button {
   padding-left: 15px;
   padding-right: 15px;
   background-color: transparent;
-  border-top-right-radius: 50%;
-  border-top-left-radius: 50%;
+  border-top-right-radius: 4rem;
+  border-top-left-radius: 4rem;
   font-weight: 600;
 
   cursor: pointer;

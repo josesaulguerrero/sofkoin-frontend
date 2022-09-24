@@ -6,6 +6,10 @@
     Helvetica Neue, Arial, Noto Sans, sans-serif;
 }
 
+.maincontentcontainer {
+  margin-left: 23vw;
+  margin-top: -25px;
+}
 app-user,
 app-trade,
 app-p2p {
@@ -27,7 +31,16 @@ app-sidebar {
   border-color: rgb(230, 228, 228);
   height: 80vh;
 }
-
+app-header {
+  width: 100%;
+  position: fixed;
+  height: 100px;
+  margin-top: -100px;
+}
+app-main .mainbodycontainer {
+  margin-top: 100px;
+  padding-top: 0px;
+}
 app-login {
   overflow-y: auto;
   overflow-y: 70vh;

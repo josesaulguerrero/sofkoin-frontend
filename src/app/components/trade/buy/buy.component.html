@@ -1,1 +1,31 @@
-<p>buy works!</p>
+<div class="maincontainer">
+  <div>
+    <h1>Avaliable Coins:</h1>
+    <h2>coinslist goes here</h2>
+  </div>
+  <div class="column">
+    <form>
+      <h1>buy Crypto</h1>
+      <div class="cash">
+        <p>Cash avalible</p>
+        <p class="cashavalible">$209234 USD</p>
+      </div>
+      <br />
+      <p>drop drown menu goes here</p>
+      <br />
+      <input
+        required
+        pattern="[0-9]{10}"
+        [(ngModel)]="newCryptoBuy"
+        type="number"
+        name="Amount"
+        id="newAmount"
+        placeholder="Enter Amount" />
+
+      <br />
+      <button class="submit-button" type="button" (click)="actionBuy()">
+        Buy
+      </button>
+    </form>
+  </div>
+</div>
