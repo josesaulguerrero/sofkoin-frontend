@@ -1,0 +1,14 @@
+<ul>
+  <div class="subcommentscontainer" *ngFor="let item of sidebaritems">
+    <div id="{{ item }}">
+      <li>
+        <a (click)="activeItem(item)" routerLink="/main/user/{{ item }}">{{
+          item
+        }}</a>
+      </li>
+    </div>
+  </div>
+  <div *ngIf="sidebaritems">
+    <div *ngIf="doSomething()"></div>
+  </div>
+</ul>

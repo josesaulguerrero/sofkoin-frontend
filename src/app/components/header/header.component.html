@@ -1,7 +1,14 @@
-<div class="headercontainer">
-  <div>
-    <a class="user" routerLink="">User</a>
-    <a class="trade" routerLink="">Trade</a>
-    <a class="social" routerLink="">Social</a>
+<header class="site-header">
+  <div class="site-identity">
+    <a routerLink="/main">
+      <img src="../../../assets/images/softkinlogo.png"
+    /></a>
   </div>
-</div>
+  <nav class="site-navigation">
+    <ul class="nav">
+      <li><a routerLink="/main/user/Profile">User</a></li>
+      <li><a routerLink="/main/trade">Trade</a></li>
+      <li><a routerLink="/main/p2p">P2P</a></li>
+    </ul>
+  </nav>
+</header>

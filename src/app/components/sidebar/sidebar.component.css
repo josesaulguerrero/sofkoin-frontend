@@ -1,0 +1,28 @@
+a {
+  color: rgb(59, 59, 60);
+  text-decoration: none;
+}
+
+li {
+  padding-left: 20px;
+  padding-right: 50px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.nonselected {
+  color: rgb(59, 59, 60);
+  background-color: aliceblue;
+}
+
+.selected {
+  color: aliceblue;
+  background-color: var(--e-global-color-primary);
+}
+.selected a {
+  color: aliceblue;
+}
+.subcommentscontainer {
+}
+.hiden {
+  visibility: hidden;
+}
