@@ -26,6 +26,11 @@ export class SignUpComponent implements OnInit {
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {}
 
+  playcat() {
+    var audiocat = new Audio('../../../assets/audio/Cute-cat-meow-sound.mp3');
+    audiocat.play();
+  }
+
   async asyncsignupWithGoogle() {
     let path = document.querySelector(
       "input[type='radio'][name=avatar]:checked"

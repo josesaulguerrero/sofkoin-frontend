@@ -41,16 +41,17 @@ export class LoginComponent implements OnInit {
         .subscribe({
           next: (token) => {
             if (token) {
+              localStorage.setItem('token', token[0].jwt);
               this.state.state.next({
                 loggedIn: true,
                 authenticatedPerson: response,
                 token: token[0].jwt,
               });
             }
-            this.router.navigateByUrl('/login');
+            this.router.navigateByUrl('/main');
           },
           error: (err: ErrorModel) => {
-            alert('The user is not registered' + err.error.errorMessage);
+            alert('The user is not registered: ' + err.error.errorMessage);
           },
         });
     }
@@ -73,7 +74,7 @@ export class LoginComponent implements OnInit {
                 authenticatedPerson: response,
                 token: token[0].jwt,
               });
-              this.router.navigateByUrl('/login');
+              this.router.navigateByUrl('/main');
             }
           },
           error: (err: ErrorModel) => {
@@ -101,7 +102,7 @@ export class LoginComponent implements OnInit {
                 token: token[0].jwt,
               });
               console.log(this.state.state);
-              this.router.navigateByUrl('/login');
+              this.router.navigateByUrl('/main');
             }
           },
           error: (err: ErrorModel) => {

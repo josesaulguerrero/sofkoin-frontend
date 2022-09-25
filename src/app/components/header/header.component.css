@@ -1,0 +1,105 @@
+.site-header {
+  background-color: var(--e-global-color-primary);
+}
+img {
+  width: 200px;
+}
+.logoutbutton {
+  margin-left: 30px;
+  width: 6rem;
+  color: aliceblue;
+  border-style: none;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+  font-weight: 600;
+  background-image: linear-gradient(
+    to left,
+    var(--e-global-color-primary) 5%,
+    var(--e-global-color-text)
+  );
+  cursor: pointer;
+}
+.mainitembutton {
+  margin-top: -25px;
+  width: 5rem;
+  color: aliceblue;
+  border-style: none;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: transparent;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.mainitembutton:hover {
+  background-image: linear-gradient(
+    var(--e-global-color-primary) 5%,
+    var(--e-global-color-accent)
+  );
+}
+.mainitembuttonselected {
+  margin-top: -25px;
+  width: 5rem;
+  color: aliceblue;
+  border-style: none;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  font-weight: 600;
+
+  cursor: pointer;
+  background-image: linear-gradient(
+    var(--e-global-color-primary) 5%,
+    var(--e-global-color-accent)
+  );
+}
+
+.logoutbutton:hover {
+  background-image: linear-gradient(
+    to left,
+    var(--e-global-color-primary) 5%,
+    var(--e-global-color-secondary)
+  );
+}
+a {
+  height: 150px;
+  font-size: 20px;
+  text-decoration: none;
+  color: aliceblue;
+  font-weight: 600;
+  margin-right: 5vw;
+}
+a:hover {
+  color: rgb(179, 179, 179);
+}
+.site-header {
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding: 0.5em 1em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.site-navigation ul,
+.site-navigation li {
+  margin: 0;
+
+  padding: 0;
+}
+.site-navigation li {
+  display: inline-block;
+}

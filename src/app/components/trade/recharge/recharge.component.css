@@ -1,0 +1,40 @@
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+input {
+  font-weight: 600;
+  width: 40vw;
+  height: 5vw;
+  margin-top: 7px;
+  margin-bottom: 35px;
+  text-align: center;
+}
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+button:hover {
+  opacity: 75%;
+}
+.submit-button {
+  margin-top: -25px;
+  width: 40vw;
+  color: aliceblue;
+  border-style: none;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 5px;
+  font-weight: 600;
+  background-image: linear-gradient(
+    to right,
+    var(--e-global-color-text),
+    var(--e-global-color-secondary)
+  );
+  cursor: pointer;
+}
