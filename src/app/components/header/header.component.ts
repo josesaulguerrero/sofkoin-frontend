@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HostListener } from '@angular/core';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +8,7 @@ import { HostListener } from '@angular/core';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  constructor() {}
+  constructor(private auth: AuthService) {}
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
     /* let selecteditem = document.getElementById('user');
@@ -27,5 +28,9 @@ export class HeaderComponent implements OnInit {
     selecteditem3!.className = 'mainitembutton';
     let selecteditem = document.getElementById(selected);
     selecteditem!.className = 'mainitembuttonselected';
+  }
+
+  logOut() {
+    this.auth.logOut();
   }
 }
