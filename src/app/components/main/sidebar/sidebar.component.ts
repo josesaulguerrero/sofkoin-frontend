@@ -14,19 +14,15 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {}
 
   doSomething() {
-    let flag = true;
     this.sidebaritems?.forEach((element) => {
       let nonselecteditem = document.getElementById(element);
-      if (nonselecteditem!.className === 'selected') {
-        flag = false;
-      }
+      nonselecteditem!.className === 'nonselected';
+      console.log(nonselecteditem);
     });
-    if (flag) {
-      this.start();
-    }
-  }
-  start() {
-    let selecteditem = document.getElementById(this.sidebaritems![0]);
+
+    let selecteditem = document.getElementById(
+      window.location.href.split('/')[5]
+    );
     selecteditem!.className = 'selected';
   }
 

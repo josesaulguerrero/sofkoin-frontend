@@ -21,20 +21,47 @@ a {
 }
 
 .nonselected {
+  padding-left: 20px;
+  padding-right: 50px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  height: 60px;
+  width: 23vw;
+  font-size: 1.1rem;
+  text-align: left;
+  color: inherit;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
   color: rgb(59, 59, 60);
   background-color: aliceblue;
 }
-button:hover {
+.nonselected:hover {
   color: rgb(59, 59, 60);
   background-color: rgb(184, 193, 201);
 }
 
 .selected {
+  padding-left: 20px;
+  padding-right: 50px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  height: 60px;
+  width: 23vw;
+  font-size: 1.1rem;
+  text-align: left;
+  color: inherit;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
   color: aliceblue;
   background-color: var(--e-global-color-primary);
-}
-.selected a {
-  color: aliceblue;
 }
 
 .hiden {
