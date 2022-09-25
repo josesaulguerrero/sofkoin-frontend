@@ -7,6 +7,8 @@ label {
   margin-bottom: 10px;
 }
 input {
+  background: aliceblue;
+  font-size: medium;
   width: 40vw;
   margin-top: 7px;
   margin-bottom: 35px;
@@ -76,6 +78,11 @@ button div {
   cursor: pointer;
 }
 .container {
+  padding: 4rem;
+  padding-top: 0;
+  background: aliceblue;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
 }
 .social-button-git {
   margin-right: 4%;

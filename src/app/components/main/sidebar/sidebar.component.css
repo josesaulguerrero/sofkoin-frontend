@@ -40,3 +40,8 @@ button:hover {
 .hiden {
   visibility: hidden;
 }
+
+.sidebarcontainer {
+  margin-top: -28px;
+  position: fixed;
+}

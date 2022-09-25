@@ -14,8 +14,8 @@ img {
   padding-left: 15px;
   padding-right: 15px;
 
-  border-top-left-radius: 50%;
-  border-bottom-left-radius: 50%;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
   font-weight: 600;
   background-image: linear-gradient(
     to left,
@@ -34,8 +34,8 @@ img {
   padding-left: 15px;
   padding-right: 15px;
   background-color: transparent;
-  border-bottom-right-radius: 50%;
-  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 2rem;
+  border-bottom-left-radius: 2rem;
   font-weight: 600;
 
   cursor: pointer;
@@ -57,8 +57,8 @@ img {
   padding-left: 15px;
   padding-right: 15px;
 
-  border-bottom-right-radius: 50%;
-  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 2rem;
+  border-bottom-left-radius: 2rem;
   font-weight: 600;
 
   cursor: pointer;

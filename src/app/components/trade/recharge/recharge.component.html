@@ -1,17 +1,19 @@
-<form>
-  <h1>Recharge your USD</h1>
-  <br />
-  <input
-    required
-    pattern="[0-9]{10}"
-    [(ngModel)]="newRecharge"
-    type="number"
-    name="Amount"
-    id="newAmount"
-    placeholder="Enter Amount" />
+<div>
+  <form>
+    <h1>Recharge your USD</h1>
+    <br />
+    <input
+      required
+      pattern="[0-9]{10}"
+      [(ngModel)]="newRecharge"
+      type="number"
+      name="Amount"
+      id="newAmount"
+      placeholder="Enter Amount" />
 
-  <br />
-  <button class="submit-button" type="button" (click)="actionRecharge()">
-    Recharge
-  </button>
-</form>
+    <br />
+    <button class="submit-button" type="button" (click)="actionRecharge()">
+      Recharge
+    </button>
+  </form>
+</div>
