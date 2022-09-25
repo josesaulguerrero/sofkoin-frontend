@@ -1,10 +1,11 @@
 <div class="sidebarcontainer">
   <ul>
     <div class="subcommentscontainer" *ngFor="let item of sidebaritems">
-      <div id="{{ item }}">
+      <div>
         <li>
           <button
-            class="button"
+            id="{{ item }}"
+            class="nonselected"
             (click)="activeItem(item)"
             routerLink="/main/{{ mainitem }}/{{ item }}">
             {{ item.replace('_', ' ') }}
