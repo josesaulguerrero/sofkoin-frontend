@@ -2,18 +2,26 @@
 * {
   padding: 0px;
   margin: 0px;
+
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Helvetica Neue, Arial, Noto Sans, sans-serif;
 }
+body {
+  background-color: #090947;
+}
 
 .maincontentcontainer {
-  margin-left: 23vw;
-  margin-top: -25px;
+  margin-left: 22.8vw;
+  margin-top: -28px;
+  background-color: aliceblue;
+  width: 100%;
+  padding: 0;
 }
 app-user,
 app-trade,
 app-p2p {
   display: flex;
+  background-color: aliceblue;
 }
 app-recharge {
   width: 100%;
@@ -27,19 +35,21 @@ app-sidebar {
   border-top: none;
   border-left: none;
   border-bottom: none;
-
+  background-color: aliceblue;
   border-color: rgb(230, 228, 228);
   height: 80vh;
 }
 app-header {
   width: 100%;
   position: fixed;
-  height: 100px;
+
   margin-top: -100px;
+  background-color: aliceblue;
 }
 app-main .mainbodycontainer {
   margin-top: 100px;
   padding-top: 0px;
+  background-color: aliceblue;
 }
 app-login {
   overflow-y: auto;

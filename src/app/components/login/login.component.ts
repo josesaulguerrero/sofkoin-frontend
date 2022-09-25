@@ -3,7 +3,7 @@ import { Route, Router } from '@angular/router';
 import { ErrorModel } from 'src/app/models/errorModel';
 import { TokenResponse } from 'src/app/models/tokenResponseModel';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { RequestService } from 'src/app/services/request/request.service';
+import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
@@ -41,14 +41,16 @@ export class LoginComponent implements OnInit {
         .subscribe({
           next: (token) => {
             if (token) {
+              console.log(token);
               localStorage.setItem('token', token[0].jwt);
+              localStorage.setItem('userId', token[0].userId);
               this.state.state.next({
                 loggedIn: true,
                 authenticatedPerson: response,
                 token: token[0].jwt,
               });
+              this.router.navigateByUrl('/main');
             }
-            this.router.navigateByUrl('/main');
           },
           error: (err: ErrorModel) => {
             alert('The user is not registered: ' + err.error.errorMessage);
@@ -69,6 +71,8 @@ export class LoginComponent implements OnInit {
         .subscribe({
           next: (token) => {
             if (token) {
+              localStorage.setItem('token', token[0].jwt);
+              localStorage.setItem('userId', token[0].userId);
               this.state.state.next({
                 loggedIn: true,
                 authenticatedPerson: response,
@@ -96,6 +100,8 @@ export class LoginComponent implements OnInit {
           next: (token) => {
             console.log(token);
             if (token) {
+              localStorage.setItem('token', token[0].jwt);
+              localStorage.setItem('userId', token[0].userId);
               this.state.state.next({
                 loggedIn: true,
                 authenticatedPerson: token,

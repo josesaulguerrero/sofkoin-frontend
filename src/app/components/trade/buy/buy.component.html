@@ -1,21 +1,31 @@
 <div class="maincontainer">
   <div>
     <h1>Avaliable Coins:</h1>
-    <h2>coinslist goes here</h2>
+    <div class="coinlistcontainer">
+      <div class="coinrow" *ngFor="let selectcrypto of newCryptolist">
+        <p>{{ selectcrypto }}</p>
+        <p>$Price</p>
+      </div>
+    </div>
   </div>
+
   <div class="column">
     <form>
       <h1>buy Crypto</h1>
       <div class="cash">
         <p>Cash avalible</p>
-        <p class="cashavalible">$209234 USD</p>
+        <p class="cashavalible">${{ cashavalible }} USD</p>
       </div>
       <br />
-      <p>drop drown menu goes here</p>
+      <select name="dog-names" id="cryptobuyselect">
+        <option *ngFor="let selectcrypto of newCryptolist">
+          {{ selectcrypto }}
+        </option>
+      </select>
       <br />
       <input
         required
-        pattern="[0-9]{10}"
+        pattern="[0-9]"
         [(ngModel)]="newCryptoBuy"
         type="number"
         name="Amount"

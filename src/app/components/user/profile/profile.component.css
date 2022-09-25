@@ -40,3 +40,23 @@
 .cash p {
   font-weight: 500;
 }
+
+.cryptolistcontainer {
+  font-size: medium;
+  margin-left: 20px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.rowitem {
+  margin-right: 20px;
+}
+.columntitle {
+  margin-right: 20px;
+}

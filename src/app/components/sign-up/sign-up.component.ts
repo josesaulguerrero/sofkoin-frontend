@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { RequestService } from 'src/app/services/request/request.service';
+import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { Router } from '@angular/router';
 import { ErrorModel } from 'src/app/models/errorModel';
 
