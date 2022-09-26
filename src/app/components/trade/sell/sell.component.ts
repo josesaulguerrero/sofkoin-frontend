@@ -92,19 +92,32 @@ export class SellComponent implements OnInit {
       cryptoAmount: String(this.newAmount),
       cash: this.cashAvailable as string,
     };
-
-    this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
-      next: (data) => {
-        if (data) {
-          alert('You successfully sell ' + cryptoSelected);
-        }
-      },
-      error: (err: ErrorModel) => {
-        alert(err.error.errorMessage);
-      },
-    });
+    if (this.validation()) {
+      this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
+        next: (data) => {
+          if (data) {
+            alert('You successfully sell ' + cryptoSelected);
+          }
+        },
+        error: (err: ErrorModel) => {
+          alert(err.error.errorMessage);
+        },
+      });
+    }
 
     //TODO: ACTUALIZAR EL ESTADO DEL USUARIO/MOSTRAR USD
     console.log(command);
+  }
+
+  validation(): boolean {
+    if (
+      this.newAmount! < 0.000001 ||
+      this.newAmount! > 100000 ||
+      this.newAmount === undefined
+    ) {
+      alert('The amount must be between 0.000001 and 100000');
+      return false;
+    }
+    return true;
   }
 }
