@@ -17,6 +17,9 @@ export class ProfileComponent implements OnInit {
     private betarequest: BetarequestService,
     private state: StateService
   ) {}
+
+  userIsLoaded: boolean = false;
+
   name: string = '';
   surname: string = '';
   email: string = '';
@@ -42,8 +45,8 @@ export class ProfileComponent implements OnInit {
           this.phone = this.state.user.value.phoneNumber;
           this.cash = this.state.user.value.currentCash;
           this.avatarurl = this.state.user.value.avatarUrl;
-
           this.usercryptolist = this.state.user.value.cryptos;
+          this.userIsLoaded = true;
         }
       },
       error: (err: ErrorModel) => {

@@ -1,1 +1,52 @@
-<p>sell works!</p>
+<div class="container">
+  <div>
+    <h1>Avaliable Coins:</h1>
+    <div class="coinlistcontainer">
+      <div class="coinrow" *ngFor="let selectcrypto of cryptos">
+        <p>{{ selectcrypto.symbol }}:</p>
+        <p>{{ selectcrypto.price }}USD</p>
+      </div>
+    </div>
+    <div>
+      <h2>User Cryptos</h2>
+      <div class="amount-div">
+        Balance
+        <input
+          disabled
+          type="text"
+          [(ngModel)]="cryptoBalanceSelected"
+          name="amount"
+          id="userCryptoBalance" />
+        <select (change)="setCryptoBalance()" name="cryptos" id="cryptoBalance">
+          <option
+            [(ngModel)]="cryptoSelected"
+            *ngFor="let selectcrypto of userCryptos">
+            {{ selectcrypto.symbol }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="offer-container">
+    <div class="title-container"><h2>Sell Crypto</h2></div>
+    <div>
+      <div class="price-div">
+        Price
+        <input disabled type="text" name="price" />
+      </div>
+
+      <div class="amount-div">
+        Amount
+        <input [(ngModel)]="newAmount" type="text" name="amount" />
+        <select name="transporte">
+          <option>BTC</option>
+          <option>ETH</option>
+        </select>
+      </div>
+
+      <div>
+        <button (click)="test()" class="submit-button">Sell</button>
+      </div>
+    </div>
+  </div>
+</div>

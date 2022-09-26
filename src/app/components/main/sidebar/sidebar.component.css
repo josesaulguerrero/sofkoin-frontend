@@ -71,4 +71,11 @@ a {
 .sidebarcontainer {
   margin-top: -28px;
   position: fixed;
+  height: 83.5vh;
+  border-style: solid;
+  border-width: 1px;
+  border-top: none;
+  border-left: none;
+  border-bottom: none;
+  border-color: rgb(227, 227, 227);
 }

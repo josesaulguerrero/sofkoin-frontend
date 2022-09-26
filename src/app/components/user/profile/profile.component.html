@@ -1,7 +1,22 @@
+<!--Loader div-->
+<div class="loader" *ngIf="!userIsLoaded">
+  <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+    <circle
+      id="c"
+      fill="none"
+      stroke-width="4"
+      stroke-linecap="round"
+      cx="45"
+      cy="45"
+      r="43" />
+  </svg>
+</div>
+
+<!--Loader div ends-->
 <div class="usertopcontainer">
   <img class="avatar" src="{{ avatarurl }}" />
   <div class="infocontainer">
-    <p>Name: {{ name }} {{ surname }}</p>
+    <p class="username">{{ name }} {{ surname }}</p>
     <div class="rowcontainer">
       <div class="column">
         <p>Email:</p>
@@ -14,7 +29,7 @@
     </div>
   </div>
   <div class="cash">
-    <p>Cash avalible</p>
+    <p>Cash available</p>
     <p class="cashavalible">${{ cash }} USD</p>
   </div>
 </div>

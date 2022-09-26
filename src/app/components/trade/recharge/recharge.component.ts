@@ -31,14 +31,14 @@ export class RechargeComponent implements OnInit {
             err.error.errorMessage === null ||
             err.error.errorMessage === undefined
           ) {
-            alert('Something went worng: ');
+            alert('Something went wrong');
           } else {
             alert(err.error.errorMessage);
           }
         },
       });
     } else {
-      alert('Something went worng: ');
+      alert('Something went wrong');
     }
   }
 }
