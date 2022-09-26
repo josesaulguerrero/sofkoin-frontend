@@ -17,7 +17,6 @@ export class SidebarComponent implements OnInit {
     this.sidebaritems?.forEach((element) => {
       let nonselecteditem = document.getElementById(element);
       nonselecteditem!.className === 'nonselected';
-      console.log(nonselecteditem);
     });
 
     let selecteditem = document.getElementById(

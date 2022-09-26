@@ -16,7 +16,6 @@ export class HeaderComponent implements OnInit {
   }
   @HostListener('window:load')
   onPageLoaded() {
-    console.log(window.location.href.split('/')[4]);
     this.select(window.location.href.split('/')[4]);
   }
   select(selected: string) {

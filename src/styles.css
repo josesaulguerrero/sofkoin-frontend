@@ -16,6 +16,7 @@ body {
   background-color: aliceblue;
   width: 100%;
   padding: 0;
+  margin-bottom: 28px;
 }
 app-user,
 app-trade,

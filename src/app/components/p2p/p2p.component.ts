@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserModel } from 'src/app/models/UserModel';
 
 @Component({
   selector: 'app-p2p',

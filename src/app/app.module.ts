@@ -27,6 +27,7 @@ import { PublishofferComponent } from './components/p2p/publishoffer/publishoffe
 import { UsersComponent } from './components/p2p/users/users.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AuthGuardService } from './services/authguard/auth-guard.service';
+import { SingleuserComponent } from './components/p2p/users/singleuser/singleuser.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { AuthGuardService } from './services/authguard/auth-guard.service';
     PublishofferComponent,
     UsersComponent,
     WelcomeComponent,
+    SingleuserComponent,
   ],
 
   imports: [
