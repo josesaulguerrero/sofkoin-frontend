@@ -15,3 +15,47 @@
   width: 70vw;
   margin: 18px, 20px, 20px, 20px;
 }
+
+.header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.data-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.type {
+  width: 60px;
+}
+
+.timestamp {
+  width: 200px;
+}
+
+.cryptosymbol {
+  width: 60px;
+}
+
+.cryptoamount {
+  width: 80px;
+}
+
+.action {
+  padding-left: 6vw;
+}
+
+.date {
+  padding-left: 17vw;
+}
+
+.coin {
+  padding-left: 17vw;
+}
+
+.amount {
+  padding-left: 12vw;
+}
