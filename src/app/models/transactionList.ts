@@ -1,8 +1,8 @@
 export type TransactionsList = {
   transactionId: string;
   type: string;
-  cryptoAmount: string;
-  cryptoPrice: string;
+  cryptoAmount: number;
+  cryptoPrice: number;
   timestamp: string;
   cryptoSymbol: string;
 };

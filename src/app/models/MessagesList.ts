@@ -2,12 +2,12 @@
 
 export type MessagesList = {
   messageId: string;
-  marketID: string;
-  proposalCryptoAmount: string;
-  proposalCryptoPrice: string;
-  messageStatus: string;
+  status: string;
   senderId: string;
+  marketId: string;
   receiverId: string;
-  cryptoSymbol: string;
-  messageRelationType: string;
+  //falta un campo aqui messageRelationType:string;
+  proposalCryptoAmount: number;
+  proposalCryptoPrice: number;
+  proposalCryptoSymbol: string;
 };

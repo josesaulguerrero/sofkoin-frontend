@@ -7,8 +7,9 @@ export type UserModel = {
   email: string;
   fullName: string;
   phoneNumber: string;
+  authMethod: string;
   avatarUrl: string;
-  currentCash: string;
+  currentCash: number;
   messages: MessagesList[];
   cryptos: UserCryptosList[];
   activities: ActivitiesList[];
