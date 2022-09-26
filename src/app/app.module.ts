@@ -28,6 +28,7 @@ import { UsersComponent } from './components/p2p/users/users.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AuthGuardService } from './services/authguard/auth-guard.service';
 import { LoadscreenComponent } from './components/loadscreen/loadscreen/loadscreen.component';
+import { SingleuserComponent } from './components/p2p/users/singleuser/singleuser.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { LoadscreenComponent } from './components/loadscreen/loadscreen/loadscre
     UsersComponent,
     WelcomeComponent,
     LoadscreenComponent,
+    SingleuserComponent,
   ],
 
   imports: [

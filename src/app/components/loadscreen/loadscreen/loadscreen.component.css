@@ -1,0 +1,30 @@
+.loader {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+svg {
+  position: absolute;
+  stroke: var(--e-global-color-secondary);
+  width: 80px;
+  stroke-dasharray: 269.7405090332031px;
+  stroke-dashoffset: 0;
+  animation: heartBeat 1s linear reverse infinite;
+  transform: rotate(-90deg);
+}
+
+@keyframes heartBeat {
+  50% {
+    stroke-dashoffset: 269.7405090332031px;
+  }
+  50.01% {
+    stroke-dashoffset: -269.7405090332031px;
+  }
+}

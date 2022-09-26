@@ -1,6 +1,7 @@
 .avatar {
   border: 1px solid #fff;
   box-shadow: 0 0 5px 5px var(--e-global-color-text);
+
   margin: 20px;
   border-radius: 50%;
   min-width: 100px;
@@ -9,8 +10,8 @@
   max-height: 110px;
   width: 8vw;
   height: 8vw;
-  transition: 500ms all;
 }
+
 .usertopcontainer {
   display: flex;
   background-color: rgb(232, 245, 255);

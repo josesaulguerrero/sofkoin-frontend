@@ -25,11 +25,13 @@ export class SellComponent implements OnInit {
   cryptoSelected?: string;
   cashAvailable?: number;
   userCryptos?: UserCryptosList[] = [];
+  isLoaded: boolean = true;
 
   availableCryptos?: UserCryptosList[];
   cryptos?: CryptoPriceModel[];
 
   ngOnInit(): void {
+    this.getFirstCryptoPrices();
     this.getCryptoPrices();
     this.getUserCryptos();
   }
@@ -47,7 +49,14 @@ export class SellComponent implements OnInit {
       .pipe(mergeMap(() => this.requestBeta.geAllCryptoPriceMethod()))
       .subscribe((data: CryptoPriceModel[]) => {
         this.cryptos = data;
+        this.isLoaded = true;
       });
+  }
+
+  async getFirstCryptoPrices() {
+    this.requestBeta.geAllCryptoPriceMethod().subscribe((data) => {
+      this.cryptos = data;
+    });
   }
 
   setCryptoBalance() {

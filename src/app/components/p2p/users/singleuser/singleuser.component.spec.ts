@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { P2pComponent } from './p2p.component';
+import { SingleuserComponent } from './singleuser.component';
 
-describe('P2pComponent', () => {
-  let component: P2pComponent;
-  let fixture: ComponentFixture<P2pComponent>;
+describe('SingleuserComponent', () => {
+  let component: SingleuserComponent;
+  let fixture: ComponentFixture<SingleuserComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [P2pComponent],
+      declarations: [SingleuserComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(P2pComponent);
+    fixture = TestBed.createComponent(SingleuserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

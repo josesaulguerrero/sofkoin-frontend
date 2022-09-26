@@ -1,1 +1,12 @@
-<p>loadscreen works!</p>
+<div class="loader" *ngIf="!isLoaded">
+  <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+    <circle
+      id="c"
+      fill="none"
+      stroke-width="4"
+      stroke-linecap="round"
+      cx="45"
+      cy="45"
+      r="43" />
+  </svg>
+</div>

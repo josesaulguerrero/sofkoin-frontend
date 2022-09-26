@@ -1,3 +1,4 @@
+import { compileNgModule } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { interval, mergeMap } from 'rxjs';
 import { commandCommitTradeTransaction } from 'src/app/models/commands/commandCommitTradeTransaction';
@@ -19,8 +20,10 @@ export class BuyComponent implements OnInit {
     private requestAlpha: RequestService,
     private state: StateService
   ) {}
+
+  isLoaded: boolean = true;
   cashAvailable?: number;
-  newCryptoBuy: string = '';
+  newCryptoBuy?: number;
   newCryptolist: string[] = [
     'BTC',
     'ETH',
@@ -36,11 +39,29 @@ export class BuyComponent implements OnInit {
 
   cryptos?: CryptoPriceModel[];
 
+  USDCryptoValue: number = 0;
+  currencyConverterFactor: number = 0;
+
+  startPrice() {
+    this.currencyConverterFactor = this.cryptos?.filter(
+      (coin) => coin.symbol === 'BTC'
+    )[0].price as number;
+  }
+
+  async getCryptoPricesFirstTime() {
+    this.requestBeta.geAllCryptoPriceMethod().subscribe((data) => {
+      this.currencyConverterFactor = data.filter(
+        (coin) => coin.symbol === 'BTC'
+      )[0].price as number;
+    });
+  }
+
   async getCryptoPrices() {
     interval(0.1 * 60 * 1000)
       .pipe(mergeMap(() => this.requestBeta.geAllCryptoPriceMethod()))
       .subscribe((data: CryptoPriceModel[]) => {
         this.cryptos = data;
+        this.isLoaded = true;
       });
   }
 
@@ -50,12 +71,28 @@ export class BuyComponent implements OnInit {
     });
   }
 
+  async changeConversionFactor() {
+    let selectElement = document.getElementById(
+      'cryptobuyselect'
+    ) as HTMLSelectElement;
+    let cryptoSelected =
+      selectElement.options[selectElement.selectedIndex].value;
+    this.currencyConverterFactor = this.cryptos?.filter(
+      (coin) => coin.symbol === cryptoSelected
+    )[0].price as number;
+  }
+
+  //Settea el precio de btc por defecto y luego hacer una funcion que en on change cambie el valor por el que se opera
+
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
     //If cashUser = '' then make a get request to get user cash
+    this.getCryptoPricesFirstTime();
     this.getCryptoPrices();
     this.getCashAvailable();
+    this.startPrice();
   }
+
   actionBuy() {
     let token = localStorage.getItem('token') as string;
     let userId = localStorage.getItem('userId');
@@ -64,6 +101,9 @@ export class BuyComponent implements OnInit {
     ) as HTMLSelectElement;
     let cryptoSelected =
       selectElement.options[selectElement.selectedIndex].value;
+
+    let input = document.getElementById('newAmount') as HTMLInputElement;
+
     let command: commandCommitTradeTransaction = {
       buyerId: localStorage.getItem('userId') as string,
       transactionType: 'BUY',
@@ -71,7 +111,7 @@ export class BuyComponent implements OnInit {
       cryptoPrice: String(
         this.cryptos?.filter((c) => c.symbol === cryptoSelected)[0].price
       ),
-      cryptoAmount: this.newCryptoBuy,
+      cryptoAmount: String(input.value),
       cash: this.cashAvailable as number,
     };
 
@@ -86,9 +126,8 @@ export class BuyComponent implements OnInit {
       },
     });
 
-    this.newCryptoBuy = '';
+    this.newCryptoBuy = 0;
     //Update user state
     //Toca hacer un get de la info del user o hacer la resta pero es más peligroso por decimales
-    console.log(command);
   }
 }

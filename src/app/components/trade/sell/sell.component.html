@@ -1,6 +1,7 @@
+<app-loadscreen *ngIf="!isLoaded"></app-loadscreen>
 <div class="container">
   <div class="coins-section">
-    <div class="title-container"><h2>Avaliable Coins</h2></div>
+    <div class="title-container"><h2>Available Coins</h2></div>
     <div class="coinlistcontainer">
       <div class="coinrow" *ngFor="let selectcrypto of cryptos">
         <div class="cryptosymbol">{{ selectcrypto.symbol }}</div>

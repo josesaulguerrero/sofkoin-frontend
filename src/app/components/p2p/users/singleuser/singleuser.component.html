@@ -1,0 +1,36 @@
+<div *ngIf="existusercoins()">
+  <div class="headerinfo">
+    <div class="coin">Coin</div>
+    <div class="amount">Amount</div>
+  </div>
+  <div class="coins-container" *ngFor="let singlecoin of usercoins">
+    <div ng class="cryptosymbol">{{ singlecoin.symbol }}</div>
+    <div class="cryptoamount">{{ singlecoin.amount }}</div>
+
+    <button class="offerbutton" (click)="makeOffer(singlecoin.symbol)">
+      Make Offer
+    </button>
+    <br />
+  </div>
+  <form
+    name="offerform"
+    id="offerform{{ singleuser!.userId }}"
+    class="hiddenform">
+    <p id="buymessage">Buy {{ currentcoin }}:</p>
+    <input
+      [(ngModel)]="newammount"
+      [ngModelOptions]="{ standalone: true }"
+      type="number"
+      placeholder="Offer an amount" />
+    <input
+      [(ngModel)]="newprice"
+      [ngModelOptions]="{ standalone: true }"
+      type="number"
+      placeholder="Offer a price" />
+    <button class="sendofferbutton" (click)="buyOffer()">
+      Send Offer Message
+    </button>
+  </form>
+</div>
+<br />
+<div>{{ message }}</div>

@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-loadscreen',
   templateUrl: './loadscreen.component.html',
-  styleUrls: ['./loadscreen.component.css']
+  styleUrls: ['./loadscreen.component.css'],
 })
 export class LoadscreenComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  @Input() isLoaded: boolean = false;
+  ngOnInit(): void {}
 }
