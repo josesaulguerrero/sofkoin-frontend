@@ -1,4 +1,19 @@
 <div class="container">
   <div class="title-container"><h2>Transactions</h2></div>
-  <div class="transactions-container"></div>
+  <div class="transactions-container">
+    <div class="header">
+      <div class="action">Action</div>
+      <div class="date">Date</div>
+      <div class="coin">Coin</div>
+      <div class="amount">Amount</div>
+    </div>
+    <div class="">
+      <div class="data-container" *ngFor="let transaction of transactions">
+        <div class="type">{{ transaction.type }}</div>
+        <div class="timestamp">{{ transaction.timestamp }}</div>
+        <div class="cryptosymbol">{{ transaction.cryptoSymbol }}</div>
+        <div class="cryptoamount">{{ transaction.cryptoAmount }}</div>
+      </div>
+    </div>
+  </div>
 </div>

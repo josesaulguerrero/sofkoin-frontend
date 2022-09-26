@@ -5,8 +5,9 @@ export type MessagesList = {
   marketID: string;
   proposalCryptoAmount: string;
   proposalCryptoPrice: string;
-  messageStatu: string;
+  messageStatus: string;
   senderId: string;
   receiverId: string;
   cryptoSymbol: string;
+  messageRelationType: string;
 };
