@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
   surname: string = '';
   email: string = '';
   phone: string = '';
-  cash: string = '';
+  cash?: number;
   avatarurl: string = '';
   usercryptolist?: UserCryptosList[];
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
