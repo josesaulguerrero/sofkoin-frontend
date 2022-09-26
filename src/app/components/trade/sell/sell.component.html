@@ -38,14 +38,15 @@
       <div class="amount-div">
         Amount
         <input [(ngModel)]="newAmount" type="text" name="amount" />
-        <select name="transporte">
-          <option>BTC</option>
-          <option>ETH</option>
+        <select name="availableCryptos" id="availableCryptos">
+          <option *ngFor="let selectcrypto of availableCryptos">
+            {{ selectcrypto.symbol }}
+          </option>
         </select>
       </div>
 
       <div>
-        <button (click)="test()" class="submit-button">Sell</button>
+        <button (click)="actionBuy()" class="submit-button">Sell</button>
       </div>
     </div>
   </div>
