@@ -1,14 +1,17 @@
 <div class="container">
-  <div class="title-container"><h2>Users</h2></div>
-  <div class="transactions-container">
-    <div class="header">
-      <div class="action">Action</div>
-      <div class="date">Date</div>
-      <div class="coin">Coin</div>
-      <div class="amount">Amount</div>
-    </div>
-    <div class="">
-      <div class="data-container" *ngFor="let user of users"></div>
+  <div class="title-container"><h2></h2></div>
+  <div class="user-container">
+    <div class="header"></div>
+
+    <div class="data-container" *ngFor="let singleuser of users">
+      <div *ngIf="OwnUser(singleuser.userId)">
+        <button class="expand" (click)="collapsible(singleuser.userId)">
+          {{ singleuser.fullName }}</button
+        ><br />
+        <div class="hiddendata" id="{{ singleuser.userId }}">
+          <app-singleuser [singleuser]="singleuser"></app-singleuser>
+        </div>
+      </div>
     </div>
   </div>
 </div>
