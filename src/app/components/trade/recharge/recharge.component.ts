@@ -24,21 +24,21 @@ export class RechargeComponent implements OnInit {
       };
       this.request.fundMethod(command, token).subscribe({
         next: () => {
-          alert('Transaction complited: ');
+          alert('Transaction complete');
         },
         error: (err: ErrorModel) => {
           if (
             err.error.errorMessage === null ||
             err.error.errorMessage === undefined
           ) {
-            alert('Something went worng: ');
+            alert('Something went wrong');
           } else {
             alert(err.error.errorMessage);
           }
         },
       });
     } else {
-      alert('Something went worng: ');
+      alert('Something went wrong');
     }
   }
 }

@@ -10,6 +10,7 @@ export class StateService {
     authenticatedPerson: {},
     token: {},
   };
+
   userState: UserModel = {
     userId: '',
     email: '',

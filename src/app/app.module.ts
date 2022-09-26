@@ -26,6 +26,7 @@ import { ActiveoffersComponent } from './components/p2p/activeoffers/activeoffer
 import { PublishofferComponent } from './components/p2p/publishoffer/publishoffer.component';
 import { UsersComponent } from './components/p2p/users/users.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { AuthGuardService } from './services/authguard/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
     provideAuth(() => getAuth()),
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [AuthGuardService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

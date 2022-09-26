@@ -4,6 +4,9 @@ import { catchError, Observable } from 'rxjs';
 import { TokenResponse } from 'src/app/models/tokenResponseModel';
 import { commandFundWallet } from 'src/app/models/commands/commandFundWallet';
 import { UserModel } from 'src/app/models/UserModel';
+import { UserCryptosList } from 'src/app/models/CryptoUsrList';
+import { CryptoPrice } from 'src/app/models/cryptoprice';
+import { CryptoPriceModel } from 'src/app/models/CryptoPriceModel';
 @Injectable({
   providedIn: 'root',
 })
@@ -26,7 +29,7 @@ export class BetarequestService {
   geAllMarketsMethod(): Observable<Object> {
     return this.client.get<any>(this.host + '/view/market/all');
   }
-  geAllCryptoPriceMethod(): Observable<Object> {
+  geAllCryptoPriceMethod(): Observable<CryptoPriceModel[]> {
     return this.client.get<any>(this.host + '/view/cryptos/price');
   }
 }
