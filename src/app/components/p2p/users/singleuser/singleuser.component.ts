@@ -3,6 +3,7 @@ import { UserModel } from 'src/app/models/UserModel';
 import { UserCryptosList } from 'src/app/models/CryptoUsrList';
 import { ErrorModel } from 'src/app/models/errorModel';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
+import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { StateService } from 'src/app/services/state/state.service';
 @Component({
   selector: 'app-singleuser',
@@ -10,7 +11,11 @@ import { StateService } from 'src/app/services/state/state.service';
   styleUrls: ['./singleuser.component.css'],
 })
 export class SingleuserComponent implements OnInit {
-  constructor(private request: RequestService, private state: StateService) {}
+  constructor(
+    private request: RequestService,
+    private state: StateService,
+    private betarequest: BetarequestService
+  ) {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
@@ -48,10 +53,11 @@ export class SingleuserComponent implements OnInit {
   }
   buyOffer() {
     if (this.validation()) {
+      this.getMarket();
       this.request
         .saveMessageMethod(
           {
-            marketId: 'f2d4a64a-acbb-4918-9ed0-cb40f0c9eb2a',
+            marketId: localStorage.getItem('marketId'),
             senderId: localStorage.getItem('userId')!,
             receiverId: this.singleuser?.userId,
             cryptoSymbol: this.currentcoin,
@@ -63,19 +69,49 @@ export class SingleuserComponent implements OnInit {
         .subscribe({
           next: (response) => {
             alert('Message Sended');
+            this.message = '';
+            this.newammount = '';
+            this.newprice = '';
+
             console.log(response);
           },
           error: (err: ErrorModel) => {
+            alert('Something went wrong');
+            this.message = '';
+            this.newammount = '';
+            this.newprice = '';
+
             if (
-              err.error.errorMessage === null ||
-              err.error.errorMessage === undefined
+              !(
+                err.error.errorMessage === null ||
+                err.error.errorMessage === undefined
+              )
             ) {
-              alert('Something went wrong');
-            } else {
               alert(err.error.errorMessage);
             }
           },
         });
+    }
+  }
+  getMarket() {
+    if (localStorage.getItem('marketId') === null || undefined) {
+      this.betarequest.geAllMarketsMethod().subscribe({
+        next: (market) => {
+          localStorage.setItem('marketId', market[0].marketId);
+          console.log('conected to market');
+          this.state.market.next(market[0]);
+        },
+        error: (err: ErrorModel) => {
+          if (
+            err.error.errorMessage === null ||
+            err.error.errorMessage === undefined
+          ) {
+            alert('Something went wrong with the market');
+          } else {
+            alert(err.error.errorMessage);
+          }
+        },
+      });
     }
   }
 

@@ -7,6 +7,7 @@ import { UserModel } from 'src/app/models/UserModel';
 import { UserCryptosList } from 'src/app/models/CryptoUsrList';
 import { CryptoPrice } from 'src/app/models/cryptoprice';
 import { CryptoPriceModel } from 'src/app/models/CryptoPriceModel';
+import { MarketModel } from 'src/app/models/marketmodel';
 @Injectable({
   providedIn: 'root',
 })
@@ -26,8 +27,8 @@ export class BetarequestService {
     return this.client.get<UserModel[]>(this.host + '/view/user/all');
   }
 
-  geAllMarketsMethod(): Observable<Object> {
-    return this.client.get<any>(this.host + '/view/market/all');
+  geAllMarketsMethod(): Observable<MarketModel[]> {
+    return this.client.get<MarketModel[]>(this.host + '/view/market/all');
   }
   geAllCryptoPriceMethod(): Observable<CryptoPriceModel[]> {
     return this.client.get<any>(this.host + '/view/cryptos/price');

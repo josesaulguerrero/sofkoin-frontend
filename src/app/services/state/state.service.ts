@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { MarketModel } from 'src/app/models/marketmodel';
 import { UserModel } from 'src/app/models/UserModel';
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,12 @@ export class StateService {
     transactions: [],
   };
 
+  marketState: MarketModel = {
+    marketId: '',
+    offers: [],
+    cryptoSymbols: [],
+  };
+  market = new BehaviorSubject(this.marketState);
   state = new BehaviorSubject(this.initialState);
   user = new BehaviorSubject(this.userState);
   constructor() {}
