@@ -19,7 +19,7 @@ export class BuyComponent implements OnInit {
     private requestAlpha: RequestService,
     private state: StateService
   ) {}
-  cashAvailable: string = '';
+  cashAvailable?: number;
   newCryptoBuy: string = '';
   newCryptolist: string[] = [
     'BTC',
@@ -72,7 +72,7 @@ export class BuyComponent implements OnInit {
         this.cryptos?.filter((c) => c.symbol === cryptoSelected)[0].price
       ),
       cryptoAmount: this.newCryptoBuy,
-      cash: this.cashAvailable,
+      cash: this.cashAvailable as number,
     };
 
     this.requestAlpha.tradeTransactionMethod(command, token).subscribe({

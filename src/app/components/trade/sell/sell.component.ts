@@ -23,13 +23,9 @@ export class SellComponent implements OnInit {
   newAmount?: number;
   cryptoBalanceSelected: string = '--';
   cryptoSelected?: string;
-  cashAvailable?: string;
-  userCryptos?: UserCryptosList[] = [
-    {
-      symbol: '       ',
-      amount: '--',
-    },
-  ];
+  cashAvailable?: number;
+  userCryptos?: UserCryptosList[] = [];
+
   availableCryptos?: UserCryptosList[];
   cryptos?: CryptoPriceModel[];
 
@@ -64,9 +60,10 @@ export class SellComponent implements OnInit {
       'userCryptoBalance'
     ) as HTMLInputElement;
 
-    this.cryptoBalanceSelected = this.userCryptos?.filter(
-      (crypto) => crypto.symbol === cryptoSelected
-    )[0].amount as string;
+    this.cryptoBalanceSelected = String(
+      this.userCryptos?.filter((crypto) => crypto.symbol === cryptoSelected)[0]
+        .amount
+    );
 
     inputBalance.value = this.cryptoBalanceSelected;
 
@@ -90,7 +87,7 @@ export class SellComponent implements OnInit {
         this.cryptos?.filter((c) => c.symbol === cryptoSelected)[0].price
       ),
       cryptoAmount: String(this.newAmount),
-      cash: this.cashAvailable as string,
+      cash: this.cashAvailable as number,
     };
     if (this.validation()) {
       this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
