@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { RequestService } from 'src/app/services/request/alpharequest.service';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,10 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private auth: AuthService) {}
+  constructor(
+    private auth: AuthService,
+    private alphaRequest: RequestService
+  ) {}
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
     /* let selecteditem = document.getElementById('user');
@@ -31,6 +35,12 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut() {
+    this.alphaRequest
+      .logout(
+        { userId: localStorage.getItem('userId') },
+        localStorage.getItem('token') as string
+      )
+      .subscribe((data) => console.log(data));
     this.auth.logOut();
   }
 }

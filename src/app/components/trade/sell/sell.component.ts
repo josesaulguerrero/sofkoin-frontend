@@ -20,7 +20,7 @@ export class SellComponent implements OnInit {
     private requestAlpha: RequestService,
     private state: StateService
   ) {}
-  newAmount?: number;
+  newAmount: number = 0;
   cryptoBalanceSelected: string = '--';
   cryptoSelected?: string;
   cashAvailable?: number;
@@ -108,13 +108,15 @@ export class SellComponent implements OnInit {
 
   validation(): boolean {
     if (
+      !isFinite(this.newAmount) ||
       this.newAmount! < 0.000001 ||
       this.newAmount! > 100000 ||
       this.newAmount === undefined
     ) {
-      alert('The amount must be between 0.000001 and 100000');
+      alert('The amount must be a number between 0.000001 and 100000');
       return false;
     }
+    alert('Ok');
     return true;
   }
 }

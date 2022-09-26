@@ -1,29 +1,13 @@
 <div class="container">
-  <div>
-    <h1>Avaliable Coins:</h1>
+  <div class="coins-section">
+    <div class="title-container"><h2>Avaliable Coins</h2></div>
     <div class="coinlistcontainer">
       <div class="coinrow" *ngFor="let selectcrypto of cryptos">
-        <p>{{ selectcrypto.symbol }}:</p>
-        <p>{{ selectcrypto.price }}USD</p>
-      </div>
-    </div>
-    <div>
-      <h2>User Cryptos</h2>
-      <div class="amount-div">
-        Balance
-        <input
-          disabled
-          type="text"
-          [(ngModel)]="cryptoBalanceSelected"
-          name="amount"
-          id="userCryptoBalance" />
-        <select (change)="setCryptoBalance()" name="cryptos" id="cryptoBalance">
-          <option
-            [(ngModel)]="cryptoSelected"
-            *ngFor="let selectcrypto of userCryptos">
-            {{ selectcrypto.symbol }}
-          </option>
-        </select>
+        <div class="cryptosymbol">{{ selectcrypto.symbol }}</div>
+        <div class="cryptoprice">
+          {{ selectcrypto.price }}
+          <div class="usd-tag">USD</div>
+        </div>
       </div>
     </div>
   </div>
@@ -47,6 +31,25 @@
 
       <div>
         <button (click)="actionBuy()" class="submit-button">Sell</button>
+      </div>
+    </div>
+    <div class="user-balance">
+      <div class="title-container"><h2>User Cryptos</h2></div>
+      <div class="amount-div">
+        Balance
+        <input
+          disabled
+          type="text"
+          [(ngModel)]="cryptoBalanceSelected"
+          name="amount"
+          id="userCryptoBalance" />
+        <select (change)="setCryptoBalance()" name="cryptos" id="cryptoBalance">
+          <option
+            [(ngModel)]="cryptoSelected"
+            *ngFor="let selectcrypto of userCryptos">
+            {{ selectcrypto.symbol }}
+          </option>
+        </select>
       </div>
     </div>
   </div>

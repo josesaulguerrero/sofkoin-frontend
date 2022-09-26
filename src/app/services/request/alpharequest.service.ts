@@ -13,8 +13,8 @@ export class RequestService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  // host: string = 'https://sofkoin-alpha-1234.herokuapp.com';
-  host: string = 'http://localhost:8070';
+  host: string = 'https://sofkoin-alpha-1117.herokuapp.com';
+  //host: string = 'http://localhost:8070';
 
   signUpMethod(command: any): Observable<Object> {
     return this.client.post<any>(
@@ -30,6 +30,15 @@ export class RequestService {
       command,
       this.httpOptions
     );
+  }
+
+  logout(command: any, token: string): Observable<any> {
+    return this.client.post(this.host + '/auth/logout', command, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }),
+    });
   }
 
   p2pTransactionMethod(command: any, token: string): Observable<Object> {

@@ -15,8 +15,9 @@ export class BetarequestService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
-  // host: string = 'https://sofkoin-.herokuapp.com????????????????????????? cual es?';
-  host: string = 'http://localhost:8080';
+  host: string = 'https://sofkoin-beta-1117.herokuapp.com';
+
+  //host: string = 'http://localhost:8080';
 
   getUserByIdMethod(id: string): Observable<UserModel> {
     console.log(this.host + '/view/user/' + id);
