@@ -7,8 +7,6 @@
   flex-direction: row;
 }
 
-.infocontainer .rowcontainer {
-}
 .column {
   display: flex;
   justify-content: center;
@@ -57,6 +55,12 @@ form {
   background-color: rgb(225, 241, 255);
 }
 
+#insert-amount:hover {
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(2, 2, 84);
+}
+
 .input-class input {
   border-style: none;
   background-color: rgb(225, 241, 255);
@@ -67,9 +71,17 @@ form {
 .input-class select {
   font-weight: 600;
   height: 30px;
-  border-style: none;
+  border-style: 1px solid;
+  border-color: transparent;
+  border-radius: 5px;
   background-color: rgb(225, 241, 255);
   margin-left: 3px;
+}
+
+.input-class select:hover {
+  border-width: 1px;
+  cursor: pointer;
+  border-color: rgb(2, 2, 84);
 }
 
 .input-class label {
@@ -134,11 +146,6 @@ button:disabled {
 }
 .cash p {
   font-weight: 500;
-}
-
-.coinlistcontainer {
-  display: flex;
-  flex-direction: column;
 }
 
 .coinrow {

@@ -97,7 +97,7 @@ export class BuyComponent implements OnInit {
 
   private cleanInputs() {
     this.USDCryptoValue = undefined;
-    this.cryptoSelected = '--';
+    this.getCryptoSelectedPrice();
   }
 
   actionBuy() {
@@ -117,6 +117,7 @@ export class BuyComponent implements OnInit {
     this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
       next: (data) => {
         if (this.user) {
+          console.log(data[0]);
           this.state.subtractCash(data[0].cash, this.user);
           alert('You successfully bought ' + this.cryptoSelected);
         }

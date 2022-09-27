@@ -45,9 +45,18 @@
   right: 0;
   font-weight: 600;
   height: 30px;
-  border-style: none;
+  border-style: 1px solid;
+  border-color: transparent;
+  border-radius: 5px;
   background-color: rgb(225, 241, 255);
-  margin-left: 3px;
+  margin-right: 5px;
+  z-index: 10000;
+}
+
+.amount-div select:hover {
+  border-width: 1px;
+  cursor: pointer;
+  border-color: rgb(2, 2, 84);
 }
 
 .amount-div select:focus {
@@ -84,12 +93,6 @@
   border-style: solid;
   border-color: rgb(2, 2, 84);
   border-width: 2px;
-}
-
-.price-div:hover {
-  border-style: solid;
-  border-width: 2px;
-  border-color: rgb(2, 2, 84);
 }
 
 div .disabled {
