@@ -1,10 +1,78 @@
 div {
+  margin-top: 5px;
   display: flex;
-  gap: 25px;
+  flex-flow: row;
+  gap: 2px;
   justify-content: center;
 }
-
+.offercontainer {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+.tittle p {
+  color: aliceblue;
+  background-color: var(--e-global-color-primary);
+  font-weight: 700;
+}
 div p {
+  padding-top: 7px;
+  padding-bottom: 7px;
   width: 15vw;
   text-align: center;
+}
+section {
+  width: 100%;
+}
+button {
+  font-weight: 600;
+  color: aliceblue;
+  height: 3vw;
+  width: 15vw;
+  cursor: pointer;
+}
+.buybutton {
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(40, 186, 32);
+}
+.deletebutton {
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(209, 31, 31);
+}
+button:hover {
+  opacity: 80%;
+}
+.activeofferscontainer {
+  background-color: rgb(213, 229, 243);
+  height: 80vh;
+  overflow-y: auto;
+  width: 70vw;
+}
+
+.mine {
+  border-radius: 10px;
+  background-color: rgb(172, 203, 231);
+  background: linear-gradient(to left, rgb(213, 229, 243), rgb(172, 203, 231));
+}
+.forme {
+  border-radius: 10px;
+  background: linear-gradient(to left, rgb(213, 229, 243), rgb(172, 203, 231));
+}
+.infocontainer {
+  gap: 20px;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+}
+.youroffer {
+  padding: 5px;
+  border-radius: 10px;
+  background: linear-gradient(to left, rgb(213, 229, 243), rgb(172, 203, 231));
+}
+.directtoyou {
+  padding: 5px;
+  border-radius: 10px;
+  background: linear-gradient(to left, rgb(213, 229, 243), rgb(172, 203, 231));
 }
