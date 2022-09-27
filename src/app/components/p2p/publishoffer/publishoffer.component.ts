@@ -7,6 +7,7 @@ import { UserModel } from 'src/app/models/UserModel';
 import { StateService } from 'src/app/services/state/state.service';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { MarketModel } from 'src/app/models/marketmodel';
+import { ErrorModel } from 'src/app/models/errorModel';
 
 @Component({
   selector: 'app-publishoffer',
@@ -60,10 +61,23 @@ export class PublishofferComponent implements OnInit {
         offerCryptoAmount: this.offerCryptoAmount,
         offerCryptoPrice: this.offerCryptoPrice,
       };
-      this.alphaRequest.publishOfferMethod(
-        newOffer,
-        localStorage.getItem('token') as string
-      );
+      this.alphaRequest
+        .publishOfferMethod(newOffer, localStorage.getItem('token') as string)
+        .subscribe({
+          next: () => {
+            alert('The offer was successfully publish.');
+          },
+          error: (err: ErrorModel) => {
+            alert(err.error.errorMessage);
+          },
+        });
+      this.offerCryptoAmount = NaN;
+      this.offerCryptoPrice = NaN;
+      this.offerUsdCash = NaN;
+      const select = document.getElementById(
+        'userCryptos'
+      ) as HTMLSelectElement;
+      select.selectedIndex = 0;
     }
   }
 }
