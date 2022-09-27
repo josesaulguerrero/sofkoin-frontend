@@ -11,6 +11,15 @@
   width: 8vw;
   height: 8vw;
 }
+.datacontainer {
+  display: flex;
+}
+.cryptolistcontainer p {
+  width: 10vw;
+}
+.canvas {
+  width: 15vw;
+}
 
 .usertopcontainer {
   display: flex;
@@ -68,7 +77,6 @@ h3 {
 .row {
   display: flex;
   flex-direction: row;
-  width: 15vw;
 }
 
 .rowitem {
