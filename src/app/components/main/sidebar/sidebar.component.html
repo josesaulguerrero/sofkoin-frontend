@@ -1,20 +1,13 @@
 <div class="sidebarcontainer">
-  <ul>
-    <div class="subcommentscontainer" *ngFor="let item of sidebaritems">
-      <div>
-        <li>
-          <button
-            id="{{ item }}"
-            class="nonselected"
-            (click)="activeItem(item)"
-            routerLink="/main/{{ mainitem }}/{{ item }}">
-            {{ item.replace('_', ' ') }}
-          </button>
-        </li>
-      </div>
+  <div class="subcommentscontainer" *ngFor="let item of sidebaritems">
+    <div class="acontainer">
+      <a
+        id="{{ item }}"
+        class="nonselected"
+        routerLinkActive="selected"
+        routerLink="/main/{{ mainitem }}/{{ item }}">
+        {{ item.replace('_', ' ') }}
+      </a>
     </div>
-    <div *ngIf="sidebaritems">
-      <div *ngIf="doSomething()"></div>
-    </div>
-  </ul>
+  </div>
 </div>

@@ -1,34 +1,36 @@
-<div class="activeofferscontainer">
-  <section>
-    <div class="tittle">
-      <p>Crypto</p>
-      <p>Amount</p>
-      <p>Price</p>
-      <p></p>
-    </div>
-    <div *ngFor="let offer of offers">
-      <div class="offercontainer" *ngIf="showOffer(offer)">
-        <div class="mine" *ngIf="showasmine(offer.publisherId)">
-          <p>{{ offer.cryptoSymbol }}</p>
-          <p>{{ offer.cryptoAmount }}</p>
-          <p>{{ offer.cryptoPrice }}</p>
-          <button class="deletebutton" (click)="deleteoffer(offer)">
-            Delete
-          </button>
-        </div>
-        <div class="forme" *ngIf="showasforme(offer.targetAudienceId)">
-          <p>{{ offer.cryptoSymbol }}</p>
-          <p>{{ offer.cryptoAmount }}</p>
-          <p>{{ offer.cryptoPrice }}</p>
-          <button class="buybutton" (click)="buyoffer(offer)">Buy</button>
-        </div>
-        <div class="general" *ngIf="showasgeneral(offer)">
-          <p>{{ offer.cryptoSymbol }}</p>
-          <p>{{ offer.cryptoAmount }}</p>
-          <p>{{ offer.cryptoPrice }}</p>
-          <button class="buybutton" (click)="buyoffer(offer)">Buy</button>
+<div class="container">
+  <div class="activeofferscontainer">
+    <section>
+      <div class="tittle">
+        <p>Crypto</p>
+        <p>Amount</p>
+        <p>Price</p>
+        <p></p>
+      </div>
+      <div *ngFor="let offer of offers">
+        <div class="offercontainer" *ngIf="showOffer(offer)">
+          <div class="mine" *ngIf="showasmine(offer.publisherId)">
+            <p>{{ offer.cryptoSymbol }}</p>
+            <p>{{ offer.cryptoAmount }}</p>
+            <p>{{ offer.cryptoPrice }}</p>
+            <button class="deletebutton" (click)="deleteoffer(offer)">
+              Delete
+            </button>
+          </div>
+          <div class="forme" *ngIf="showasforme(offer.targetAudienceId)">
+            <p>{{ offer.cryptoSymbol }}</p>
+            <p>{{ offer.cryptoAmount }}</p>
+            <p>{{ offer.cryptoPrice }}</p>
+            <button class="buybutton" (click)="buyoffer(offer)">Buy</button>
+          </div>
+          <div class="general" *ngIf="showasgeneral(offer)">
+            <p>{{ offer.cryptoSymbol }}</p>
+            <p>{{ offer.cryptoAmount }}</p>
+            <p>{{ offer.cryptoPrice }}</p>
+            <button class="buybutton" (click)="buyoffer(offer)">Buy</button>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </div>

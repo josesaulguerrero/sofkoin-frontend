@@ -85,3 +85,10 @@ button:hover {
 .offerform {
   display: block;
 }
+
+form {
+  margin-left: 20px;
+}
+form p {
+  font-weight: 600;
+}

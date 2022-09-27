@@ -1,37 +1,13 @@
-a {
-  margin: 30px;
-  text-decoration: none;
-}
-.button {
-  padding-left: 20px;
-  padding-right: 50px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  height: 60px;
-  width: 23vw;
-  font-size: 1.1rem;
-  text-align: left;
-  color: inherit;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  border: none;
-  cursor: pointer;
-  overflow: hidden;
-  outline: none;
-}
-
 .nonselected {
-  padding-left: 20px;
-  padding-right: 50px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  height: 60px;
-  width: 23vw;
+  text-decoration: none;
+  width: 22vw;
   font-size: 1.1rem;
   text-align: left;
-  color: inherit;
-  background-color: transparent;
-  background-repeat: no-repeat;
+  padding-left: 20px;
+
+  padding-top: 12px;
+  padding-bottom: 12px;
+  display: inline-block;
   border: none;
   cursor: pointer;
   overflow: hidden;
@@ -45,17 +21,14 @@ a {
 }
 
 .selected {
-  padding-left: 20px;
-  padding-right: 50px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  height: 60px;
-  width: 23vw;
+  text-decoration: none;
+  width: 22vw;
   font-size: 1.1rem;
   text-align: left;
-  color: inherit;
-  background-color: transparent;
-  background-repeat: no-repeat;
+
+  padding-top: 12px;
+  padding-bottom: 12px;
+  display: inline-block;
   border: none;
   cursor: pointer;
   overflow: hidden;
@@ -63,15 +36,20 @@ a {
   color: aliceblue;
   background-color: var(--e-global-color-primary);
 }
+.selected:hover {
+  color: aliceblue;
+  background-color: var(--e-global-color-primary);
+}
 
-.hiden {
-  visibility: hidden;
+.acontainer {
+  background-color: aliceblue;
 }
 
 .sidebarcontainer {
   margin-top: -28px;
-  position: fixed;
+  position: absolute;
   height: 83.5vh;
+
   border-style: solid;
   border-width: 1px;
   border-top: none;

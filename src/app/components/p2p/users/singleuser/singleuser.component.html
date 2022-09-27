@@ -6,7 +6,6 @@
   <div class="coins-container" *ngFor="let singlecoin of usercoins">
     <div ng class="cryptosymbol">{{ singlecoin.symbol }}</div>
     <div class="cryptoamount">{{ singlecoin.amount }}</div>
-
     <button class="offerbutton" (click)="makeOffer(singlecoin.symbol)">
       Make Offer
     </button>
@@ -27,6 +26,9 @@
       [ngModelOptions]="{ standalone: true }"
       type="number"
       placeholder="Offer a price" />
+    <div>
+      <p class="Total">Total: ${{ total }} USD</p>
+    </div>
     <button class="sendofferbutton" (click)="buyOffer()">
       Send Offer Message
     </button>
