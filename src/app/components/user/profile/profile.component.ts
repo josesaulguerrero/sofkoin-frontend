@@ -46,11 +46,72 @@ export class ProfileComponent implements OnInit {
           this.avatarurl = this.state.user.value.avatarUrl;
           this.usercryptolist = this.state.user.value.cryptos;
           this.userIsLoaded = true;
+          this.renderPie();
         }
       },
       error: (err: ErrorModel) => {
         alert('The user is not registered: ' + err.error.errorMessage);
       },
     });
+  }
+  renderPie() {
+    var canvas = document.getElementById('can') as HTMLCanvasElement;
+    var ctx = canvas.getContext('2d')!;
+    var lastend = 0;
+    var data: number[] = [];
+    var labels: string[] = [];
+
+    this.usercryptolist?.forEach((crypto) => {
+      data.push(crypto.amount * crypto.priceUsd);
+      labels.push(crypto.symbol);
+    });
+
+    var myTotal = 0;
+    var myColor = [
+      '#6f00d0',
+      '#ff3eaf',
+      '#090947',
+      '#009bff',
+      '#2a358c',
+      '#6f00d0',
+      '#ff3eaf',
+      '#090947',
+      '#009bff',
+      '#2a358c',
+    ];
+    //var labels = ['A', 'B', 'C', 'D'];
+
+    for (var e = 0; e < data.length; e++) {
+      myTotal += data[e];
+    }
+
+    // make the chart 10 px smaller to fit on canvas
+    var off = 10;
+    var w = (canvas.width - off) / 2;
+    var h = (canvas.height - off) / 2;
+    for (var i = 0; i < data.length; i++) {
+      ctx.fillStyle = myColor[i];
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(w, h);
+      var len = (data[i] / myTotal) * 2 * Math.PI;
+      var r = h - off / 2;
+      ctx.arc(w, h, r, lastend, lastend + len, false);
+      ctx.lineTo(w, h);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = 'white';
+      ctx.font = '20px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      var mid = lastend + len / 2;
+      ctx.fillText(
+        labels[i],
+        w + Math.cos(mid) * (r / 2),
+        h + Math.sin(mid) * (r / 2)
+      );
+      lastend += Math.PI * 2 * (data[i] / myTotal);
+    }
   }
 }
