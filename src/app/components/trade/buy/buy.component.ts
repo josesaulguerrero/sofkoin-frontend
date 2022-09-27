@@ -21,10 +21,10 @@ export class BuyComponent implements OnInit {
     private state: StateService
   ) {}
 
-  isLoaded: boolean = false;
+  isLoaded: boolean = true;
   user?: UserModel;
   newCryptoBuy?: number;
-  selectedCrypto: string = '--';
+  cryptoSelected: string = '--';
   newCryptolist: string[] = [
     'BTC',
     'ETH',
@@ -49,14 +49,14 @@ export class BuyComponent implements OnInit {
     )[0].price as number;
   }
 
-  async getCryptoPricesFirstTime() {
+  getCryptoPricesFirstTime() {
     this.requestBeta.geAllCryptoPriceMethod().subscribe((data) => {
       this.cryptos = data;
     });
   }
 
-  async getCryptoPrices() {
-    interval(0.1 * 60 * 1000)
+  getCryptoPrices() {
+    interval(6000)
       .pipe(mergeMap(() => this.requestBeta.geAllCryptoPriceMethod()))
       .subscribe((data: CryptoPriceModel[]) => {
         this.cryptos = data;
@@ -68,10 +68,12 @@ export class BuyComponent implements OnInit {
     this.state.user.subscribe((currentUser) => (this.user = currentUser));
   }
 
-  async changeConversionFactor() {
-    this.currencyConverterFactor = this.cryptos?.filter(
-      (coin) => coin.symbol === this.selectedCrypto
-    )[0].price as number;
+  changeConversionFactor() {
+    if (this.cryptos) {
+      this.currencyConverterFactor =
+        this.cryptos?.find((coin) => coin.symbol === this.cryptoSelected)
+          ?.price ?? 0;
+    }
   }
 
   //Settea el precio de btc por defecto y luego hacer una funcion que en on change cambie el valor por el que se opera
@@ -85,24 +87,30 @@ export class BuyComponent implements OnInit {
     this.startPrice();
   }
 
+  private getCryptoSelectedPrice(): number | undefined {
+    const crypto = this.cryptos?.find(
+      (crypto) => crypto.symbol === this.cryptoSelected
+    );
+
+    return crypto?.price;
+  }
+
+  private cleanInputs() {
+    this.USDCryptoValue = undefined;
+    this.cryptoSelected = '--';
+  }
+
   actionBuy() {
-    let token = localStorage.getItem('token') as string;
-    let userId = localStorage.getItem('userId');
-    let selectElement = document.getElementById(
-      'cryptobuyselect'
-    ) as HTMLSelectElement;
-    let cryptoSelected =
-      selectElement.options[selectElement.selectedIndex].value;
+    const userId: string = localStorage.getItem('userId') as string;
+    const token: string = localStorage.getItem('token') as string;
 
     let input = document.getElementById('newAmount') as HTMLInputElement;
 
     let command: commandCommitTradeTransaction = {
-      buyerId: localStorage.getItem('userId') as string,
+      buyerId: userId,
       transactionType: 'BUY',
-      cryptoSymbol: cryptoSelected,
-      cryptoPrice: String(
-        this.cryptos?.filter((c) => c.symbol === cryptoSelected)[0].price
-      ),
+      cryptoSymbol: this.cryptoSelected,
+      cryptoPrice: String(this.getCryptoSelectedPrice()),
       cryptoAmount: String(input.value),
     };
 
@@ -110,11 +118,14 @@ export class BuyComponent implements OnInit {
       next: (data) => {
         if (this.user) {
           this.state.subtractCash(data[0].cash, this.user);
-          alert('You successfully bought ' + cryptoSelected);
+          alert('You successfully bought ' + this.cryptoSelected);
         }
+
+        this.cleanInputs();
       },
       error: (err: ErrorModel) => {
         alert(err.error.errorMessage);
+        this.cleanInputs();
       },
     });
 

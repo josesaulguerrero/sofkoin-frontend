@@ -57,7 +57,6 @@ export class RequestService {
     command: commandCommitTradeTransaction,
     token: string
   ): Observable<Array<TradeTransactionCommited>> {
-    console.log(command);
     return this.client.post<Array<TradeTransactionCommited>>(
       this.host + '/transaction/trade',
       command,

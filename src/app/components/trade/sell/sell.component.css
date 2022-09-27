@@ -88,12 +88,23 @@
 
 .price-div:hover {
   border-style: solid;
-  border-color: rgb(2, 2, 84);
   border-width: 2px;
+  border-color: rgb(2, 2, 84);
+}
+
+div .disabled {
+  border: none;
 }
 
 input {
   text-align: right;
+  width: 150px;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  position: absolute;
 }
 
 input:focus {

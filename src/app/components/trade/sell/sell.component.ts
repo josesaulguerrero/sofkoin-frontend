@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { interval, mergeMap } from 'rxjs';
+import { delay, interval, mergeMap, repeat, tap } from 'rxjs';
 import { commandCommitTradeTransaction } from 'src/app/models/commands/commandCommitTradeTransaction';
 import { CryptoPrice } from 'src/app/models/cryptoprice';
 import { CryptoPriceModel } from 'src/app/models/CryptoPriceModel';
@@ -44,12 +44,11 @@ export class SellComponent implements OnInit {
   }
 
   async getCryptoPrices() {
-    interval(0.1 * 60 * 1000)
+    interval(6000)
       .pipe(mergeMap(() => this.requestBeta.geAllCryptoPriceMethod()))
       .subscribe((data: CryptoPriceModel[]) => {
         this.cryptos = data;
         this.isLoaded = true;
-
         this.getCryptoSelectedTotalPrice();
       });
   }
@@ -89,7 +88,9 @@ export class SellComponent implements OnInit {
       (crypto) => crypto.symbol === this.cryptoSelected
     );
 
-    this.cryptoBalanceSelected = String(cryptoUser?.amount) ?? '--';
+    this.cryptoBalanceSelected = cryptoUser?.amount
+      ? String(cryptoUser?.amount.toFixed(6))
+      : '';
   }
 
   actionBuy() {
@@ -110,10 +111,12 @@ export class SellComponent implements OnInit {
             this.state.subtractCash(data[0].cash);
             this.state.user.subscribe((data) => console.log(data));
             alert('You successfully sell ' + this.cryptoSelected);
+            this.cleanInputs();
           }
         },
         error: (err: ErrorModel) => {
           alert(err.error.errorMessage);
+          this.cleanInputs();
         },
       });
     }
@@ -121,7 +124,12 @@ export class SellComponent implements OnInit {
     //TODO: ACTUALIZAR EL ESTADO DEL USUARIO/MOSTRAR USD
   }
 
-  validation(): boolean {
+  private cleanInputs() {
+    this.newAmount = undefined;
+    this.getAmountAndBalance();
+  }
+
+  private validation(): boolean {
     if (
       (this.newAmount && !isFinite(this.newAmount)) ||
       this.newAmount! < 0.000001 ||
@@ -131,7 +139,6 @@ export class SellComponent implements OnInit {
       alert('The amount must be a number between 0.000001 and 100000');
       return false;
     }
-    alert('Ok');
     return true;
   }
 }
