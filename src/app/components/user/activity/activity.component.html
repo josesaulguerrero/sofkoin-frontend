@@ -3,13 +3,13 @@
   <div class="title-container"><h2>User Activity</h2></div>
   <div class="activity-container">
     <div class="header">
-      <div class="action">Date</div>
-      <div class="date">Description</div>
+      <div class="column-size title">Date</div>
+      <div class="column-size title">Description</div>
     </div>
     <div class="">
       <div class="data-container" *ngFor="let activity of activities">
-        <div class="timestamp">{{ activity.timestamp }}</div>
-        <div class="type">{{ activity.type }}</div>
+        <div class="column-size content">{{ activity.timestamp | date: 'MMM d, y, h:mm:ss a' }}</div>
+        <div class="column-size content">{{ activity.type }}</div>
       </div>
     </div>
   </div>

@@ -4,58 +4,55 @@
   align-items: center;
 }
 
-.title-container {
-  width: 70vw;
-  padding: 9px;
-}
-
 .transactions-container {
+  margin-top: 20px;
   background-color: rgb(213, 229, 243);
   height: 70vh;
   width: 70vw;
-  margin: 18px, 20px, 20px, 20px;
+  margin: 0px, 20px, 20px, 20px;
+  overflow: auto;
 }
 
 .header {
-  height: 80px;
+  height: 50px;
   display: flex;
   align-items: center;
+  text-align: center;
 }
 
 .data-container {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
   text-align: center;
 }
-.type {
-  width: 60px;
+
+.column-size {
+  width: 25%;
 }
 
-.timestamp {
-  width: 200px;
+.title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: aliceblue;
+  background-color: var(--e-global-color-primary);
+  font-weight: 700;
+  margin: 0px 5px;
+  height: 4vh;
 }
 
-.cryptosymbol {
-  width: 60px;
+.content{
+  margin-bottom: 10px;
 }
 
-.cryptoamount {
-  width: 80px;
+.FUND{
+  color: var(--e-global-color-accent);
 }
 
-.action {
-  padding-left: 6vw;
+.BUY{
+  color: var(--e-global-color-sell);
 }
 
-.date {
-  padding-left: 17vw;
+.SELL{
+  color: var(--e-global-color-buy);
 }
 
-.coin {
-  padding-left: 17vw;
-}
-
-.amount {
-  padding-left: 12vw;
-}
