@@ -104,7 +104,6 @@ export class BuyComponent implements OnInit {
         this.cryptos?.filter((c) => c.symbol === cryptoSelected)[0].price
       ),
       cryptoAmount: String(input.value),
-      cash: this.user?.currentCash as number,
     };
 
     this.requestAlpha.tradeTransactionMethod(command, token).subscribe({

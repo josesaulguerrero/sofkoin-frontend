@@ -4,5 +4,4 @@ export type commandCommitTradeTransaction = {
   cryptoSymbol: string;
   cryptoAmount: string;
   cryptoPrice: string;
-  cash: number;
 };
