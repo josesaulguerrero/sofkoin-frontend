@@ -22,14 +22,12 @@ export class SellComponent implements OnInit {
   ) {}
   newAmount?: number;
   cryptoBalanceSelected?: string;
-  cryptoUserSelected: string = '--';
   cryptoSelected: string = '--';
   cryptoSelectedTotalPrice: number = 0;
   cashAvailable?: number;
-  userCryptos: UserCryptosList[] = [];
   isLoaded: boolean = true;
 
-  availableCryptos?: UserCryptosList[];
+  userCryptos?: UserCryptosList[];
   cryptos?: CryptoPriceModel[];
 
   ngOnInit(): void {
@@ -41,7 +39,7 @@ export class SellComponent implements OnInit {
   async getUserCryptos() {
     this.state.user.subscribe((data) => {
       data.cryptos.forEach((crypto) => this.userCryptos?.push(crypto));
-      this.availableCryptos = data.cryptos;
+      this.userCryptos = data.cryptos;
       this.cashAvailable = data.currentCash;
     });
   }
@@ -57,7 +55,12 @@ export class SellComponent implements OnInit {
       });
   }
 
-  getCryptoSelectedPrice() {
+  getAmountAndBalance() {
+    this.getCryptoSelectedPrice();
+    this.setCryptoBalance();
+  }
+
+  private getCryptoSelectedPrice() {
     if (this.cryptoSelected !== '--') {
       const crypto = this.cryptos?.find(
         (crypto) => crypto.symbol === this.cryptoSelected
@@ -76,9 +79,9 @@ export class SellComponent implements OnInit {
     });
   }
 
-  setCryptoBalance() {
+  private setCryptoBalance() {
     const cryptoUser = this.userCryptos?.find(
-      (crypto) => crypto.symbol === this.cryptoUserSelected
+      (crypto) => crypto.symbol === this.cryptoSelected
     );
 
     this.cryptoBalanceSelected = String(cryptoUser?.amount) ?? '--';

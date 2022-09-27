@@ -26,19 +26,20 @@
 
       <div class="amount-div">
         Amount
-        <input [(ngModel)]="newAmount" type="text" name="amount" (keyup)="getCryptoSelectedPrice()"
+        <input [(ngModel)]="newAmount" type="text" name="amount" (ngModelChange)="getAmountAndBalance()"
           placeholder="Insert amount" />
-        <select [(ngModel)]="cryptoSelected" name="availableCryptos" (change)="getCryptoSelectedPrice()"
+        <select [(ngModel)]="cryptoSelected" name="availableCryptos" (change)="getAmountAndBalance()"
           id="availableCryptos">
           <option disabled selected>--</option>
-          <option *ngFor="let selectcrypto of availableCryptos">
+          <option *ngFor="let selectcrypto of userCryptos">
             {{ selectcrypto.symbol }}
           </option>
         </select>
       </div>
 
       <div>
-        <button [disabled]="!newAmount" (click)="actionBuy()" class="submit-button">Sell</button>
+        <button [disabled]="cryptoSelected == '--' || !newAmount" (click)="actionBuy()"
+          class="submit-button">Sell</button>
       </div>
     </div>
     <div class="user-balance">
@@ -49,12 +50,6 @@
         Balance
         <input disabled type="text" [(ngModel)]="cryptoBalanceSelected" name="amount" id="userCryptoBalance"
           placeholder="Select a crypto" />
-        <select [(ngModel)]="cryptoUserSelected" (change)="setCryptoBalance()" name=" cryptos" id="cryptoBalance">
-          <option disabled selected>--</option>
-          <option *ngFor=" let selectcrypto of userCryptos">
-            {{ selectcrypto.symbol }}
-          </option>
-        </select>
       </div>
     </div>
   </div>
