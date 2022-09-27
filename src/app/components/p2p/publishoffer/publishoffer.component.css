@@ -1,0 +1,54 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+h2{
+  margin-bottom: 14px;
+  color: var(--e-global-color-primary);
+}
+
+form{
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+
+input {
+  font-weight: 600;
+  width: 30vw;
+  height: 2vw;
+  text-align: center;
+}
+
+select{
+  width: 30vw;
+  height: 2vw;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+button:hover {
+  opacity: 75%;
+}
+button {
+  margin-top: 20px;
+  width: 30vw;
+  color: aliceblue;
+  border-style: none;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 5px;
+  font-weight: 600;
+  background-image: linear-gradient(
+    to right,
+    var(--e-global-color-text),
+    var(--e-global-color-secondary)
+  );
+  cursor: pointer;
+}
