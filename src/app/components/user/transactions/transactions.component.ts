@@ -26,7 +26,7 @@ export class TransactionsComponent implements OnInit {
     this.betaRequest
       .getUserByIdMethod(localStorage.getItem('userId') as string)
       .subscribe((data) => {
-        this.transactions = data.transactions;
+        this.transactions = data.transactions.reverse();
         this.isLoaded = true;
       });
   }
