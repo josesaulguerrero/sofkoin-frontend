@@ -47,7 +47,8 @@
       </div>
       <div class="amount-div">
         Balance
-        <input disabled type="text" [(ngModel)]="cryptoBalanceSelected" name="amount" id="userCryptoBalance" />
+        <input disabled type="text" [(ngModel)]="cryptoBalanceSelected" name="amount" id="userCryptoBalance"
+          placeholder="Select a crypto" />
         <select [(ngModel)]="cryptoUserSelected" (change)="setCryptoBalance()" name=" cryptos" id="cryptoBalance">
           <option disabled selected>--</option>
           <option *ngFor=" let selectcrypto of userCryptos">

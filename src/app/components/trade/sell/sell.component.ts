@@ -21,7 +21,7 @@ export class SellComponent implements OnInit {
     private state: StateService
   ) {}
   newAmount?: number;
-  cryptoBalanceSelected: string = '--';
+  cryptoBalanceSelected?: string;
   cryptoUserSelected: string = '--';
   cryptoSelected: string = '--';
   cryptoSelectedTotalPrice: number = 0;
