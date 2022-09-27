@@ -6,7 +6,7 @@ export type MessagesList = {
   senderId: string;
   marketId: string;
   receiverId: string;
-  //falta un campo aqui messageRelationType:string;
+  messageRelationType: string;
   proposalCryptoAmount: number;
   proposalCryptoPrice: number;
   proposalCryptoSymbol: string;

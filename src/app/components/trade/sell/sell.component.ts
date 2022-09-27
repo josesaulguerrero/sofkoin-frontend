@@ -26,8 +26,7 @@ export class SellComponent implements OnInit {
   cryptoSelectedTotalPrice: number = 0;
   cashAvailable?: number;
   isLoaded: boolean = true;
-
-  userCryptos?: UserCryptosList[];
+  userCryptos?: UserCryptosList[] = [];
   cryptos?: CryptoPriceModel[];
 
   ngOnInit(): void {
@@ -120,7 +119,6 @@ export class SellComponent implements OnInit {
     }
 
     //TODO: ACTUALIZAR EL ESTADO DEL USUARIO/MOSTRAR USD
-    console.log(command);
   }
 
   validation(): boolean {

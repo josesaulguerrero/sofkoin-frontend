@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { commandChangeMessageStatus } from 'src/app/models/commands/commandChangeMessageStatus';
+import { commandPublishP2POffer } from 'src/app/models/commands/commandPublishP2POffer';
+import { ErrorModel } from 'src/app/models/errorModel';
+import { MessagesList } from 'src/app/models/MessagesList';
+import { RequestService } from 'src/app/services/request/alpharequest.service';
+import { BetarequestService } from 'src/app/services/request/betarequest.service';
+import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
   selector: 'app-messages',
@@ -6,8 +13,86 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./messages.component.css'],
 })
 export class MessagesComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private betaRequest: BetarequestService,
+    private alphaRequest: RequestService,
+    private state: StateService
+  ) {}
 
+  isLoaded: boolean = false;
+
+  messages?: MessagesList[];
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getMessages();
+  }
+
+  async getMessages() {
+    this.betaRequest
+      .getUserByIdMethod(localStorage.getItem('userId') as string)
+      .subscribe((data) => {
+        this.messages = data.messages;
+        this.isLoaded = true;
+      });
+  }
+
+  async acceptOffer(messageId: string) {
+    let messageSelected = this.messages?.filter(
+      (message) => message.messageId === messageId
+    )[0];
+    let commandPublishOffer: commandPublishP2POffer = {
+      marketId: messageSelected?.marketId as string,
+      publisherId: localStorage.getItem('userId') as string,
+      targetAudienceId: messageSelected?.senderId as string,
+      cryptoSymbol: messageSelected?.proposalCryptoSymbol as string,
+      offerCryptoAmount: messageSelected?.proposalCryptoAmount as number,
+      offerCryptoPrice: messageSelected?.proposalCryptoPrice as number,
+    };
+
+    let token: string = localStorage.getItem('token') as string;
+
+    console.log(commandPublishOffer);
+
+    let commandChangeMessageStatus: commandChangeMessageStatus = {
+      receiverId: messageSelected?.receiverId as string,
+      senderId: messageSelected?.senderId as string,
+      messageId: messageSelected?.messageId as string,
+      newStatus: 'ACCEPTED',
+    };
+
+    this.alphaRequest.publishOfferMethod(commandPublishOffer, token).subscribe({
+      next: (response) => {
+        this.alphaRequest
+          .updateMessageMethod(commandChangeMessageStatus, token)
+          .subscribe();
+        console.log(response);
+      },
+      error: (err: ErrorModel) => {
+        alert(err.error.errorMessage);
+      },
+    });
+  }
+
+  async rejectOffer(messageId: string) {
+    let messageSelected = this.messages?.filter(
+      (message) => message.messageId === messageId
+    )[0];
+
+    let token: string = localStorage.getItem('token') as string;
+
+    let commandChangeMessageStatus: commandChangeMessageStatus = {
+      receiverId: messageSelected?.receiverId as string,
+      senderId: messageSelected?.senderId as string,
+      messageId: messageSelected?.messageId as string,
+      newStatus: 'REJECTED',
+    };
+
+    this.alphaRequest
+      .updateMessageMethod(commandChangeMessageStatus, token)
+      .subscribe();
+  }
+
+  validateMessageRejected() {}
+
+  validateMessageAccepted() {}
 }

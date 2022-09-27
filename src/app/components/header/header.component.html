@@ -4,32 +4,21 @@
       <img src="../../../assets/images/softkinlogobar.png"
     /></a>
   </div>
+
   <nav class="site-navigation">
     <ul class="nav">
       <li>
-        <button
-          id="user"
-          (click)="select('user')"
-          class="mainitembutton"
-          routerLink="/main/user/Profile">
+        <button id="user" (click)="select('user')" class="mainitembutton">
           User
         </button>
       </li>
       <li>
-        <button
-          id="trade"
-          (click)="select('trade')"
-          class="mainitembutton"
-          routerLink="/main/trade">
+        <button id="trade" (click)="select('trade')" class="mainitembutton">
           Trade
         </button>
       </li>
       <li>
-        <button
-          id="p2p"
-          (click)="select('p2p')"
-          class="mainitembutton"
-          routerLink="/main/p2p">
+        <button id="p2p" (click)="select('p2p')" class="mainitembutton">
           P2P
         </button>
       </li>
@@ -40,4 +29,5 @@
       </li>
     </ul>
   </nav>
+  <div *ngIf="firstload()"></div>
 </header>
