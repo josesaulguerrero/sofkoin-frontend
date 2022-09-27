@@ -38,7 +38,7 @@
       </div>
 
       <div>
-        <button (click)="actionBuy()" class="submit-button">Sell</button>
+        <button [disabled]="!newAmount" (click)="actionBuy()" class="submit-button">Sell</button>
       </div>
     </div>
     <div class="user-balance">
