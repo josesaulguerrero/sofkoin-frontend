@@ -1,7 +1,9 @@
 <app-loadscreen *ngIf="!isLoaded"></app-loadscreen>
 <div class="container">
   <div class="coins-section">
-    <div class="title-container"><h2>Available Coins</h2></div>
+    <div class="title-container">
+      <h2>Available Coins</h2>
+    </div>
     <div class="coinlistcontainer">
       <div class="coinrow" *ngFor="let selectcrypto of cryptos">
         <div class="cryptosymbol">{{ selectcrypto.symbol }}</div>
@@ -13,17 +15,22 @@
     </div>
   </div>
   <div class="offer-container">
-    <div class="title-container"><h2>Sell Crypto</h2></div>
+    <div class="title-container">
+      <h2>Sell Crypto</h2>
+    </div>
     <div>
       <div class="price-div">
-        Price
-        <input disabled type="text" name="price" />
+        Total
+        <input disabled type="text" name="price" [(ngModel)]="cryptoSelectedTotalPrice" />
       </div>
 
       <div class="amount-div">
         Amount
-        <input [(ngModel)]="newAmount" type="text" name="amount" />
-        <select name="availableCryptos" id="availableCryptos">
+        <input [(ngModel)]="newAmount" type="text" name="amount" (keyup)="getCryptoSelectedPrice()"
+          placeholder="Insert amount" />
+        <select [(ngModel)]="cryptoSelected" name="availableCryptos" (change)="getCryptoSelectedPrice()"
+          id="availableCryptos">
+          <option disabled selected>--</option>
           <option *ngFor="let selectcrypto of availableCryptos">
             {{ selectcrypto.symbol }}
           </option>
@@ -31,24 +38,20 @@
       </div>
 
       <div>
-        <button (click)="actionBuy()" class="submit-button">Sell</button>
+        <button [disabled]="!newAmount" (click)="actionBuy()" class="submit-button">Sell</button>
       </div>
     </div>
     <div class="user-balance">
-      <div class="title-container"><h2>User Cryptos</h2></div>
+      <div class="title-container">
+        <h2>User Cryptos</h2>
+      </div>
       <div class="amount-div">
         Balance
-        <input
-          disabled
-          type="text"
-          [(ngModel)]="cryptoBalanceSelected"
-          name="amount"
-          id="userCryptoBalance" />
-        <select (change)="setCryptoBalance()" name="cryptos" id="cryptoBalance">
+        <input disabled type="text" [(ngModel)]="cryptoBalanceSelected" name="amount" id="userCryptoBalance"
+          placeholder="Select a crypto" />
+        <select [(ngModel)]="cryptoUserSelected" (change)="setCryptoBalance()" name=" cryptos" id="cryptoBalance">
           <option disabled selected>--</option>
-          <option
-            [(ngModel)]="cryptoSelected"
-            *ngFor="let selectcrypto of userCryptos">
+          <option *ngFor=" let selectcrypto of userCryptos">
             {{ selectcrypto.symbol }}
           </option>
         </select>

@@ -15,6 +15,7 @@
 }
 
 .amount-div {
+  position: relative;
   margin: 8px;
   padding: 15px;
   padding-left: 16px;
@@ -40,6 +41,8 @@
 }
 
 .amount-div select {
+  position: absolute;
+  right: 0;
   font-weight: 600;
   height: 30px;
   border-style: none;
@@ -100,6 +103,13 @@ input:focus {
 button:hover {
   opacity: 75%;
 }
+
+button:disabled {
+  background-color: gray;
+  cursor: default;
+  opacity: 1;
+}
+
 .submit-button {
   margin: 8px;
   padding: 15px;
