@@ -1,4 +1,3 @@
-import { compileNgModule } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { interval, mergeMap } from 'rxjs';
 import { commandCommitTradeTransaction } from 'src/app/models/commands/commandCommitTradeTransaction';
@@ -25,6 +24,7 @@ export class BuyComponent implements OnInit {
   isLoaded: boolean = true;
   user?: UserModel;
   newCryptoBuy?: number;
+  selectedCrypto: string = '--';
   newCryptolist: string[] = [
     'BTC',
     'ETH',
@@ -40,7 +40,7 @@ export class BuyComponent implements OnInit {
 
   cryptos?: CryptoPriceModel[];
 
-  USDCryptoValue: number = 0;
+  USDCryptoValue?: number;
   currencyConverterFactor: number = 0;
 
   startPrice() {
@@ -51,9 +51,7 @@ export class BuyComponent implements OnInit {
 
   async getCryptoPricesFirstTime() {
     this.requestBeta.geAllCryptoPriceMethod().subscribe((data) => {
-      this.currencyConverterFactor = data.filter(
-        (coin) => coin.symbol === 'BTC'
-      )[0].price as number;
+      this.cryptos = data;
     });
   }
 
@@ -67,21 +65,12 @@ export class BuyComponent implements OnInit {
   }
 
   getCurrentUser() {
-    this.state.user.subscribe((currentUser) => {
-      this.user = currentUser;
-      console.log('next', this.user);
-      console.log('next currentCash', this.user.currentCash);
-    });
+    this.state.user.subscribe((currentUser) => (this.user = currentUser));
   }
 
   async changeConversionFactor() {
-    let selectElement = document.getElementById(
-      'cryptobuyselect'
-    ) as HTMLSelectElement;
-    let cryptoSelected =
-      selectElement.options[selectElement.selectedIndex].value;
     this.currencyConverterFactor = this.cryptos?.filter(
-      (coin) => coin.symbol === cryptoSelected
+      (coin) => coin.symbol === this.selectedCrypto
     )[0].price as number;
   }
 
@@ -130,7 +119,7 @@ export class BuyComponent implements OnInit {
       },
     });
 
-    //Update user state
-    //Toca hacer un get de la info del user o hacer la resta pero es más peligroso por decimales
+    // Update user state
+    // Toca hacer un get de la info del user o hacer la resta pero es más peligroso por decimales
   }
 }

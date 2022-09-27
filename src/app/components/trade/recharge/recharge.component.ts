@@ -24,6 +24,7 @@ export class RechargeComponent implements OnInit {
       };
       this.request.fundMethod(command, token).subscribe({
         next: () => {
+          this.newRecharge = undefined;
           alert('Transaction complete');
         },
         error: (err: ErrorModel) => {

@@ -21,10 +21,12 @@
         <h3>Buy crypto</h3>
       </div>
       <div class="input-class">
-        <input required disabled pattern="[0-9]" value="{{ (USDCryptoValue / currencyConverterFactor).toFixed(6) }}"
-          type="number" name="Amount" id="newAmount" placeholder="Enter Amount" />
+        <input required disabled pattern="[0-9]"
+          value="{{ USDCryptoValue && (USDCryptoValue / currencyConverterFactor).toFixed(6)  }}" type="number"
+          name="Amount" id="newAmount" placeholder="Select crypto" />
 
-        <select (change)="changeConversionFactor()" name="cryptos" id="cryptobuyselect">
+
+        <select [(ngModel)]="selectedCrypto" (change)="changeConversionFactor()" name="cryptos" id="cryptobuyselect">
           <option disabled selected>--</option>
           <option *ngFor="let selectcrypto of newCryptolist">
             {{ selectcrypto }}
@@ -36,7 +38,8 @@
         <label for="AmountInUsd">USD</label>
       </div>
 
-      <button class="submit-button" type="button" (click)="actionBuy()">
+      <button [disabled]="selectedCrypto === '--' || !USDCryptoValue" class="submit-button" type="button"
+        (click)="actionBuy()">
         Buy
       </button>
       <div class="cash">
