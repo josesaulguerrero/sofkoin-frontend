@@ -42,7 +42,29 @@ export class HeaderComponent implements OnInit {
   }
   firstload() {
     if (window.location.href.split('/')[4] === 'user') {
+      let selecteditem2 = document.getElementById('p2p');
+      selecteditem2!.className = 'mainitembutton';
+      let selecteditem3 = document.getElementById('trade');
+      selecteditem3!.className = 'mainitembutton';
       let selecteditem = document.getElementById('user');
+      selecteditem!.className = 'mainitembuttonselected';
+    }
+    if (window.location.href.split('/')[4] === 'p2p') {
+      let selecteditem1 = document.getElementById('user');
+      selecteditem1!.className = 'mainitembutton';
+
+      let selecteditem3 = document.getElementById('trade');
+      selecteditem3!.className = 'mainitembutton';
+      let selecteditem = document.getElementById('p2p');
+      selecteditem!.className = 'mainitembuttonselected';
+    }
+    if (window.location.href.split('/')[4] === 'trade') {
+      let selecteditem1 = document.getElementById('user');
+      selecteditem1!.className = 'mainitembutton';
+      let selecteditem2 = document.getElementById('p2p');
+      selecteditem2!.className = 'mainitembutton';
+
+      let selecteditem = document.getElementById('trade');
       selecteditem!.className = 'mainitembuttonselected';
     }
   }
