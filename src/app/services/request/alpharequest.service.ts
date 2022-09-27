@@ -55,9 +55,9 @@ export class RequestService {
   tradeTransactionMethod(
     command: any,
     token: string
-  ): Observable<TradeTransactionCommited> {
+  ): Observable<Array<TradeTransactionCommited>> {
     console.log(command);
-    return this.client.post<TradeTransactionCommited>(
+    return this.client.post<Array<TradeTransactionCommited>>(
       this.host + '/transaction/trade',
       command,
       {

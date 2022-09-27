@@ -1,7 +1,9 @@
 <app-loadscreen *ngIf="!isLoaded"></app-loadscreen>
 <div class="maincontainer">
   <div class="coins-section">
-    <div class="title-container"><h2>Available Coins</h2></div>
+    <div class="title-container">
+      <h2>Available Coins</h2>
+    </div>
     <div class="coinlistcontainer">
       <div class="coinrow" *ngFor="let selectcrypto of cryptos">
         <div class="cryptosymbol">{{ selectcrypto.symbol }}</div>
@@ -15,22 +17,14 @@
 
   <div class="column">
     <form>
-      <div class="title-container"><h3>Buy crypto</h3></div>
+      <div class="title-container">
+        <h3>Buy crypto</h3>
+      </div>
       <div class="input-class">
-        <input
-          required
-          disabled
-          pattern="[0-9]"
-          value="{{ (USDCryptoValue / currencyConverterFactor).toFixed(6) }}"
-          type="number"
-          name="Amount"
-          id="newAmount"
-          placeholder="Enter Amount" />
+        <input required disabled pattern="[0-9]" value="{{ (USDCryptoValue / currencyConverterFactor).toFixed(6) }}"
+          type="number" name="Amount" id="newAmount" placeholder="Enter Amount" />
 
-        <select
-          (change)="changeConversionFactor()"
-          name="cryptos"
-          id="cryptobuyselect">
+        <select (change)="changeConversionFactor()" name="cryptos" id="cryptobuyselect">
           <option disabled selected>--</option>
           <option *ngFor="let selectcrypto of newCryptolist">
             {{ selectcrypto }}
@@ -38,11 +32,7 @@
         </select>
       </div>
       <div class="input-class">
-        <input
-          [(ngModel)]="USDCryptoValue"
-          name="AmountInUsd"
-          id="newAmountInUsd"
-          placeholder="Insert amount" />
+        <input [(ngModel)]="USDCryptoValue" name="AmountInUsd" id="newAmountInUsd" placeholder="Insert amount" />
         <label for="AmountInUsd">USD</label>
       </div>
 
@@ -50,7 +40,7 @@
         Buy
       </button>
       <div class="cash">
-        <p class="cashavalible">Cash available ${{ cashAvailable }} USD</p>
+        <p class="cashavalible">Cash available ${{ user?.currentCash }} USD</p>
       </div>
     </form>
   </div>

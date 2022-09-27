@@ -46,11 +46,12 @@ export class StateService {
       )
       .subscribe();
   }
-  public updateCash(cash: number): void {
-    let subscription = this.user.subscribe((user) => {
-      this.user.next({ ...user, currentCash: cash });
-    });
 
-    subscription.unsubscribe();
+  public subtractCash(cash: number, user?: UserModel): void {
+    if (user) {
+      const newCash = user.currentCash - cash;
+      const updatedUser = { ...user, currentCash: newCash };
+      this.user.next(updatedUser);
+    }
   }
 }

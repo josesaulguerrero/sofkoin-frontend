@@ -102,7 +102,7 @@ export class SellComponent implements OnInit {
       this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
         next: (data) => {
           if (data) {
-            this.state.updateCash(data.cash);
+            this.state.subtractCash(data[0].cash);
             this.state.user.subscribe((data) => console.log(data));
             alert('You successfully sell ' + cryptoSelected);
           }

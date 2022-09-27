@@ -5,6 +5,7 @@ import { commandCommitTradeTransaction } from 'src/app/models/commands/commandCo
 import { CryptoPriceModel } from 'src/app/models/CryptoPriceModel';
 import { UserCryptosList } from 'src/app/models/CryptoUsrList';
 import { ErrorModel } from 'src/app/models/errorModel';
+import { UserModel } from 'src/app/models/UserModel';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { StateService } from 'src/app/services/state/state.service';
@@ -22,7 +23,7 @@ export class BuyComponent implements OnInit {
   ) {}
 
   isLoaded: boolean = true;
-  cashAvailable?: number;
+  user?: UserModel;
   newCryptoBuy?: number;
   newCryptolist: string[] = [
     'BTC',
@@ -65,9 +66,11 @@ export class BuyComponent implements OnInit {
       });
   }
 
-  getCashAvailable() {
-    this.state.user.subscribe((data) => {
-      this.cashAvailable = data.currentCash;
+  getCurrentUser() {
+    this.state.user.subscribe((currentUser) => {
+      this.user = currentUser;
+      console.log('next', this.user);
+      console.log('next currentCash', this.user.currentCash);
     });
   }
 
@@ -89,7 +92,7 @@ export class BuyComponent implements OnInit {
     //If cashUser = '' then make a get request to get user cash
     this.getCryptoPricesFirstTime();
     this.getCryptoPrices();
-    this.getCashAvailable();
+    this.getCurrentUser();
     this.startPrice();
   }
 
@@ -112,15 +115,13 @@ export class BuyComponent implements OnInit {
         this.cryptos?.filter((c) => c.symbol === cryptoSelected)[0].price
       ),
       cryptoAmount: String(input.value),
-      cash: this.cashAvailable as number,
+      cash: this.user?.currentCash as number,
     };
 
     this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
       next: (data) => {
-        if (data) {
-          console.log(data);
-          this.state.updateCash(data.cash);
-          this.state.user.subscribe((data) => console.log(data));
+        if (this.user) {
+          this.state.subtractCash(data[0].cash, this.user);
           alert('You successfully bought ' + cryptoSelected);
         }
       },
