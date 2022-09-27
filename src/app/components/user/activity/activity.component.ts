@@ -32,7 +32,7 @@ export class ActivityComponent implements OnInit {
     this.betaRequest
       .getUserByIdMethod(localStorage.getItem('userId') as string)
       .subscribe((data) => {
-        this.activities = data.activities;
+        this.activities = data.activities.reverse();
         this.isLoaded = true;
       });
   }
