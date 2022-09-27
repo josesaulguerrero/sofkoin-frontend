@@ -30,6 +30,7 @@ export class BetarequestService {
   geAllMarketsMethod(): Observable<MarketModel[]> {
     return this.client.get<MarketModel[]>(this.host + '/view/market/all');
   }
+
   geAllCryptoPriceMethod(): Observable<CryptoPriceModel[]> {
     return this.client.get<any>(this.host + '/view/cryptos/price');
   }

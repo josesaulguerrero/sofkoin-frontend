@@ -1,1 +1,15 @@
-<p>activeoffers works!</p>
+<section>
+  <div>
+    <p>Crypto</p>
+    <p>Amount</p>
+    <p>Price</p>
+  </div>
+  <div *ngFor="let offer of offers">
+    <div>
+      <p> {{offer.cryptoSymbol}} </p>
+      <p> {{offer.cryptoAmount}} </p>
+      <p> {{offer.cryptoPrice}} </p>
+      <button>Buy</button>
+    </div>
+  </div>
+</section>

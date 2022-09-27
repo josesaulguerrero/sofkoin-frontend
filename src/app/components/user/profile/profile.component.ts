@@ -38,7 +38,6 @@ export class ProfileComponent implements OnInit {
       next: (user) => {
         if (user) {
           this.state.user.next(user);
-          console.log(this.state.user);
           this.name = this.state.user.value.fullName;
           this.surname = '';
           this.email = this.state.user.value.email;

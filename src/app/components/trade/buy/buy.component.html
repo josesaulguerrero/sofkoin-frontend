@@ -43,7 +43,7 @@
         Buy
       </button>
       <div class="cash">
-        <p class="cashavalible">Cash available ${{ user?.currentCash }} USD</p>
+        <p class="cashavalible">Cash available ${{ user?.currentCash?.toFixed(2) }} USD</p>
       </div>
     </form>
   </div>

@@ -1,0 +1,10 @@
+div {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+}
+
+div p {
+  width: 15vw;
+  text-align: center;
+}
