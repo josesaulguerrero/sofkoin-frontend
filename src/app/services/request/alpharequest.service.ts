@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
 import { TokenResponse } from 'src/app/models/tokenResponseModel';
 import { commandFundWallet } from 'src/app/models/commands/commandFundWallet';
+import { TradeTransactionCommited } from 'src/app/models/events/TradeTransactionCommited';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,15 @@ export class RequestService {
     );
   }
 
+  logout(command: any, token: string): Observable<any> {
+    return this.client.post(this.host + '/auth/logout', command, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }),
+    });
+  }
+
   p2pTransactionMethod(command: any, token: string): Observable<Object> {
     console.log(command);
     return this.client.post<any>(this.host + '/transaction/p2p', command, {
@@ -42,14 +52,21 @@ export class RequestService {
     });
   }
 
-  tradeTransactionMethod(command: any, token: string): Observable<Object> {
-    console.log(command.cashAmount + ' ' + command.userId + ' ' + token);
-    return this.client.post<any>(this.host + '/transaction/trade', command, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    });
+  tradeTransactionMethod(
+    command: any,
+    token: string
+  ): Observable<TradeTransactionCommited> {
+    console.log(command);
+    return this.client.post<TradeTransactionCommited>(
+      this.host + '/transaction/trade',
+      command,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }),
+      }
+    );
   }
 
   fundMethod(command: any, token: string): Observable<Object> {

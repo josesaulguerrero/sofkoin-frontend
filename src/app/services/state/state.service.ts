@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
 import { MarketModel } from 'src/app/models/marketmodel';
 import { UserModel } from 'src/app/models/UserModel';
 @Injectable({
@@ -31,8 +31,26 @@ export class StateService {
     offers: [],
     cryptoSymbols: [],
   };
+
   market = new BehaviorSubject(this.marketState);
   state = new BehaviorSubject(this.initialState);
-  user = new BehaviorSubject(this.userState);
-  constructor() {}
+  user: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(
+    this.userState
+  );
+  constructor() {
+    this.user
+      .pipe(
+        tap((data) => {
+          this.userState = data;
+        })
+      )
+      .subscribe();
+  }
+  public updateCash(cash: number): void {
+    let subscription = this.user.subscribe((user) => {
+      this.user.next({ ...user, currentCash: cash });
+    });
+
+    subscription.unsubscribe();
+  }
 }

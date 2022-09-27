@@ -20,16 +20,18 @@ export class SellComponent implements OnInit {
     private requestAlpha: RequestService,
     private state: StateService
   ) {}
-  newAmount?: number;
+  newAmount: number = 0;
   cryptoBalanceSelected: string = '--';
   cryptoSelected?: string;
   cashAvailable?: number;
   userCryptos?: UserCryptosList[] = [];
+  isLoaded: boolean = true;
 
   availableCryptos?: UserCryptosList[];
   cryptos?: CryptoPriceModel[];
 
   ngOnInit(): void {
+    this.getFirstCryptoPrices();
     this.getCryptoPrices();
     this.getUserCryptos();
   }
@@ -47,7 +49,14 @@ export class SellComponent implements OnInit {
       .pipe(mergeMap(() => this.requestBeta.geAllCryptoPriceMethod()))
       .subscribe((data: CryptoPriceModel[]) => {
         this.cryptos = data;
+        this.isLoaded = true;
       });
+  }
+
+  async getFirstCryptoPrices() {
+    this.requestBeta.geAllCryptoPriceMethod().subscribe((data) => {
+      this.cryptos = data;
+    });
   }
 
   setCryptoBalance() {
@@ -93,6 +102,8 @@ export class SellComponent implements OnInit {
       this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
         next: (data) => {
           if (data) {
+            this.state.updateCash(data.cash);
+            this.state.user.subscribe((data) => console.log(data));
             alert('You successfully sell ' + cryptoSelected);
           }
         },
@@ -108,13 +119,15 @@ export class SellComponent implements OnInit {
 
   validation(): boolean {
     if (
+      !isFinite(this.newAmount) ||
       this.newAmount! < 0.000001 ||
       this.newAmount! > 100000 ||
       this.newAmount === undefined
     ) {
-      alert('The amount must be between 0.000001 and 100000');
+      alert('The amount must be a number between 0.000001 and 100000');
       return false;
     }
+    alert('Ok');
     return true;
   }
 }

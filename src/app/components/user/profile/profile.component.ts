@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
     private state: StateService
   ) {}
 
-  userIsLoaded: boolean = true;
+  userIsLoaded: boolean = false;
 
   name: string = '';
   surname: string = '';
