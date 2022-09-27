@@ -35,14 +35,19 @@
 </div>
 <div class="ballancecontainer">
   <h3>Your Crypto balance:</h3>
-  <div class="cryptolistcontainer">
-    <div class="row">
-      <p class="columntitle">Crypto</p>
-      <p class="columntitle">Amount</p>
-    </div>
-    <div class="row" *ngFor="let usercrypto of usercryptolist">
-      <div class="rowitem">{{ usercrypto.symbol }}</div>
-      <div class="rowitem">{{ usercrypto.amount }}</div>
+  <div class="datacontainer">
+    <canvas class="canvas" id="can" width="400" height="400"></canvas>
+    <div class="cryptolistcontainer">
+      <div class="row">
+        <p class="columntitle">Crypto</p>
+        <p class="columntitle">Amount</p>
+        <p class="columntitle">Price in USD</p>
+      </div>
+      <div class="row" *ngFor="let usercrypto of usercryptolist">
+        <p class="rowitem">{{ usercrypto.symbol }}</p>
+        <p class="rowitem">{{ usercrypto.amount }}</p>
+        <p class="rowitem">{{ usercrypto.priceUsd * usercrypto.amount }}</p>
+      </div>
     </div>
   </div>
 </div>
