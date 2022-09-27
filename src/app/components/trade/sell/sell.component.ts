@@ -26,8 +26,13 @@ export class SellComponent implements OnInit {
   cryptoSelected: string = '--';
   cryptoSelectedTotalPrice: number = 0;
   cashAvailable?: number;
+<<<<<<< HEAD
+  userCryptos?: UserCryptosList[] = [];
+  isLoaded: boolean = false;
+=======
   userCryptos: UserCryptosList[] = [];
   isLoaded: boolean = true;
+>>>>>>> a11ffa9d00b010fa936842a0e5205ceb8be737ca
 
   availableCryptos?: UserCryptosList[];
   cryptos?: CryptoPriceModel[];

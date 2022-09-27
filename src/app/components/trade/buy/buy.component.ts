@@ -21,7 +21,7 @@ export class BuyComponent implements OnInit {
     private state: StateService
   ) {}
 
-  isLoaded: boolean = true;
+  isLoaded: boolean = false;
   user?: UserModel;
   newCryptoBuy?: number;
   selectedCrypto: string = '--';
