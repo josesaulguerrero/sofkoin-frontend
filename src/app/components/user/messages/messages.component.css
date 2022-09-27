@@ -15,3 +15,17 @@
   width: 70vw;
   margin: 18px, 20px, 20px, 20px;
 }
+
+.data-container {
+  border-style: solid;
+  border-color: black;
+  width: 67vw;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.data-container div {
+  text-align: center;
+  width: 8.5vw;
+}

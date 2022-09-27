@@ -13,18 +13,21 @@ export class TransactionsComponent implements OnInit {
   constructor(
     private route: Router,
     private state: StateService,
-    private betaReques: BetarequestService
+    private betaRequest: BetarequestService
   ) {}
   transactions?: TransactionsList[];
+  isLoaded: boolean = false;
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
-    this.getUserState();
+    this.getTransactions();
   }
-  getUserState() {
-    this.state.user.subscribe((data) => {
-      this.transactions = data.transactions;
-      console.log(this.transactions);
-    });
+  async getTransactions() {
+    this.betaRequest
+      .getUserByIdMethod(localStorage.getItem('userId') as string)
+      .subscribe((data) => {
+        this.transactions = data.transactions;
+        this.isLoaded = true;
+      });
   }
 }
