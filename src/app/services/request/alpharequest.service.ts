@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
 import { TokenResponse } from 'src/app/models/tokenResponseModel';
 import { commandFundWallet } from 'src/app/models/commands/commandFundWallet';
+import { TradeTransactionCommited } from 'src/app/models/events/TradeTransactionCommited';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +15,7 @@ export class RequestService {
   };
 
   host: string = 'https://sofkoin-alpha-1117.herokuapp.com';
-<<<<<<< HEAD
-  //host: string = 'http://localhost:8070';
-=======
   // host: string = 'http://localhost:8070';
->>>>>>> fa521853d3671672630a1b59e4ada9b14667e5b2
 
   signUpMethod(command: any): Observable<Object> {
     return this.client.post<any>(
@@ -55,14 +52,21 @@ export class RequestService {
     });
   }
 
-  tradeTransactionMethod(command: any, token: string): Observable<Object> {
-    console.log(command.cashAmount + ' ' + command.userId + ' ' + token);
-    return this.client.post<any>(this.host + '/transaction/trade', command, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    });
+  tradeTransactionMethod(
+    command: any,
+    token: string
+  ): Observable<TradeTransactionCommited> {
+    console.log(command);
+    return this.client.post<TradeTransactionCommited>(
+      this.host + '/transaction/trade',
+      command,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }),
+      }
+    );
   }
 
   fundMethod(command: any, token: string): Observable<Object> {

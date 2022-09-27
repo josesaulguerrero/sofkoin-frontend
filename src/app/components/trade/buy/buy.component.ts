@@ -118,6 +118,9 @@ export class BuyComponent implements OnInit {
     this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
       next: (data) => {
         if (data) {
+          console.log(data);
+          this.state.updateCash(data.cash);
+          this.state.user.subscribe((data) => console.log(data));
           alert('You successfully bought ' + cryptoSelected);
         }
       },
@@ -126,7 +129,6 @@ export class BuyComponent implements OnInit {
       },
     });
 
-    this.newCryptoBuy = 0;
     //Update user state
     //Toca hacer un get de la info del user o hacer la resta pero es más peligroso por decimales
   }

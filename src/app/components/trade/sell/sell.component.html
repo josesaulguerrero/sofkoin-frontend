@@ -45,6 +45,7 @@
           name="amount"
           id="userCryptoBalance" />
         <select (change)="setCryptoBalance()" name="cryptos" id="cryptoBalance">
+          <option disabled selected>--</option>
           <option
             [(ngModel)]="cryptoSelected"
             *ngFor="let selectcrypto of userCryptos">
