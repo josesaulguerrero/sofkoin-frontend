@@ -107,8 +107,9 @@ export class RequestService {
     });
   }
   deleteOfferMethod(command: any, token: string): Observable<Object> {
-    console.log(command.cashAmount + ' ' + command.userId + ' ' + token);
-    return this.client.post<any>(this.host + '/market/delete/offer', command, {
+    console.log(command);
+
+    return this.client.patch<any>(this.host + '/market/delete/offer', command, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
