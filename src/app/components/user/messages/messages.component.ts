@@ -73,5 +73,26 @@ export class MessagesComponent implements OnInit {
     });
   }
 
-  async rejectOffer() {}
+  async rejectOffer(messageId: string) {
+    let messageSelected = this.messages?.filter(
+      (message) => message.messageId === messageId
+    )[0];
+
+    let token: string = localStorage.getItem('token') as string;
+
+    let commandChangeMessageStatus: commandChangeMessageStatus = {
+      receiverId: messageSelected?.receiverId as string,
+      senderId: messageSelected?.senderId as string,
+      messageId: messageSelected?.messageId as string,
+      newStatus: 'REJECTED',
+    };
+
+    this.alphaRequest
+      .updateMessageMethod(commandChangeMessageStatus, token)
+      .subscribe();
+  }
+
+  validateMessageRejected() {}
+
+  validateMessageAccepted() {}
 }

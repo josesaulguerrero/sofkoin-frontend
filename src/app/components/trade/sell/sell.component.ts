@@ -20,12 +20,19 @@ export class SellComponent implements OnInit {
     private requestAlpha: RequestService,
     private state: StateService
   ) {}
-  newAmount: number = 0;
-  cryptoBalanceSelected: string = '--';
-  cryptoSelected?: string;
+  newAmount?: number;
+  cryptoBalanceSelected?: string;
+  cryptoUserSelected: string = '--';
+  cryptoSelected: string = '--';
+  cryptoSelectedTotalPrice: number = 0;
   cashAvailable?: number;
+<<<<<<< HEAD
   userCryptos?: UserCryptosList[] = [];
   isLoaded: boolean = false;
+=======
+  userCryptos: UserCryptosList[] = [];
+  isLoaded: boolean = true;
+>>>>>>> a11ffa9d00b010fa936842a0e5205ceb8be737ca
 
   availableCryptos?: UserCryptosList[];
   cryptos?: CryptoPriceModel[];
@@ -50,33 +57,36 @@ export class SellComponent implements OnInit {
       .subscribe((data: CryptoPriceModel[]) => {
         this.cryptos = data;
         this.isLoaded = true;
+
+        this.getCryptoSelectedPrice();
       });
   }
 
+  getCryptoSelectedPrice() {
+    if (this.cryptoSelected !== '--') {
+      const crypto = this.cryptos?.find(
+        (crypto) => crypto.symbol === this.cryptoSelected
+      );
+
+      if (this.newAmount && crypto?.price) {
+        const newTotalPrice = (crypto.price * this.newAmount).toFixed(2);
+        this.cryptoSelectedTotalPrice = Number(newTotalPrice);
+      } else this.cryptoSelectedTotalPrice = 0;
+    }
+  }
+
   async getFirstCryptoPrices() {
-    this.requestBeta.geAllCryptoPriceMethod().subscribe((data) => {
-      this.cryptos = data;
+    this.requestBeta.geAllCryptoPriceMethod().subscribe((cryptos) => {
+      this.cryptos = cryptos;
     });
   }
 
   setCryptoBalance() {
-    let selectElement = document.getElementById(
-      'cryptoBalance'
-    ) as HTMLSelectElement;
-    let cryptoSelected =
-      selectElement.options[selectElement.selectedIndex].value;
-    let inputBalance = document.getElementById(
-      'userCryptoBalance'
-    ) as HTMLInputElement;
-
-    this.cryptoBalanceSelected = String(
-      this.userCryptos?.filter((crypto) => crypto.symbol === cryptoSelected)[0]
-        .amount
+    const cryptoUser = this.userCryptos?.find(
+      (crypto) => crypto.symbol === this.cryptoUserSelected
     );
 
-    inputBalance.value = this.cryptoBalanceSelected;
-
-    console.log(this.cryptoSelected);
+    this.cryptoBalanceSelected = String(cryptoUser?.amount) ?? '--';
   }
 
   actionBuy() {
@@ -119,7 +129,7 @@ export class SellComponent implements OnInit {
 
   validation(): boolean {
     if (
-      !isFinite(this.newAmount) ||
+      (this.newAmount && !isFinite(this.newAmount)) ||
       this.newAmount! < 0.000001 ||
       this.newAmount! > 100000 ||
       this.newAmount === undefined
