@@ -22,7 +22,7 @@ export class SellComponent implements OnInit {
     private state: StateService
   ) {}
   newAmount?: number;
-  cryptoBalanceSelected?: string;
+  cryptoBalanceSelected?: number;
   cryptoSelected: string = '--';
   cryptoSelectedTotalPrice: number = 0;
   cashAvailable?: number;
@@ -85,9 +85,7 @@ export class SellComponent implements OnInit {
       (crypto) => crypto.symbol === this.cryptoSelected
     );
 
-    this.cryptoBalanceSelected = cryptoUser?.amount
-      ? String(cryptoUser?.amount.toFixed(6))
-      : '';
+    this.cryptoBalanceSelected = cryptoUser && cryptoUser.amount;
   }
 
   actionBuy() {

@@ -5,19 +5,19 @@
 }
 
 .transactions-container {
-  margin-top: 20px;
   background-color: rgb(213, 229, 243);
   height: 70vh;
   width: 70vw;
-  margin: 0px, 20px, 20px, 20px;
+  margin: 20px;
   overflow: auto;
 }
 
 .header {
   height: 50px;
   display: flex;
-  align-items: center;
   text-align: center;
+  position: sticky;
+  top: 0px;
 }
 
 .data-container {
@@ -29,7 +29,7 @@
   width: 25%;
 }
 
-.title{
+.title {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,19 +40,18 @@
   height: 4vh;
 }
 
-.content{
+.content {
   margin-bottom: 10px;
 }
 
-.FUND{
+.FUND {
   color: var(--e-global-color-accent);
 }
 
-.BUY{
+.BUY {
   color: var(--e-global-color-buy);
 }
 
-.SELL{
+.SELL {
   color: var(--e-global-color-sell);
 }
-

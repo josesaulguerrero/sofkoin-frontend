@@ -1,5 +1,5 @@
 .container {
-  width: 70vw;
+  width: 100%;
   display: flex;
   justify-content: space-around;
 }
@@ -11,7 +11,13 @@
 
 .title-container h2 {
   font-weight: 500;
-  padding: 20px;
+  padding: 12px;
+}
+
+.title-container h3 {
+  font-size: 18px;
+  font-weight: 500;
+  padding: 12px;
 }
 
 .amount-div {

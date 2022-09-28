@@ -3,11 +3,11 @@
   <div class="transactions-container">
     <div class="header">
       <div class="column-size title">Action</div>
-      <div class="column-size title">Date</div>
-      <div class="column-size title">Coin</div>
+      <div class="column-size title">Date (UTC)</div>
+      <div class="column-size title">Crypto / Coin</div>
       <div class="column-size title">Amount</div>
     </div>
-    <div class="">
+    <div class="transactions">
       <div class="data-container" *ngFor="let transaction of transactions">
         <div class="column-size  content {{ transaction.type }}">
           {{ transaction.type }}

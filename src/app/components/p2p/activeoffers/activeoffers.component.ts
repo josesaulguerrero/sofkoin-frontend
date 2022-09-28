@@ -11,7 +11,9 @@ import { SocketService } from 'src/app/services/socket/socket.service';
   styleUrls: ['./activeoffers.component.css'],
 })
 export class ActiveoffersComponent implements OnInit {
-  private CONFIRMATION_MSG = 'Are you sure you want to buy this offer?';
+  private CONFIRMATION_MSG_BUY = 'Are you sure you want to buy this offer?';
+  private CONFIRMATION_MSG_DEL = 'Are you sure you want to delete this offer?';
+
   constructor(
     private state: StateService,
     private betarequest: BetarequestService,
@@ -69,26 +71,28 @@ export class ActiveoffersComponent implements OnInit {
     });
   }
   deleteoffer(offer: OfferModel) {
-    this.alphaservice
-      .deleteOfferMethod(
-        {
-          marketId: this.state.market.value.marketId,
-          offerId: offer.offerId,
-        },
-        localStorage.getItem('token')!
-      )
-      .subscribe({
-        error: (err: ErrorModel) => {
-          if (
-            err.error.errorMessage === null ||
-            err.error.errorMessage === undefined
-          ) {
-            alert('Something went wrong with the market');
-          } else {
-            alert(err.error.errorMessage);
-          }
-        },
-      });
+    if (confirm(this.CONFIRMATION_MSG_DEL)) {
+      this.alphaservice
+        .deleteOfferMethod(
+          {
+            marketId: this.state.market.value.marketId,
+            offerId: offer.offerId,
+          },
+          localStorage.getItem('token')!
+        )
+        .subscribe({
+          error: (err: ErrorModel) => {
+            if (
+              err.error.errorMessage === null ||
+              err.error.errorMessage === undefined
+            ) {
+              alert('Something went wrong with the market');
+            } else {
+              alert(err.error.errorMessage);
+            }
+          },
+        });
+    }
   }
   showOffer(offer: OfferModel): Boolean {
     let currentUserId = localStorage.getItem('userId')!;
@@ -144,7 +148,7 @@ export class ActiveoffersComponent implements OnInit {
     return false;
   }
   buyoffer(offer: OfferModel) {
-    if (confirm(this.CONFIRMATION_MSG)) {
+    if (confirm(this.CONFIRMATION_MSG_BUY)) {
       this.alphaservice
         .p2pTransactionMethod(
           {
