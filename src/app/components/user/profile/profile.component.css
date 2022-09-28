@@ -12,6 +12,7 @@
   height: 8vw;
 }
 .datacontainer {
+  margin-top: 30px;
   display: flex;
 }
 .cryptolistcontainer p {
@@ -89,6 +90,7 @@ h3 {
   border-style: solid;
   border-radius: 3px;
   border-color: gray;
+  text-align: center;
 }
 .columntitle {
   color: aliceblue;
@@ -98,6 +100,7 @@ h3 {
   padding: 12px;
   border-style: solid;
   border-radius: 3px;
+  text-align: center;
 }
 
 .ballancecontainer {
