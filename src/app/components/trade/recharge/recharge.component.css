@@ -34,7 +34,7 @@ button:hover {
   background-image: linear-gradient(
     to right,
     var(--e-global-color-text),
-    var(--e-global-color-secondary)
+    var(--e-global-color-accent)
   );
   cursor: pointer;
 }

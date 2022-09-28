@@ -2,19 +2,48 @@
   <div class="container">
     <form (submit)="publishOffer()">
       <h2>Publish a global offer:</h2>
-      <select name="cryptos" id="userCryptos" [(ngModel)]="selectedCrypto">
-        <option disabled selected>--</option>
-        <option *ngFor="let crypto of user.cryptos" [ngValue]="crypto">
-          {{ crypto.symbol }}
-        </option>
-      </select>
-      <input [(ngModel)]="offerCryptoAmount" (ngModelChange)="calculateOfferCash()" name="cryptoAmount"
-        id="offerCryptoAmount" placeholder="Insert amount to sell" type="number" required />
-      <input [(ngModel)]="offerCryptoPrice" (ngModelChange)="calculateOfferCash()" name="cryptoPrice"
-        id="offerCryptoPrice" placeholder="Insert offer price" required type="number" />
-      <input required disabled pattern="\d" value="{{ offerUsdCash.toFixed(3)}}" type="number" name="Amount"
-        id="newAmount" placeholder="USD cash" />
-      <button>Publish</button>
+
+      <div class="input-class">
+        <input
+          [(ngModel)]="offerCryptoAmount"
+          (ngModelChange)="calculateOfferCash()"
+          name="cryptoAmount"
+          id="offerCryptoAmount"
+          placeholder="Insert amount to sell"
+          type="number"
+          required />
+        <select name="cryptos" id="userCryptos" [(ngModel)]="selectedCrypto">
+          <option disabled selected>--</option>
+          <option *ngFor="let crypto of user.cryptos" [ngValue]="crypto">
+            {{ crypto.symbol }}
+          </option>
+        </select>
+      </div>
+      <div class="input-class">
+        <input
+          [(ngModel)]="offerCryptoPrice"
+          (ngModelChange)="calculateOfferCash()"
+          name="cryptoPrice"
+          id="offerCryptoPrice"
+          placeholder="Insert offer price"
+          required
+          type="number" />
+      </div>
+      <div class="input-class">
+        <input
+          required
+          disabled
+          pattern="\d"
+          value="{{ offerUsdCash.toFixed(3) }}"
+          type="number"
+          name="Amount"
+          id="newAmount"
+          placeholder="USD cash" />
+      </div>
+      <button
+        [disabled]="!selectedCrypto || !offerCryptoAmount || !offerCryptoPrice">
+        Publish
+      </button>
     </form>
   </div>
 </div>

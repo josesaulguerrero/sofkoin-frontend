@@ -3,17 +3,24 @@
   <div class="transactions-container">
     <div class="header">
       <div class="column-size title">Action</div>
-      <div class="column-size  title">Date</div>
-      <div class="column-size  title">Coin</div>
-      <div class="column-size  title">Amount</div>
+      <div class="column-size title">Date</div>
+      <div class="column-size title">Coin</div>
+      <div class="column-size title">Amount</div>
     </div>
     <div class="">
       <div class="data-container" *ngFor="let transaction of transactions">
-        <div class="column-size  content {{transaction.type}}">{{ transaction.type }}</div>
-        <div class="column-size  content {{transaction.type}}">{{ transaction.timestamp | date: 'MMM d, y, h:mm:ss a' }}
+        <div class="column-size  content {{ transaction.type }}">
+          {{ transaction.type }}
         </div>
-        <div class="column-size  content {{transaction.type}}">{{ transaction.cryptoSymbol }}</div>
-        <div class="column-size  content {{transaction.type}}">{{ transaction.cryptoAmount }}</div>
+        <div class="column-size  content {{ transaction.type }}">
+          {{ transaction.timestamp | date: 'MMM d, y, h:mm:ss a' }}
+        </div>
+        <div class="column-size  content {{ transaction.type }}">
+          {{ transaction.cryptoSymbol }}
+        </div>
+        <div class="column-size  content {{ transaction.type }}">
+          {{ transaction.cryptoAmount | number: '1.0-3' }}
+        </div>
       </div>
     </div>
   </div>

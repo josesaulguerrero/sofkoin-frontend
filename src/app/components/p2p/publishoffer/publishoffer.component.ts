@@ -16,10 +16,10 @@ import { ErrorModel } from 'src/app/models/errorModel';
 })
 export class PublishofferComponent implements OnInit {
   user!: UserModel;
-  offerCryptoPrice!: number;
-  offerCryptoAmount!: number;
+  offerCryptoPrice?: number;
+  offerCryptoAmount?: number;
   offerUsdCash: number = 0;
-  selectedCrypto?: UserCryptosList | null;
+  selectedCrypto?: UserCryptosList;
   market?: MarketModel;
 
   constructor(
@@ -30,6 +30,7 @@ export class PublishofferComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUser();
     this.getCurrentMarket();
+
     console.log(this.user.cryptos.length);
   }
 
@@ -42,11 +43,11 @@ export class PublishofferComponent implements OnInit {
   }
 
   calculateOfferCash() {
-    this.offerUsdCash = this.offerCryptoAmount * this.offerCryptoPrice;
+    this.offerUsdCash = this.offerCryptoAmount! * this.offerCryptoPrice!;
   }
 
   public publishOffer() {
-    if (this.offerCryptoAmount > this.selectedCrypto!.amount) {
+    if (this.offerCryptoAmount! > this.selectedCrypto!.amount) {
       alert('You do not have enough crypto to publish this offer.');
     } else if (this.offerUsdCash < 5 || this.offerUsdCash > 100000) {
       alert(
@@ -58,8 +59,8 @@ export class PublishofferComponent implements OnInit {
         publisherId: this.user!.userId,
         targetAudienceId: '-',
         cryptoSymbol: this.selectedCrypto!.symbol,
-        offerCryptoAmount: this.offerCryptoAmount,
-        offerCryptoPrice: this.offerCryptoPrice,
+        offerCryptoAmount: this.offerCryptoAmount!,
+        offerCryptoPrice: this.offerCryptoPrice!,
       };
       this.alphaRequest
         .publishOfferMethod(newOffer, localStorage.getItem('token') as string)

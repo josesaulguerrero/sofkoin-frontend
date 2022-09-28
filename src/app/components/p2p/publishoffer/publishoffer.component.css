@@ -1,15 +1,15 @@
-.container{
+.container {
   display: flex;
   flex-direction: column;
   align-content: center;
 }
 
-h2{
+h2 {
   margin-bottom: 14px;
   color: var(--e-global-color-primary);
 }
 
-form{
+form {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -24,11 +24,74 @@ input {
   text-align: center;
 }
 
-select{
-  width: 30vw;
-  height: 2vw;
-  margin-bottom: 14px;
+.input-class {
+  align-content: center;
   text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px;
+  padding: 15px;
+  padding-left: 16px;
+  padding-top: 8px;
+  width: 270px;
+  height: 30px;
+  border-radius: 5px;
+  border-color: rgb(225, 241, 255);
+  border-style: solid;
+  border-width: 2px;
+  background-color: rgb(225, 241, 255);
+}
+
+#insert-amount:hover {
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(2, 2, 84);
+}
+
+.input-class input {
+  border-style: none;
+  background-color: rgb(225, 241, 255);
+  height: 40px;
+  text-align: center;
+}
+
+.input-class select {
+  font-weight: 600;
+  width: 60px;
+  height: 30px;
+  border-style: 1px solid;
+
+  border-radius: 5px;
+  background-color: rgb(225, 241, 255);
+  margin-left: 3px;
+}
+
+.input-class select:hover {
+  border-width: 1px;
+  cursor: pointer;
+  border-color: rgb(2, 2, 84);
+}
+
+.input-class label {
+  font-weight: 600;
+  border-style: none;
+  background-color: rgb(225, 241, 255);
+  margin-left: 3px;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input {
+  text-align: right;
+}
+
+input:focus {
+  outline: none;
 }
 
 button:hover {
@@ -45,20 +108,25 @@ button {
   padding-right: 15px;
   border-radius: 5px;
   font-weight: 600;
-  background-image: linear-gradient(
+  background: linear-gradient(
     to right,
     var(--e-global-color-text),
     var(--e-global-color-secondary)
   );
   cursor: pointer;
 }
+button:disabled {
+  opacity: 100%;
+  cursor: default;
+  background: gray;
+}
 
-.else-block{
+.else-block {
   display: flex;
   justify-content: center;
 }
 
-.else-block h2{
+.else-block h2 {
   margin-top: 30px;
   color: var(--color-label);
   font-size: 1.4rem;

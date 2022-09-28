@@ -83,15 +83,14 @@ export class SingleuserComponent implements OnInit {
             this.message = '';
             this.newammount = '';
             this.newprice = '';
-
+            this.total = '';
             console.log(response);
           },
           error: (err: ErrorModel) => {
-            alert('Something went wrong');
             this.message = '';
             this.newammount = '';
             this.newprice = '';
-
+            this.total = '';
             if (
               !(
                 err.error.errorMessage === null ||
@@ -99,6 +98,8 @@ export class SingleuserComponent implements OnInit {
               )
             ) {
               alert(err.error.errorMessage);
+            } else {
+              alert('Something went wrong');
             }
           },
         });
