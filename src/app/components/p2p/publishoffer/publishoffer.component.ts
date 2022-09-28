@@ -16,7 +16,6 @@ import { ErrorModel } from 'src/app/models/errorModel';
 })
 export class PublishofferComponent implements OnInit {
   user!: UserModel;
-  userCryptos?: string[];
   offerCryptoPrice!: number;
   offerCryptoAmount!: number;
   offerUsdCash: number = 0;
