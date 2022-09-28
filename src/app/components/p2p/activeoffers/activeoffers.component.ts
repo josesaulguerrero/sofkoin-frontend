@@ -22,6 +22,11 @@ export class ActiveoffersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMarket();
+    this.deleteOfferListener();
+    this.publishOfferListener();
+  }
+
+  async deleteOfferListener() {
     this.socketService.P2POfferDeletedListener().subscribe({
       next: (offerToBeDeleted) => {
         this.offers = this.offers.filter(
@@ -31,6 +36,16 @@ export class ActiveoffersComponent implements OnInit {
     });
   }
 
+  async publishOfferListener() {
+    this.socketService
+      .P2POfferPublished(localStorage.getItem('userId') as string)
+      .subscribe({
+        next: (offerPublished) => {
+          this.offers.unshift(offerPublished);
+        },
+      });
+  }
+
   getMarket() {
     this.betarequest.geAllMarketsMethod().subscribe({
       next: (markets) => {
@@ -38,7 +53,7 @@ export class ActiveoffersComponent implements OnInit {
 
         this.state.market.next(market);
 
-        this.offers = market.offers;
+        this.offers = market.offers.reverse();
       },
       error: (err: ErrorModel) => {
         if (

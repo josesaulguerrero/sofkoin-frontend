@@ -49,10 +49,10 @@
 }
 
 .BUY{
-  color: var(--e-global-color-sell);
+  color: var(--e-global-color-buy);
 }
 
 .SELL{
-  color: var(--e-global-color-buy);
+  color: var(--e-global-color-sell);
 }
 

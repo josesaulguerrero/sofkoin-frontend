@@ -16,7 +16,6 @@ import { ErrorModel } from 'src/app/models/errorModel';
 })
 export class PublishofferComponent implements OnInit {
   user!: UserModel;
-  userCryptos?: string[];
   offerCryptoPrice!: number;
   offerCryptoAmount!: number;
   offerUsdCash: number = 0;
@@ -31,6 +30,7 @@ export class PublishofferComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUser();
     this.getCurrentMarket();
+    console.log(this.user.cryptos.length);
   }
 
   public getCurrentUser() {

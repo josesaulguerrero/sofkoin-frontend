@@ -20,6 +20,7 @@ export class SingleuserComponent implements OnInit {
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
+    this.getMarket();
     if (
       this.singleuser?.cryptos !== undefined &&
       this.singleuser?.cryptos.length >= 1
@@ -62,8 +63,8 @@ export class SingleuserComponent implements OnInit {
     }
   }
   buyOffer() {
+    debugger;
     if (this.validation()) {
-      this.getMarket();
       this.request
         .saveMessageMethod(
           {
@@ -104,7 +105,10 @@ export class SingleuserComponent implements OnInit {
     }
   }
   getMarket() {
-    if (localStorage.getItem('marketId') === null || undefined) {
+    if (
+      localStorage.getItem('marketId') === null ||
+      localStorage.getItem('marketId') === undefined
+    ) {
       this.betarequest.geAllMarketsMethod().subscribe({
         next: (market) => {
           localStorage.setItem('marketId', market[0].marketId);

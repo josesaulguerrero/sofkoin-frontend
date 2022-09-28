@@ -52,3 +52,14 @@ button {
   );
   cursor: pointer;
 }
+
+.else-block{
+  display: flex;
+  justify-content: center;
+}
+
+.else-block h2{
+  margin-top: 30px;
+  color: var(--color-label);
+  font-size: 1.4rem;
+}
