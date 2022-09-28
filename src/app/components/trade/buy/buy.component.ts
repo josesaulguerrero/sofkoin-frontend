@@ -117,8 +117,13 @@ export class BuyComponent implements OnInit {
     this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
       next: (data) => {
         if (this.user) {
-          console.log(data[0]);
-          this.state.subtractCash(data[0].cash, this.user);
+          const buyEvent = data[0];
+          const crypto: UserCryptosList = {
+            symbol: buyEvent.cryptoSymbol,
+            amount: buyEvent.cryptoAmount,
+            priceUsd: buyEvent.cryptoPrice,
+          };
+          this.state.buyCryptoEvent(data[0].cash, crypto, this.user);
           alert('You successfully bought ' + this.cryptoSelected);
         }
 
