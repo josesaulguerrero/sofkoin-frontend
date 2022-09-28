@@ -2,19 +2,59 @@
 <div class="container">
   <div class="title-container"><h2>Messages</h2></div>
   <div class="messages-container">
-    <div class="data-container" *ngFor="let message of messages">
-      <div>Crypto: {{ message.proposalCryptoSymbol }}</div>
-      <div>Proposal Amount: {{ message.proposalCryptoAmount }}</div>
-      <div>Proposal price: {{ message.proposalCryptoPrice }} USD</div>
+    <div
+      class="data-container"
+      id="{{ message.messageRelationType }}CONTAINER"
+      *ngFor="let message of messages">
+      <div class="{{ message.messageRelationType }}" id="message-element">
+        <div>Crypto: {{ message.proposalCryptoSymbol }}</div>
+        <div>Proposal Amount: {{ message.proposalCryptoAmount }}</div>
+        <div>Proposal price: {{ message.proposalCryptoPrice }} USD</div>
+        <div
+          *ngIf="
+            !validateMessageAccepted(
+              message.status,
+              message.messageRelationType,
+              message.messageId
+            )
+          ">
+          <button
+            id="{{ message.messageId }}"
+            class="accept-button"
+            (click)="acceptOffer(message.messageId)">
+            Accept
+          </button>
+          <button
+            class="reject-button"
+            (click)="rejectOffer(message.messageId)">
+            Reject
+          </button>
+        </div>
+        <div
+          *ngIf="
+            receiverMessageAccepted(
+              message.status,
+              message.messageRelationType,
+              message.messageId
+            )
+          ">
+          Message Accepted
+        </div>
 
-      <div>Status: {{ message.status }}</div>
-      <div *ngIf="message.messageRelationType === 'RECEIVER'">
-        <button
-          id="{{ message.messageId }}"
-          (click)="acceptOffer(message.messageId)">
-          Accept
-        </button>
-        <button (click)="rejectOffer(message.messageId)">Reject</button>
+        <div
+          *ngIf="
+            receiverMessageRejected(
+              message.status,
+              message.messageRelationType,
+              message.messageId
+            )
+          ">
+          Message Rejected
+        </div>
+
+        <div *ngIf="message.messageRelationType === 'SENDER'">
+          Status: {{ message.status }}
+        </div>
       </div>
     </div>
   </div>

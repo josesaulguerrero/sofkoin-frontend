@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit {
           },
           error: (err: ErrorModel) => {
             alert('The user is not registered: ' + err.error.errorMessage);
+            this.router.navigateByUrl('/login');
           },
         });
     }
@@ -119,6 +120,7 @@ export class LoginComponent implements OnInit {
               alert('Email or password invalid: ');
             } else {
               alert(err.error.errorMessage);
+              this.router.navigateByUrl('/login');
             }
           },
         });
