@@ -47,7 +47,7 @@
       </div>
       <div class="row" *ngFor="let usercrypto of usercryptolist">
         <p class="rowitem">{{ usercrypto.symbol }}</p>
-        <p class="rowitem">{{ usercrypto.amount.toFixed(6) }}</p>
+        <p class="rowitem">{{ usercrypto.amount | number: '1.0-6' }}</p>
         <p class="rowitem">
           {{ usercrypto.priceUsd | number: '1.0-3' }}
         </p>

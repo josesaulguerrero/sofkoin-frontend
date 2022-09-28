@@ -63,7 +63,7 @@
       </button>
       <div class="cash">
         <p class="cashavalible">
-          Cash available ${{ user?.currentCash?.toFixed(2) }} USD
+          Cash available ${{ user?.currentCash | number: '1.0-3' }} USD
         </p>
       </div>
     </form>
