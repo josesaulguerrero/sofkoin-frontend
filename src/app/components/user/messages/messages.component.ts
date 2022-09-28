@@ -28,6 +28,7 @@ export class MessagesComponent implements OnInit {
   ngOnInit(): void {
     this.getMessages();
     this.messagesListener();
+    this.messageStatusListener();
   }
 
   async getMessages() {
@@ -97,6 +98,23 @@ export class MessagesComponent implements OnInit {
       .subscribe({
         next: (messageSaved) => {
           this.messages?.push(messageSaved);
+        },
+      });
+  }
+
+  async messageStatusListener() {
+    this.socketService
+      .offerMessageStatusChangedListener(
+        localStorage.getItem('userId') as string
+      )
+      .subscribe({
+        next: (statusChanged) => {
+          this.messages = this.messages?.map((message) => {
+            if (message.messageId === statusChanged.messageId) {
+              return statusChanged;
+            }
+            return message;
+          });
         },
       });
   }
