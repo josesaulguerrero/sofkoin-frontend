@@ -14,18 +14,73 @@
   height: 70vh;
   width: 70vw;
   margin: 18px, 20px, 20px, 20px;
+  overflow: auto;
 }
 
 .data-container {
-  border-style: solid;
-  border-color: black;
-  width: 67vw;
+  width: 70vw;
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
+  margin-top: 3vh;
 }
 
-.data-container div {
+#message-element {
+  padding: 10px;
+  padding-top: 5px;
+  width: 50vw;
+  display: flex;
+  justify-content: space-around;
+}
+
+#message-element div {
   text-align: center;
   width: 8.5vw;
+}
+
+#RECEIVERCONTAINER {
+  display: flex;
+  justify-content: flex-start;
+}
+
+#SENDERCONTAINER {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.RECEIVER {
+  color: aliceblue;
+  background-color: var(--e-global-color-primary);
+  border-style: solid;
+  border-radius: 5px;
+  margin-left: 0.7vw;
+}
+
+.SENDER {
+  color: aliceblue;
+  background-color: var(--e-global-color-primary);
+  opacity: 0.8;
+  border-style: solid;
+  border-radius: 5px;
+  margin-right: 1vw;
+}
+
+.accept-button {
+  color: aliceblue;
+  border-style: none;
+  padding: 0.5vw;
+  border-radius: 5px;
+  font-weight: 600;
+  background-color: rgb(40, 186, 32);
+  cursor: pointer;
+}
+
+.reject-button {
+  margin-left: 3px;
+  color: aliceblue;
+  border-style: none;
+  padding: 0.5vw;
+  border-radius: 5px;
+  font-weight: 600;
+  background-color: rgb(209, 31, 31);
+  cursor: pointer;
 }

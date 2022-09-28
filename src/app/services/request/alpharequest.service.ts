@@ -5,6 +5,7 @@ import { catchError, Observable } from 'rxjs';
 import { TokenResponse } from 'src/app/models/tokenResponseModel';
 import { commandFundWallet } from 'src/app/models/commands/commandFundWallet';
 import { TradeTransactionCommited } from 'src/app/models/events/TradeTransactionCommited';
+import { commandPublishP2POffer } from 'src/app/models/commands/commandPublishP2POffer';
 
 @Injectable({
   providedIn: 'root',
@@ -90,13 +91,17 @@ export class RequestService {
     });
   }
   updateMessageMethod(command: any, token: string): Observable<Object> {
-    console.log(command.cashAmount + ' ' + command.userId + ' ' + token);
-    return this.client.post<any>(this.host + '/update/status', command, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    });
+    console.log(command);
+    return this.client.patch<any>(
+      this.host + '/message/update/status',
+      command,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }),
+      }
+    );
   }
   publishOfferMethod(
     command: commandPublishP2POffer,

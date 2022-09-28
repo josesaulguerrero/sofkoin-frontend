@@ -42,7 +42,7 @@ export class MessagesComponent implements OnInit {
     )[0];
     let commandPublishOffer: commandPublishP2POffer = {
       marketId: messageSelected?.marketId as string,
-      publisherId: localStorage.getItem('userId') as string,
+      publisherId: messageSelected?.receiverId as string,
       targetAudienceId: messageSelected?.senderId as string,
       cryptoSymbol: messageSelected?.proposalCryptoSymbol as string,
       offerCryptoAmount: messageSelected?.proposalCryptoAmount as number,
@@ -62,15 +62,25 @@ export class MessagesComponent implements OnInit {
 
     this.alphaRequest.publishOfferMethod(commandPublishOffer, token).subscribe({
       next: (response) => {
+        console.log(response);
+
         this.alphaRequest
           .updateMessageMethod(commandChangeMessageStatus, token)
-          .subscribe();
-        console.log(response);
+          .subscribe({
+            next: (data) => {
+              console.log(data);
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
       },
       error: (err: ErrorModel) => {
         alert(err.error.errorMessage);
       },
     });
+
+    console.log(commandChangeMessageStatus);
   }
 
   async rejectOffer(messageId: string) {
@@ -89,10 +99,46 @@ export class MessagesComponent implements OnInit {
 
     this.alphaRequest
       .updateMessageMethod(commandChangeMessageStatus, token)
-      .subscribe();
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
-  validateMessageRejected() {}
+  validateMessageAccepted(
+    messageStatus: string,
+    messageRelationType: string,
+    messageId: string
+  ): boolean {
+    if (messageStatus === 'PENDING' && messageRelationType === 'RECEIVER') {
+      return false;
+    }
+    return true;
+  }
 
-  validateMessageAccepted() {}
+  receiverMessageAccepted(
+    messageStatus: string,
+    messageRelationType: string,
+    messageId: string
+  ) {
+    if (messageStatus === 'ACCEPTED' && messageRelationType === 'RECEIVER') {
+      return true;
+    }
+    return false;
+  }
+
+  receiverMessageRejected(
+    messageStatus: string,
+    messageRelationType: string,
+    messageId: string
+  ) {
+    if (messageStatus === 'REJECTED' && messageRelationType === 'RECEIVER') {
+      return true;
+    }
+    return false;
+  }
 }

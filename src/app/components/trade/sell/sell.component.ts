@@ -131,7 +131,6 @@ export class SellComponent implements OnInit {
       alert('The amount must be a number between 0.000001 and 100000');
       return false;
     }
-    alert('Ok');
     return true;
   }
 }
