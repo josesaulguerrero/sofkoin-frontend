@@ -30,6 +30,7 @@ export class PublishofferComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUser();
     this.getCurrentMarket();
+    console.log(this.user.cryptos.length);
   }
 
   public getCurrentUser() {
