@@ -23,7 +23,7 @@ export const routes: Routes = [
   { path: '', component: WelcomeComponent },
   { path: 'main', redirectTo: '/main/user/Profile', pathMatch: 'full' },
   { path: 'main/user', redirectTo: '/main/user/Profile', pathMatch: 'full' },
-  { path: 'main/trade', redirectTo: '/main/trade/Recharge', pathMatch: 'full' },
+  { path: 'main/trade', redirectTo: '/main/trade/Fund', pathMatch: 'full' },
   {
     path: 'main/p2p',
     redirectTo: '/main/p2p/Active_Offers',
@@ -65,7 +65,7 @@ export const routes: Routes = [
         component: TradeComponent,
         children: [
           {
-            path: 'Recharge',
+            path: 'Fund',
             component: RechargeComponent,
           },
           {

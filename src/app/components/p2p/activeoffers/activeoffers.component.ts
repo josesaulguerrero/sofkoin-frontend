@@ -24,16 +24,13 @@ export class ActiveoffersComponent implements OnInit {
   }
 
   getMarket() {
-    ///Atennnnnnnnnnntioooooooooooonnnnnnnnn maybe it iis better to allway call the market????????
     this.betarequest.geAllMarketsMethod().subscribe({
       next: (markets) => {
         const market = markets[0];
-        console.log('conected to market');
+
         this.state.market.next(market);
 
         this.offers = market.offers;
-
-        console.log(this.offers);
       },
       error: (err: ErrorModel) => {
         if (

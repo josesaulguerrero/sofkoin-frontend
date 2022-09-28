@@ -11,6 +11,6 @@ export class TradeComponent implements OnInit {
   sidebaritems?: string[];
   ngOnInit(): void {
     this.mainitem = 'trade';
-    this.sidebaritems = ['Recharge', 'Buy', 'Sell'];
+    this.sidebaritems = ['Fund', 'Buy', 'Sell'];
   }
 }
