@@ -19,42 +19,37 @@
       <h2>Sell Crypto</h2>
     </div>
     <div>
-      <div class="price-div">
-        Total
-        <input disabled type="text" name="price" [(ngModel)]="cryptoSelectedTotalPrice" />
-      </div>
-
       <div class="amount-div">
         Amount
-        <input [(ngModel)]="newAmount" type="text" name="amount" (keyup)="getCryptoSelectedPrice()"
-          placeholder="Insert amount" />
-        <select [(ngModel)]="cryptoSelected" name="availableCryptos" (change)="getCryptoSelectedPrice()"
+        <input [(ngModel)]="newAmount" type="number" min="0.000001" max="100.000" name="amount"
+          (ngModelChange)="getAmountAndBalance()" placeholder="Insert" />
+        <select [(ngModel)]="cryptoSelected" name="availableCryptos" (change)="getAmountAndBalance()"
           id="availableCryptos">
           <option disabled selected>--</option>
-          <option *ngFor="let selectcrypto of availableCryptos">
+          <option *ngFor="let selectcrypto of userCryptos">
             {{ selectcrypto.symbol }}
           </option>
         </select>
       </div>
+      <div class="price-div disabled">
+        Total
+        <input disabled type="number" name="price" [(ngModel)]="cryptoSelectedTotalPrice" />
+      </div>
+
 
       <div>
-        <button [disabled]="!newAmount" (click)="actionBuy()" class="submit-button">Sell</button>
+        <button [disabled]="cryptoSelected == '--' || !newAmount" (click)="actionBuy()"
+          class="submit-button">Sell</button>
       </div>
     </div>
     <div class="user-balance">
       <div class="title-container">
         <h2>User Cryptos</h2>
       </div>
-      <div class="amount-div">
+      <div class="amount-div disabled">
         Balance
-        <input disabled type="text" [(ngModel)]="cryptoBalanceSelected" name="amount" id="userCryptoBalance"
+        <input disabled type="number" [(ngModel)]="cryptoBalanceSelected" name="amount" id="userCryptoBalance"
           placeholder="Select a crypto" />
-        <select [(ngModel)]="cryptoUserSelected" (change)="setCryptoBalance()" name=" cryptos" id="cryptoBalance">
-          <option disabled selected>--</option>
-          <option *ngFor=" let selectcrypto of userCryptos">
-            {{ selectcrypto.symbol }}
-          </option>
-        </select>
       </div>
     </div>
   </div>

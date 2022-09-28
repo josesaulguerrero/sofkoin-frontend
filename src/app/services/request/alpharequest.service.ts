@@ -5,6 +5,7 @@ import { catchError, Observable } from 'rxjs';
 import { TokenResponse } from 'src/app/models/tokenResponseModel';
 import { commandFundWallet } from 'src/app/models/commands/commandFundWallet';
 import { TradeTransactionCommited } from 'src/app/models/events/TradeTransactionCommited';
+import { commandCommitTradeTransaction } from 'src/app/models/commands/commandCommitTradeTransaction';
 
 @Injectable({
   providedIn: 'root',
@@ -54,10 +55,9 @@ export class RequestService {
   }
 
   tradeTransactionMethod(
-    command: any,
+    command: commandCommitTradeTransaction,
     token: string
   ): Observable<Array<TradeTransactionCommited>> {
-    console.log(command);
     return this.client.post<Array<TradeTransactionCommited>>(
       this.host + '/transaction/trade',
       command,

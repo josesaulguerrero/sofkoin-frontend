@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { interval, mergeMap } from 'rxjs';
+import { delay, interval, mergeMap, repeat, tap } from 'rxjs';
 import { commandCommitTradeTransaction } from 'src/app/models/commands/commandCommitTradeTransaction';
 import { CryptoPrice } from 'src/app/models/cryptoprice';
 import { CryptoPriceModel } from 'src/app/models/CryptoPriceModel';
@@ -22,14 +22,11 @@ export class SellComponent implements OnInit {
   ) {}
   newAmount?: number;
   cryptoBalanceSelected?: string;
-  cryptoUserSelected: string = '--';
   cryptoSelected: string = '--';
   cryptoSelectedTotalPrice: number = 0;
   cashAvailable?: number;
+  isLoaded: boolean = true;
   userCryptos?: UserCryptosList[] = [];
-  isLoaded: boolean = false;
-
-  availableCryptos?: UserCryptosList[];
   cryptos?: CryptoPriceModel[];
 
   ngOnInit(): void {
@@ -41,30 +38,40 @@ export class SellComponent implements OnInit {
   async getUserCryptos() {
     this.state.user.subscribe((data) => {
       data.cryptos.forEach((crypto) => this.userCryptos?.push(crypto));
-      this.availableCryptos = data.cryptos;
+      this.userCryptos = data.cryptos;
       this.cashAvailable = data.currentCash;
     });
   }
 
   async getCryptoPrices() {
-    interval(0.1 * 60 * 1000)
+    interval(6000)
       .pipe(mergeMap(() => this.requestBeta.geAllCryptoPriceMethod()))
       .subscribe((data: CryptoPriceModel[]) => {
         this.cryptos = data;
         this.isLoaded = true;
-
-        this.getCryptoSelectedPrice();
+        this.getCryptoSelectedTotalPrice();
       });
   }
 
-  getCryptoSelectedPrice() {
-    if (this.cryptoSelected !== '--') {
-      const crypto = this.cryptos?.find(
-        (crypto) => crypto.symbol === this.cryptoSelected
-      );
+  getAmountAndBalance() {
+    this.getCryptoSelectedTotalPrice();
+    this.setCryptoBalance();
+  }
 
-      if (this.newAmount && crypto?.price) {
-        const newTotalPrice = (crypto.price * this.newAmount).toFixed(2);
+  private getCryptoSelectedPrice(): number | undefined {
+    const crypto = this.cryptos?.find(
+      (crypto) => crypto.symbol === this.cryptoSelected
+    );
+
+    return crypto?.price;
+  }
+
+  private getCryptoSelectedTotalPrice() {
+    if (this.cryptoSelected !== '--') {
+      const cryptoPrice = this.getCryptoSelectedPrice();
+
+      if (this.newAmount && cryptoPrice) {
+        const newTotalPrice = (cryptoPrice * this.newAmount).toFixed(2);
         this.cryptoSelectedTotalPrice = Number(newTotalPrice);
       } else this.cryptoSelectedTotalPrice = 0;
     }
@@ -76,32 +83,26 @@ export class SellComponent implements OnInit {
     });
   }
 
-  setCryptoBalance() {
+  private setCryptoBalance() {
     const cryptoUser = this.userCryptos?.find(
-      (crypto) => crypto.symbol === this.cryptoUserSelected
+      (crypto) => crypto.symbol === this.cryptoSelected
     );
 
-    this.cryptoBalanceSelected = String(cryptoUser?.amount) ?? '--';
+    this.cryptoBalanceSelected = cryptoUser?.amount
+      ? String(cryptoUser?.amount.toFixed(6))
+      : '';
   }
 
   actionBuy() {
-    let selectElement = document.getElementById(
-      'availableCryptos'
-    ) as HTMLSelectElement;
-    let cryptoSelected =
-      selectElement.options[selectElement.selectedIndex].value;
-    let token: string = localStorage.getItem('token') as string;
+    const userId: string = localStorage.getItem('userId') as string;
+    const token: string = localStorage.getItem('token') as string;
 
-    console.log(cryptoSelected);
     let command: commandCommitTradeTransaction = {
-      buyerId: localStorage.getItem('userId') as string,
+      buyerId: userId,
       transactionType: 'SELL',
-      cryptoSymbol: cryptoSelected,
-      cryptoPrice: String(
-        this.cryptos?.filter((c) => c.symbol === cryptoSelected)[0].price
-      ),
+      cryptoSymbol: this.cryptoSelected,
+      cryptoPrice: String(this.getCryptoSelectedPrice()),
       cryptoAmount: String(this.newAmount),
-      cash: this.cashAvailable as number,
     };
     if (this.validation()) {
       this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
@@ -109,11 +110,13 @@ export class SellComponent implements OnInit {
           if (data) {
             this.state.subtractCash(data[0].cash);
             this.state.user.subscribe((data) => console.log(data));
-            alert('You successfully sell ' + cryptoSelected);
+            alert('You successfully sell ' + this.cryptoSelected);
+            this.cleanInputs();
           }
         },
         error: (err: ErrorModel) => {
           alert(err.error.errorMessage);
+          this.cleanInputs();
         },
       });
     }
@@ -121,7 +124,12 @@ export class SellComponent implements OnInit {
     //TODO: ACTUALIZAR EL ESTADO DEL USUARIO/MOSTRAR USD
   }
 
-  validation(): boolean {
+  private cleanInputs() {
+    this.newAmount = undefined;
+    this.getAmountAndBalance();
+  }
+
+  private validation(): boolean {
     if (
       (this.newAmount && !isFinite(this.newAmount)) ||
       this.newAmount! < 0.000001 ||

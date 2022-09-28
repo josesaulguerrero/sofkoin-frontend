@@ -26,19 +26,19 @@
           name="Amount" id="newAmount" placeholder="Select crypto" />
 
 
-        <select [(ngModel)]="selectedCrypto" (change)="changeConversionFactor()" name="cryptos" id="cryptobuyselect">
+        <select [(ngModel)]="cryptoSelected" (change)="changeConversionFactor()" name="cryptos" id="cryptobuyselect">
           <option disabled selected>--</option>
           <option *ngFor="let selectcrypto of newCryptolist">
             {{ selectcrypto }}
           </option>
         </select>
       </div>
-      <div class="input-class">
+      <div class="input-class" id="insert-amount">
         <input [(ngModel)]="USDCryptoValue" name="AmountInUsd" id="newAmountInUsd" placeholder="Insert amount" />
         <label for="AmountInUsd">USD</label>
       </div>
 
-      <button [disabled]="selectedCrypto === '--' || !USDCryptoValue" class="submit-button" type="button"
+      <button [disabled]="cryptoSelected === '--' || !USDCryptoValue" class="submit-button" type="button"
         (click)="actionBuy()">
         Buy
       </button>
