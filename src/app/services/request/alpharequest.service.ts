@@ -1,11 +1,10 @@
-import { commandPublishP2POffer } from './../../models/commands/commandPublishP2POffer';
+import { commandPublishP2POffer } from 'src/app/models/commands/commandPublishP2POffer';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
 import { TokenResponse } from 'src/app/models/tokenResponseModel';
 import { commandFundWallet } from 'src/app/models/commands/commandFundWallet';
 import { TradeTransactionCommited } from 'src/app/models/events/TradeTransactionCommited';
-import { commandPublishP2POffer } from 'src/app/models/commands/commandPublishP2POffer';
 
 @Injectable({
   providedIn: 'root',
