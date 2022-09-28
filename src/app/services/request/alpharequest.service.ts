@@ -17,8 +17,8 @@ export class RequestService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  // host: string = 'https://sofkoin-alpha-1117.herokuapp.com';
-  host: string = 'http://localhost:8070';
+  host: string = 'https://sofkoin-alpha-1117.herokuapp.com';
+  // host: string = 'http://localhost:8070';
 
   signUpMethod(command: any): Observable<Object> {
     return this.client.post<any>(
