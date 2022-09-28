@@ -4,6 +4,7 @@ import { OfferModel } from 'src/app/models/offerModel';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { StateService } from 'src/app/services/state/state.service';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
+import { SocketService } from 'src/app/services/socket/socket.service';
 @Component({
   selector: 'app-activeoffers',
   templateUrl: './activeoffers.component.html',
@@ -13,27 +14,31 @@ export class ActiveoffersComponent implements OnInit {
   constructor(
     private state: StateService,
     private betarequest: BetarequestService,
-    private alphaservice: RequestService
+    private alphaservice: RequestService,
+    private socketService: SocketService
   ) {}
 
   offers: OfferModel[] = [];
 
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
     this.getMarket();
+    this.socketService.P2POfferDeletedListener().subscribe({
+      next: (offerToBeDeleted) => {
+        this.offers = this.offers.filter(
+          (offer) => offer.offerId !== offerToBeDeleted.offerId
+        );
+      },
+    });
   }
 
   getMarket() {
-    ///Atennnnnnnnnnntioooooooooooonnnnnnnnn maybe it iis better to allway call the market????????
     this.betarequest.geAllMarketsMethod().subscribe({
       next: (markets) => {
         const market = markets[0];
-        console.log('conected to market');
+
         this.state.market.next(market);
 
         this.offers = market.offers;
-
-        console.log(this.offers);
       },
       error: (err: ErrorModel) => {
         if (
@@ -57,12 +62,6 @@ export class ActiveoffersComponent implements OnInit {
         localStorage.getItem('token')!
       )
       .subscribe({
-        next: (response) => {
-          console.log(response);
-          this.offers = this.offers.filter(function (e) {
-            return e.offerId !== offer.offerId;
-          });
-        },
         error: (err: ErrorModel) => {
           if (
             err.error.errorMessage === null ||

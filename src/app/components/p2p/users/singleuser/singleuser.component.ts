@@ -5,6 +5,7 @@ import { ErrorModel } from 'src/app/models/errorModel';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { StateService } from 'src/app/services/state/state.service';
+import { HostListener } from '@angular/core';
 @Component({
   selector: 'app-singleuser',
   templateUrl: './singleuser.component.html',
@@ -26,12 +27,21 @@ export class SingleuserComponent implements OnInit {
       this.usercoins = this.singleuser.cryptos;
     }
   }
+  @HostListener('keyup')
+  onkeypress() {
+    if (this.newammount !== '' && this.newprice !== '') {
+      let amount = Number(this.newammount);
+      let price = Number(this.newprice);
+      this.total = String(amount * price);
+    }
+  }
   @Input() singleuser?: UserModel;
   usercoins?: UserCryptosList[];
   message: string = '';
   newammount: string = '';
   newprice: string = '';
   currentcoin: string = '';
+  total: string = '';
   makeOffer(cryptosymbol: string) {
     let offerForm = document.getElementById(
       'offerform' + this.singleuser!.userId
@@ -122,8 +132,17 @@ export class SingleuserComponent implements OnInit {
       return false;
     }
     if (this.newammount === null || this.newammount === undefined) {
-      alert('The email field is invalid');
+      alert('Amount undefined');
       return false;
+    }
+    if (this.newammount !== '' && this.newprice !== '') {
+      let amount = Number(this.newammount);
+      let price = Number(this.newprice);
+      this.total = String(amount * price);
+      if (amount * price < 5) {
+        alert('Minimun transaction amount is $5 USD');
+        return false;
+      }
     }
 
     return true;

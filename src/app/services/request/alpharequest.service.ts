@@ -1,3 +1,4 @@
+import { commandPublishP2POffer } from 'src/app/models/commands/commandPublishP2POffer';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
@@ -89,16 +90,22 @@ export class RequestService {
     });
   }
   updateMessageMethod(command: any, token: string): Observable<Object> {
-    console.log(command.cashAmount + ' ' + command.userId + ' ' + token);
-    return this.client.post<any>(this.host + '/update/status', command, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    });
+    console.log(command);
+    return this.client.patch<any>(
+      this.host + '/message/update/status',
+      command,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }),
+      }
+    );
   }
-  publishOfferMethod(command: any, token: string): Observable<Object> {
-    console.log(command.cashAmount + ' ' + command.userId + ' ' + token);
+  publishOfferMethod(
+    command: commandPublishP2POffer,
+    token: string
+  ): Observable<Object> {
     return this.client.post<any>(this.host + '/market/publish/offer', command, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
