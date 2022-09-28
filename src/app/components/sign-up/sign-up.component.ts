@@ -68,6 +68,7 @@ export class SignUpComponent implements OnInit {
           })
           .subscribe({
             next: (data) => {
+              alert('User registered');
               this.router.navigateByUrl('/login');
             },
             error: (err: ErrorModel) => {
@@ -113,6 +114,7 @@ export class SignUpComponent implements OnInit {
           })
           .subscribe({
             next: (data) => {
+              alert('User registered');
               this.router.navigateByUrl('/login');
             },
             error: (err: ErrorModel) => {
@@ -141,6 +143,7 @@ export class SignUpComponent implements OnInit {
         })
         .subscribe({
           next: (data) => {
+            alert('User registered');
             this.router.navigateByUrl('/login');
           },
           error: (err: ErrorModel) => {
