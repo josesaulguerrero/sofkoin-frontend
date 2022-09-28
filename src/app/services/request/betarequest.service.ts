@@ -20,7 +20,6 @@ export class BetarequestService {
   // host: string = 'http://localhost:8080';
 
   getUserByIdMethod(id: string): Observable<UserModel> {
-    console.log(this.host + '/view/user/' + id);
     return this.client.get<UserModel>(this.host + '/view/user/' + id);
   }
   geAllUserMethod(): Observable<UserModel[]> {

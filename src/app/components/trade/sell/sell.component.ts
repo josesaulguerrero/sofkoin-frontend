@@ -5,6 +5,7 @@ import { CryptoPrice } from 'src/app/models/cryptoprice';
 import { CryptoPriceModel } from 'src/app/models/CryptoPriceModel';
 import { UserCryptosList } from 'src/app/models/CryptoUsrList';
 import { ErrorModel } from 'src/app/models/errorModel';
+import { UserModel } from 'src/app/models/UserModel';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { StateService } from 'src/app/services/state/state.service';
@@ -26,21 +27,13 @@ export class SellComponent implements OnInit {
   cryptoSelectedTotalPrice: number = 0;
   cashAvailable?: number;
   isLoaded: boolean = true;
-  userCryptos?: UserCryptosList[] = [];
+  user?: UserModel;
   cryptos?: CryptoPriceModel[];
 
   ngOnInit(): void {
     this.getFirstCryptoPrices();
     this.getCryptoPrices();
-    this.getUserCryptos();
-  }
-
-  async getUserCryptos() {
-    this.state.user.subscribe((data) => {
-      data.cryptos.forEach((crypto) => this.userCryptos?.push(crypto));
-      this.userCryptos = data.cryptos;
-      this.cashAvailable = data.currentCash;
-    });
+    this.getCurrentUser();
   }
 
   async getCryptoPrices() {
@@ -51,6 +44,10 @@ export class SellComponent implements OnInit {
         this.isLoaded = true;
         this.getCryptoSelectedTotalPrice();
       });
+  }
+
+  getCurrentUser() {
+    this.state.user.subscribe((currentUser) => (this.user = currentUser));
   }
 
   getAmountAndBalance() {
@@ -84,7 +81,7 @@ export class SellComponent implements OnInit {
   }
 
   private setCryptoBalance() {
-    const cryptoUser = this.userCryptos?.find(
+    const cryptoUser = this.user?.cryptos?.find(
       (crypto) => crypto.symbol === this.cryptoSelected
     );
 
@@ -107,12 +104,19 @@ export class SellComponent implements OnInit {
     if (this.validation()) {
       this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
         next: (data) => {
-          if (data) {
-            this.state.subtractCash(data[0].cash);
-            this.state.user.subscribe((data) => console.log(data));
+          if (this.user) {
+            const sellEvent = data[0];
+            const crypto: UserCryptosList = {
+              symbol: sellEvent.cryptoSymbol,
+              amount: sellEvent.cryptoAmount,
+              priceUsd: sellEvent.cryptoPrice,
+            };
+
+            this.state.sellCryptoEvent(sellEvent.cash, crypto, this.user);
             alert('You successfully sell ' + this.cryptoSelected);
-            this.cleanInputs();
           }
+
+          this.cleanInputs();
         },
         error: (err: ErrorModel) => {
           alert(err.error.errorMessage);
