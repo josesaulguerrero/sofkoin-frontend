@@ -5,6 +5,7 @@ import { ErrorModel } from 'src/app/models/errorModel';
 import { MessagesList } from 'src/app/models/MessagesList';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
+import { SocketService } from 'src/app/services/socket/socket.service';
 import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class MessagesComponent implements OnInit {
   constructor(
     private betaRequest: BetarequestService,
     private alphaRequest: RequestService,
-    private state: StateService
+    private state: StateService,
+    private socketService: SocketService
   ) {}
 
   isLoaded: boolean = false;
@@ -25,6 +27,7 @@ export class MessagesComponent implements OnInit {
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
     this.getMessages();
+    this.messagesListener();
   }
 
   async getMessages() {
@@ -105,6 +108,16 @@ export class MessagesComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
+        },
+      });
+  }
+
+  async messagesListener() {
+    this.socketService
+      .offerMessageSavedListener(localStorage.getItem('userId') as string)
+      .subscribe({
+        next: (messageSaved) => {
+          this.messages?.push(messageSaved);
         },
       });
   }
