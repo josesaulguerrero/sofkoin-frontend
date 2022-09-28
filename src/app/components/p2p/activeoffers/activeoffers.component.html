@@ -11,22 +11,22 @@
         <div class="offercontainer" *ngIf="showOffer(offer)">
           <div class="mine" *ngIf="showasmine(offer.publisherId)">
             <p>{{ offer.cryptoSymbol }}</p>
-            <p>{{ offer.cryptoAmount }}</p>
-            <p>{{ offer.cryptoPrice }}</p>
+            <p>{{ offer.cryptoAmount | number: '1.0-6' }}</p>
+            <p>{{ offer.cryptoPrice | number: '1.0-2' }}</p>
             <button class="deletebutton" (click)="deleteoffer(offer)">
               Delete
             </button>
           </div>
           <div class="forme" *ngIf="showasforme(offer.targetAudienceId)">
             <p>{{ offer.cryptoSymbol }}</p>
-            <p>{{ offer.cryptoAmount }}</p>
-            <p>{{ offer.cryptoPrice }}</p>
+            <p>{{ offer.cryptoAmount | number: '1.0-6' }}</p>
+            <p>{{ offer.cryptoPrice | number: '1.0-2' }}</p>
             <button class="buybutton" (click)="buyoffer(offer)">Buy</button>
           </div>
           <div class="general" *ngIf="showasgeneral(offer)">
             <p>{{ offer.cryptoSymbol }}</p>
-            <p>{{ offer.cryptoAmount }}</p>
-            <p>{{ offer.cryptoPrice }}</p>
+            <p>{{ offer.cryptoAmount | number: '1.0-6' }}</p>
+            <p>{{ offer.cryptoPrice | number: '1.0-2' }}</p>
             <button class="buybutton" (click)="buyoffer(offer)">Buy</button>
           </div>
         </div>

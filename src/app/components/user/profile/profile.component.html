@@ -1,7 +1,14 @@
 <!--Loader div-->
 <div class="loader" *ngIf="!userIsLoaded">
   <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
-    <circle id="c" fill="none" stroke-width="4" stroke-linecap="round" cx="45" cy="45" r="43" />
+    <circle
+      id="c"
+      fill="none"
+      stroke-width="4"
+      stroke-linecap="round"
+      cx="45"
+      cy="45"
+      r="43" />
   </svg>
 </div>
 
@@ -23,13 +30,15 @@
   </div>
   <div class="cash">
     <p>Cash available</p>
-    <p class="cashavalible">${{ cash?.toFixed(2) }} USD</p>
+    <p class="cashavalible">${{ cash | number: '1.0-3' }} USD</p>
   </div>
 </div>
 <div class="ballancecontainer">
-  <h3>Your Crypto balance:</h3>
-  <div class="datacontainer">
+  <div class="Piecharcontainer">
+    <h3>Your Crypto balance:</h3>
     <canvas class="canvas" id="can" width="400" height="400"></canvas>
+  </div>
+  <div class="datacontainer">
     <div class="cryptolistcontainer">
       <div class="row">
         <p class="columntitle">Crypto</p>
@@ -38,8 +47,10 @@
       </div>
       <div class="row" *ngFor="let usercrypto of usercryptolist">
         <p class="rowitem">{{ usercrypto.symbol }}</p>
-        <p class="rowitem">{{ usercrypto.amount }}</p>
-        <p class="rowitem">{{ usercrypto.priceUsd * usercrypto.amount }}</p>
+        <p class="rowitem">{{ usercrypto.amount.toFixed(6) }}</p>
+        <p class="rowitem">
+          {{ usercrypto.priceUsd | number: '1.0-3' }}
+        </p>
       </div>
     </div>
   </div>

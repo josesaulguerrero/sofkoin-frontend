@@ -21,12 +21,24 @@
         <h3>Buy crypto</h3>
       </div>
       <div class="input-class">
-        <input required disabled pattern="[0-9]"
-          value="{{ USDCryptoValue && (USDCryptoValue / currencyConverterFactor).toFixed(6)  }}" type="number"
-          name="Amount" id="newAmount" placeholder="Select crypto" />
+        <input
+          required
+          disabled
+          pattern="[0-9]"
+          value="{{
+            USDCryptoValue &&
+              (USDCryptoValue / currencyConverterFactor).toFixed(6)
+          }}"
+          type="number"
+          name="Amount"
+          id="newAmount"
+          placeholder="Select crypto" />
 
-
-        <select [(ngModel)]="cryptoSelected" (change)="changeConversionFactor()" name="cryptos" id="cryptobuyselect">
+        <select
+          [(ngModel)]="cryptoSelected"
+          (change)="changeConversionFactor()"
+          name="cryptos"
+          id="cryptobuyselect">
           <option disabled selected>--</option>
           <option *ngFor="let selectcrypto of newCryptolist">
             {{ selectcrypto }}
@@ -34,16 +46,25 @@
         </select>
       </div>
       <div class="input-class" id="insert-amount">
-        <input [(ngModel)]="USDCryptoValue" name="AmountInUsd" id="newAmountInUsd" placeholder="Insert amount" />
+        <input
+          [(ngModel)]="USDCryptoValue"
+          name="AmountInUsd"
+          id="newAmountInUsd"
+          placeholder="Insert amount" />
         <label for="AmountInUsd">USD</label>
       </div>
 
-      <button [disabled]="cryptoSelected === '--' || !USDCryptoValue" class="submit-button" type="button"
+      <button
+        [disabled]="cryptoSelected === '--' || !USDCryptoValue"
+        class="submit-button"
+        type="button"
         (click)="actionBuy()">
         Buy
       </button>
       <div class="cash">
-        <p class="cashavalible">Cash available ${{ user?.currentCash?.toFixed(2) }} USD</p>
+        <p class="cashavalible">
+          Cash available ${{ user?.currentCash?.toFixed(2) }} USD
+        </p>
       </div>
     </form>
   </div>

@@ -8,7 +8,9 @@
       *ngFor="let message of messages">
       <div class="{{ message.messageRelationType }}" id="message-element">
         <div>Crypto: {{ message.proposalCryptoSymbol }}</div>
-        <div>Proposal Amount: {{ message.proposalCryptoAmount }}</div>
+        <div>
+          Proposal Amount: {{ message.proposalCryptoAmount | number: '1.0-3' }}
+        </div>
         <div>Proposal price: {{ message.proposalCryptoPrice }} USD</div>
         <div
           *ngIf="

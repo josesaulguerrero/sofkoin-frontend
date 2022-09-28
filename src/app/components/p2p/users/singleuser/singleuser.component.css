@@ -12,40 +12,25 @@ input {
 }
 
 .headerinfo {
-  height: 80px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   display: flex;
-  align-items: center;
 }
 
 .coins-container {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  text-align: center;
 }
 
-.cryptosymbol {
-  margin: 15px;
-  width: 7vw;
+.crypto {
+  margin-left: 1vw;
+  width: 15vw;
 }
 
-.cryptoamount {
-  margin: 15px;
-  width: 7vw;
-}
-
-.coin {
+.title {
   font-weight: 700;
-  margin-left: 15px;
-  margin-right: 15px;
-  width: 7vw;
-}
+  margin-left: 1vw;
 
-.amount {
-  font-weight: 700;
-  margin-left: 15px;
-  margin-right: 15px;
-  width: 7vw;
+  width: 15vw;
 }
 
 button:hover {

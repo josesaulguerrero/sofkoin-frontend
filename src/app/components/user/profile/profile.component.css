@@ -15,14 +15,16 @@
   display: flex;
 }
 .cryptolistcontainer p {
+  padding-left: 20px;
   width: 10vw;
 }
 .canvas {
-  width: 15vw;
-  height: 15vw;
+  max-height: 200px;
+  max-width: 200px;
 }
 
 .usertopcontainer {
+  padding-left: 20px;
   display: flex;
   background-color: rgb(232, 245, 255);
 }
@@ -73,6 +75,7 @@
   flex-direction: column;
 }
 h3 {
+  font-weight: 500;
   margin-bottom: 10px;
 }
 .row {
@@ -81,16 +84,26 @@ h3 {
 }
 
 .rowitem {
-  margin-top: 10px;
-  margin-right: 40px;
+  width: 12vw;
+  padding: 12px;
+  border-style: solid;
+  border-radius: 3px;
+  border-color: gray;
 }
 .columntitle {
+  color: aliceblue;
+  background-color: var(--e-global-color-primary);
+  width: 12vw;
   font-weight: 700;
-  margin-right: 20px;
+  padding: 12px;
+  border-style: solid;
+  border-radius: 3px;
 }
 
 .ballancecontainer {
-  padding-left: 10px;
+  display: flex;
+  padding: 20px;
+  padding-left: 36px;
 }
 
 .loader {

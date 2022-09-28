@@ -62,7 +62,7 @@ export class ProfileComponent implements OnInit {
     var labels: string[] = [];
 
     this.usercryptolist?.forEach((crypto) => {
-      data.push(crypto.amount * crypto.priceUsd);
+      data.push(crypto.priceUsd);
       labels.push(crypto.symbol);
     });
 

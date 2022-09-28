@@ -1,11 +1,12 @@
 <div *ngIf="existusercoins()">
   <div class="headerinfo">
-    <div class="coin">Coin</div>
-    <div class="amount">Amount</div>
+    <div class="title">Coin</div>
+    <div class="title">Amount</div>
+    <div class="title"></div>
   </div>
   <div class="coins-container" *ngFor="let singlecoin of usercoins">
-    <div ng class="cryptosymbol">{{ singlecoin.symbol }}</div>
-    <div class="cryptoamount">{{ singlecoin.amount }}</div>
+    <div class="crypto">{{ singlecoin.symbol }}</div>
+    <div class="crypto">{{ singlecoin.amount | number: '1.0-6' }}</div>
     <button class="offerbutton" (click)="makeOffer(singlecoin.symbol)">
       Make Offer
     </button>
