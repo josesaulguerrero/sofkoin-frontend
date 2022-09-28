@@ -51,29 +51,32 @@ export class StateService {
   public buyCryptoEvent(
     cash: number,
     crypto: UserCryptosList,
-    user?: UserModel
+    user: UserModel
   ): void {
-    if (user) {
-      const newCash = user.currentCash - cash;
+    const newCash = user.currentCash - cash;
 
-      const updatedUser = {
-        ...this.addOrCreateCryptoToUser(crypto, user),
-        currentCash: newCash,
-      };
-      this.user.next(updatedUser);
-    }
+    const updatedUser = {
+      ...this.addOrCreateCryptoToUser(crypto, user),
+      currentCash: newCash,
+    };
+    this.user.next(updatedUser);
   }
 
-  sellCryptoEvent(cash: number, crypto: UserCryptosList, user?: UserModel) {
-    if (user) {
-      const newCash = user.currentCash + cash;
+  fundEvent(cash: number, user: UserModel) {
+    const newCash = user.currentCash + cash;
 
-      const updatedUser = {
-        ...this.subtractOrRemoveCryptoToUser(crypto, user),
-        currentCash: newCash,
-      };
-      this.user.next(updatedUser);
-    }
+    const updatedUser = { ...user, currentCash: newCash };
+    this.user.next(updatedUser);
+  }
+
+  sellCryptoEvent(cash: number, crypto: UserCryptosList, user: UserModel) {
+    const newCash = user.currentCash + cash;
+
+    const updatedUser = {
+      ...this.subtractOrRemoveCryptoToUser(crypto, user),
+      currentCash: newCash,
+    };
+    this.user.next(updatedUser);
   }
 
   private subtractOrRemoveCryptoToUser(

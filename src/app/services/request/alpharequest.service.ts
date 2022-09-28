@@ -6,6 +6,7 @@ import { TokenResponse } from 'src/app/models/tokenResponseModel';
 import { commandFundWallet } from 'src/app/models/commands/commandFundWallet';
 import { TradeTransactionCommited } from 'src/app/models/events/TradeTransactionCommited';
 import { commandCommitTradeTransaction } from 'src/app/models/commands/commandCommitTradeTransaction';
+import { walletFunded } from 'src/app/models/events/walletFunded';
 
 @Injectable({
   providedIn: 'root',
@@ -70,14 +71,20 @@ export class RequestService {
     );
   }
 
-  fundMethod(command: any, token: string): Observable<Object> {
-    console.log(command.cashAmount + ' ' + command.userId + ' ' + token);
-    return this.client.post<any>(this.host + '/transaction/fund', command, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    });
+  fundMethod(
+    command: commandFundWallet,
+    token: string
+  ): Observable<Array<walletFunded>> {
+    return this.client.post<Array<walletFunded>>(
+      this.host + '/transaction/fund',
+      command,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }),
+      }
+    );
   }
 
   saveMessageMethod(command: any, token: string): Observable<Object> {

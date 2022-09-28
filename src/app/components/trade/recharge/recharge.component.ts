@@ -2,16 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { commandFundWallet } from 'src/app/models/commands/commandFundWallet';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { ErrorModel } from 'src/app/models/errorModel';
+import { UserModel } from 'src/app/models/UserModel';
+import { StateService } from 'src/app/services/state/state.service';
 @Component({
   selector: 'app-recharge',
   templateUrl: './recharge.component.html',
   styleUrls: ['./recharge.component.css'],
 })
 export class RechargeComponent implements OnInit {
-  constructor(private request: RequestService) {}
+  constructor(private request: RequestService, private state: StateService) {}
   newRecharge?: number;
+  user?: UserModel;
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getCurrentUser();
+  }
+  getCurrentUser() {
+    this.state.user.subscribe((currentUser) => (this.user = currentUser));
+  }
+
   actionRecharge() {
     if (!(this.newRecharge === undefined) && this.newRecharge > 0) {
       let command: commandFundWallet;
@@ -23,9 +32,13 @@ export class RechargeComponent implements OnInit {
         cashAmount: Amount,
       };
       this.request.fundMethod(command, token).subscribe({
-        next: () => {
-          this.newRecharge = undefined;
-          alert('Transaction complete');
+        next: (data) => {
+          if (this.user) {
+            const fundEvent = data[0];
+            this.newRecharge = undefined;
+            this.state.fundEvent(fundEvent.cashAmount, this.user);
+            alert('Transaction complete');
+          }
         },
         error: (err: ErrorModel) => {
           if (
