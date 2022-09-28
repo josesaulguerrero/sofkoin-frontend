@@ -87,8 +87,6 @@ export class StateService {
     const crytpoAmount = user.cryptos[indexCryptoFound].amount;
     const newCryptoAmount = crytpoAmount - crypto.amount;
 
-    console.log(newCryptoAmount);
-
     if (newCryptoAmount === 0) {
       user.cryptos = user.cryptos.filter(
         (cryp) => cryp.symbol !== crypto.symbol

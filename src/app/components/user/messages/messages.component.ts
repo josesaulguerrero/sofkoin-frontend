@@ -28,6 +28,7 @@ export class MessagesComponent implements OnInit {
   ngOnInit(): void {
     this.getMessages();
     this.messagesListener();
+    this.messageStatusListener();
   }
 
   async getMessages() {
@@ -43,18 +44,8 @@ export class MessagesComponent implements OnInit {
     let messageSelected = this.messages?.filter(
       (message) => message.messageId === messageId
     )[0];
-    let commandPublishOffer: commandPublishP2POffer = {
-      marketId: messageSelected?.marketId as string,
-      publisherId: messageSelected?.receiverId as string,
-      targetAudienceId: messageSelected?.senderId as string,
-      cryptoSymbol: messageSelected?.proposalCryptoSymbol as string,
-      offerCryptoAmount: messageSelected?.proposalCryptoAmount as number,
-      offerCryptoPrice: messageSelected?.proposalCryptoPrice as number,
-    };
 
     let token: string = localStorage.getItem('token') as string;
-
-    console.log(commandPublishOffer);
 
     let commandChangeMessageStatus: commandChangeMessageStatus = {
       receiverId: messageSelected?.receiverId as string,
@@ -63,27 +54,16 @@ export class MessagesComponent implements OnInit {
       newStatus: 'ACCEPTED',
     };
 
-    this.alphaRequest.publishOfferMethod(commandPublishOffer, token).subscribe({
-      next: (response) => {
-        console.log(response);
-
-        this.alphaRequest
-          .updateMessageMethod(commandChangeMessageStatus, token)
-          .subscribe({
-            next: (data) => {
-              console.log(data);
-            },
-            error: (err) => {
-              console.log(err);
-            },
-          });
-      },
-      error: (err: ErrorModel) => {
-        alert(err.error.errorMessage);
-      },
-    });
-
-    console.log(commandChangeMessageStatus);
+    this.alphaRequest
+      .updateMessageMethod(commandChangeMessageStatus, token)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   async rejectOffer(messageId: string) {
@@ -118,6 +98,23 @@ export class MessagesComponent implements OnInit {
       .subscribe({
         next: (messageSaved) => {
           this.messages?.push(messageSaved);
+        },
+      });
+  }
+
+  async messageStatusListener() {
+    this.socketService
+      .offerMessageStatusChangedListener(
+        localStorage.getItem('userId') as string
+      )
+      .subscribe({
+        next: (statusChanged) => {
+          this.messages = this.messages?.map((message) => {
+            if (message.messageId === statusChanged.messageId) {
+              return statusChanged;
+            }
+            return message;
+          });
         },
       });
   }
