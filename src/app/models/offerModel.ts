@@ -3,6 +3,6 @@ export type OfferModel = {
   publisherId: string;
   targetAudienceId: string;
   cryptoSymbol: string;
-  cryptoAmount: string;
-  cryptoPrice: string;
+  cryptoAmount: number;
+  cryptoPrice: number;
 };

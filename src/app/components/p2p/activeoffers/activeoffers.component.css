@@ -26,7 +26,7 @@ p {
 div p {
   padding-top: 7px;
   padding-bottom: 7px;
-  width: 17vw;
+  width: 13vw;
   text-align: center;
 }
 section {
@@ -36,7 +36,7 @@ button {
   font-weight: 600;
   color: aliceblue;
   height: 3vw;
-  width: 15vw;
+  width: 12vw;
   cursor: pointer;
   margin-left: 1vw;
   margin-right: 1vw;

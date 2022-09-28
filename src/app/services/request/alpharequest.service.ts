@@ -1,7 +1,7 @@
 import { commandPublishP2POffer } from 'src/app/models/commands/commandPublishP2POffer';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TokenResponse } from 'src/app/models/tokenResponseModel';
 import { commandFundWallet } from 'src/app/models/commands/commandFundWallet';
 import { TradeTransactionCommited } from 'src/app/models/events/TradeTransactionCommited';
@@ -17,8 +17,8 @@ export class RequestService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  host: string = 'https://sofkoin-alpha-1117.herokuapp.com';
-  // host: string = 'http://localhost:8070';
+  // host: string = 'https://sofkoin-alpha-1117.herokuapp.com';
+  host: string = 'http://localhost:8070';
 
   signUpMethod(command: any): Observable<Object> {
     return this.client.post<any>(
