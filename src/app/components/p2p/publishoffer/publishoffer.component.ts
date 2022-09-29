@@ -1,8 +1,6 @@
 import { commandPublishP2POffer } from './../../../models/commands/commandPublishP2POffer';
 import { UserCryptosList } from './../../../models/CryptoUsrList';
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { CryptoPriceModel } from 'src/app/models/CryptoPriceModel';
 import { UserModel } from 'src/app/models/UserModel';
 import { StateService } from 'src/app/services/state/state.service';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
@@ -30,8 +28,6 @@ export class PublishofferComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUser();
     this.getCurrentMarket();
-
-    console.log(this.user.cryptos.length);
   }
 
   public getCurrentUser() {
@@ -67,18 +63,21 @@ export class PublishofferComponent implements OnInit {
         .subscribe({
           next: () => {
             alert('The offer was successfully publish.');
+            this.cleanInputs();
           },
           error: (err: ErrorModel) => {
             alert(err.error.errorMessage);
+            this.cleanInputs();
           },
         });
-      this.offerCryptoAmount = NaN;
-      this.offerCryptoPrice = NaN;
-      this.offerUsdCash = NaN;
-      const select = document.getElementById(
-        'userCryptos'
-      ) as HTMLSelectElement;
-      select.selectedIndex = 0;
     }
+  }
+
+  cleanInputs() {
+    this.offerCryptoAmount = NaN;
+    this.offerCryptoPrice = NaN;
+    this.offerUsdCash = NaN;
+    const select = document.getElementById('userCryptos') as HTMLSelectElement;
+    select.selectedIndex = 0;
   }
 }

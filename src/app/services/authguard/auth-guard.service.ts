@@ -21,7 +21,7 @@ export class AuthGuardService implements CanActivate {
     if (this.isAuthenticated()) {
       return true;
     }
-    if (localStorage.getItem('token') !== '') {
+    if (!localStorage.getItem('token')) {
       this.alphaRequest.logout(
         { userId: localStorage.getItem('userId') },
         localStorage.getItem('token') as string

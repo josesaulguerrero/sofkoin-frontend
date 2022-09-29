@@ -74,7 +74,7 @@ export class HeaderComponent implements OnInit {
         { userId: localStorage.getItem('userId') },
         localStorage.getItem('token') as string
       )
-      .subscribe((data) => console.log(data));
+      .subscribe();
     this.auth.logOut();
   }
 }

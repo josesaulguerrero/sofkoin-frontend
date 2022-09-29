@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable } from 'rxjs';
-import { TokenResponse } from 'src/app/models/tokenResponseModel';
-import { commandFundWallet } from 'src/app/models/commands/commandFundWallet';
+import { Observable } from 'rxjs';
 import { UserModel } from 'src/app/models/UserModel';
-import { UserCryptosList } from 'src/app/models/CryptoUsrList';
-import { CryptoPrice } from 'src/app/models/cryptoprice';
 import { CryptoPriceModel } from 'src/app/models/CryptoPriceModel';
 import { MarketModel } from 'src/app/models/marketmodel';
 @Injectable({
@@ -16,8 +12,8 @@ export class BetarequestService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
-  host: string = 'https://sofkoin-beta-1117.herokuapp.com';
-  // host: string = 'http://localhost:8080';
+  // host: string = 'https://sofkoin-beta-11317.herokuapp.com';
+  host: string = 'http://localhost:8080';
 
   getUserByIdMethod(id: string): Observable<UserModel> {
     return this.client.get<UserModel>(this.host + '/view/user/' + id);

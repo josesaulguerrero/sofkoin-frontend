@@ -7,6 +7,8 @@ import { commandFundWallet } from 'src/app/models/commands/commandFundWallet';
 import { TradeTransactionCommited } from 'src/app/models/events/TradeTransactionCommited';
 import { commandCommitTradeTransaction } from 'src/app/models/commands/commandCommitTradeTransaction';
 import { walletFunded } from 'src/app/models/events/walletFunded';
+import { commandCommitP2PTransaction } from 'src/app/models/commands/commandCommitP2PTransaction';
+import { p2pTransactionCommited } from 'src/app/models/events/p2pTransactionCommited';
 
 @Injectable({
   providedIn: 'root',
@@ -45,14 +47,20 @@ export class RequestService {
     });
   }
 
-  p2pTransactionMethod(command: any, token: string): Observable<Object> {
-    console.log(command);
-    return this.client.post<any>(this.host + '/transaction/p2p', command, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    });
+  p2pTransactionMethod(
+    command: commandCommitP2PTransaction,
+    token: string
+  ): Observable<Array<p2pTransactionCommited>> {
+    return this.client.post<Array<p2pTransactionCommited>>(
+      this.host + '/transaction/p2p',
+      command,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }),
+      }
+    );
   }
 
   tradeTransactionMethod(

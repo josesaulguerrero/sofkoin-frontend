@@ -5,6 +5,9 @@ import { BetarequestService } from 'src/app/services/request/betarequest.service
 import { StateService } from 'src/app/services/state/state.service';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { SocketService } from 'src/app/services/socket/socket.service';
+import { UserModel } from 'src/app/models/UserModel';
+import { UserCryptosList } from 'src/app/models/CryptoUsrList';
+import { count } from 'rxjs';
 @Component({
   selector: 'app-activeoffers',
   templateUrl: './activeoffers.component.html',
@@ -21,12 +24,18 @@ export class ActiveoffersComponent implements OnInit {
     private socketService: SocketService
   ) {}
 
+  user?: UserModel;
   offers: OfferModel[] = [];
 
   ngOnInit(): void {
     this.getMarket();
     this.deleteOfferListener();
     this.publishOfferListener();
+    this.getCurrentUser();
+  }
+
+  getCurrentUser() {
+    this.state.user.subscribe((currentUser) => (this.user = currentUser));
   }
 
   async deleteOfferListener() {
@@ -160,10 +169,26 @@ export class ActiveoffersComponent implements OnInit {
         )
         .subscribe({
           next: (response) => {
-            console.log(response);
-            this.offers = this.offers.filter(function (e) {
-              return e.offerId !== offer.offerId;
-            });
+            const isBuying = response.some(
+              (res) => res.transactionType === 'BUY'
+            );
+
+            if (this.user && isBuying) {
+              const event = response[0];
+
+              const crypto: UserCryptosList = {
+                symbol: event.cryptoSymbol,
+                amount: event.cryptoAmount,
+                priceUsd: event.cryptoPrice,
+              };
+
+              this.offers = this.offers.filter(function (e) {
+                return e.offerId !== offer.offerId;
+              });
+
+              this.state.buyCryptoEvent(event.cash, crypto, this.user);
+              alert('You bought successfully this offer.');
+            }
           },
           error: (err: ErrorModel) => {
             if (

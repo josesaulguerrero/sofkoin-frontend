@@ -123,7 +123,7 @@ export class BuyComponent implements OnInit {
             amount: buyEvent.cryptoAmount,
             priceUsd: buyEvent.cryptoPrice,
           };
-          this.state.buyCryptoEvent(data[0].cash, crypto, this.user);
+          this.state.buyCryptoEvent(buyEvent.cash, crypto, this.user);
           alert('You successfully bought ' + this.cryptoSelected);
         }
 

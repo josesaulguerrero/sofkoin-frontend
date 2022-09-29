@@ -10,10 +10,7 @@ import { ErrorModel } from 'src/app/models/errorModel';
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
-  constructor(
-    private alphaRequest: RequestService,
-    private betaRequest: BetarequestService
-  ) {}
+  constructor(private betaRequest: BetarequestService) {}
   users?: UserModel[];
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
@@ -24,7 +21,6 @@ export class UsersComponent implements OnInit {
       next: (getusers) => {
         if (getusers) {
           this.users = getusers;
-          console.log(getusers);
         }
       },
       error: (err: ErrorModel) => {

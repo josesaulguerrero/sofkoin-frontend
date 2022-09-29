@@ -36,63 +36,75 @@ export const routes: Routes = [
     path: 'main',
     component: MainComponent,
     canActivate: [AuthGuardService],
-
     children: [
       {
         path: 'user',
         component: UserComponent,
+        canActivate: [AuthGuardService],
         children: [
           {
             path: 'Transactions',
             component: TransactionsComponent,
+            canActivate: [AuthGuardService],
           },
           {
             path: 'Profile',
             component: ProfileComponent,
+            canActivate: [AuthGuardService],
           },
           {
             path: 'Activity',
             component: ActivityComponent,
+            canActivate: [AuthGuardService],
           },
           {
             path: 'Messages',
             component: MessagesComponent,
+            canActivate: [AuthGuardService],
           },
         ],
       },
       {
         path: 'trade',
         component: TradeComponent,
+        canActivate: [AuthGuardService],
         children: [
           {
             path: 'Fund',
             component: RechargeComponent,
+            canActivate: [AuthGuardService],
           },
           {
             path: 'Buy',
             component: BuyComponent,
+            canActivate: [AuthGuardService],
           },
           {
             path: 'Sell',
             component: SellComponent,
+            canActivate: [AuthGuardService],
           },
         ],
       },
       {
         path: 'p2p',
         component: P2pComponent,
+        canActivate: [AuthGuardService],
         children: [
           {
             path: 'Active_Offers',
             component: ActiveoffersComponent,
+            canActivate: [AuthGuardService],
           },
           {
             path: 'Publish_Offer',
             component: PublishofferComponent,
+            canActivate: [AuthGuardService],
           },
           {
             path: 'Users',
             component: UsersComponent,
+            canActivate: [AuthGuardService],
           },
         ],
       },
