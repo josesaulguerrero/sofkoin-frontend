@@ -10,7 +10,7 @@ export class StateService {
   initialState = {
     loggedIn: false,
     authenticatedPerson: {},
-    token: {},
+    token: '',
   };
 
   userState: UserModel = {

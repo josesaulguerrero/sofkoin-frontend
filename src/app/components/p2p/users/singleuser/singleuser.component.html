@@ -12,23 +12,13 @@
     </button>
     <br />
   </div>
-  <form
-    name="offerform"
-    id="offerform{{ singleuser!.userId }}"
-    class="hiddenform">
+  <form name="offerform" id="offerform{{ singleuser!.userId }}" class="hiddenform">
     <p id="buymessage">Buy {{ currentcoin }}:</p>
-    <input
-      [(ngModel)]="newammount"
-      [ngModelOptions]="{ standalone: true }"
-      type="number"
+    <input [(ngModel)]="newammount" [ngModelOptions]="{ standalone: true }" type="number"
       placeholder="Offer an amount" />
-    <input
-      [(ngModel)]="newprice"
-      [ngModelOptions]="{ standalone: true }"
-      type="number"
-      placeholder="Offer a price" />
+    <input [(ngModel)]="newprice" [ngModelOptions]="{ standalone: true }" type="number" placeholder="Offer a price" />
     <div>
-      <p class="Total">Total: ${{ total }} USD</p>
+      <p class="Total">Total: ${{ total | number : '1.0-2' }} USD</p>
     </div>
     <button class="sendofferbutton" (click)="buyOffer()">
       Send Offer Message

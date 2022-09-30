@@ -64,6 +64,13 @@ export class SingleuserComponent implements OnInit {
   }
   buyOffer() {
     debugger;
+    const total = Number(this.total);
+    if (total < 5 || total > 100000) {
+      alert(
+        'Error: The offer needs a minimum value of 5USD and a maximum value of 100.000USD'
+      );
+      return;
+    }
     if (this.validation()) {
       this.request
         .saveMessageMethod(

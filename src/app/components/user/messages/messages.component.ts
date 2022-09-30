@@ -60,8 +60,8 @@ export class MessagesComponent implements OnInit {
         next: (data) => {
           console.log(data);
         },
-        error: (err) => {
-          console.log(err);
+        error: (err: ErrorModel) => {
+          console.error(err.error.errorMessage);
         },
       });
   }
@@ -87,7 +87,7 @@ export class MessagesComponent implements OnInit {
           console.log(data);
         },
         error: (err) => {
-          console.log(err);
+          alert(err);
         },
       });
   }

@@ -28,10 +28,10 @@ export class ProfileComponent implements OnInit {
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
     this.asyncgetUserData();
-    this.updayeProfileUser();
+    this.updateProfileUser();
   }
 
-  updayeProfileUser() {
+  updateProfileUser() {
     this.state.user.subscribe((currentUser) => {
       this.cash = currentUser.currentCash;
       this.usercryptolist = currentUser.cryptos;

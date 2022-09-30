@@ -22,10 +22,12 @@ export class AuthGuardService implements CanActivate {
       return true;
     }
     if (!localStorage.getItem('token')) {
-      this.alphaRequest.logout(
-        { userId: localStorage.getItem('userId') },
-        localStorage.getItem('token') as string
-      );
+      this.alphaRequest
+        .logout(
+          { userId: localStorage.getItem('userId') },
+          localStorage.getItem('token') as string
+        )
+        .subscribe();
     }
     localStorage.clear();
     this.router.navigate(['']);
