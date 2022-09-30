@@ -9,8 +9,8 @@ export class StompService extends RxStomp {
 
   constructor() {
     super();
-    // this.WSEndpoint = 'wss://sofkoin-gamma-1117.herokuapp.com/ws';
-    this.WSEndpoint = 'ws://localhost:8090/ws';
+    this.WSEndpoint = 'wss://sofkoin-gamma-1117.herokuapp.com/ws';
+    //  this.WSEndpoint = 'ws://localhost:8090/ws';
     super.configure(this.getConfig());
   }
 
