@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { commandChangeMessageStatus } from 'src/app/models/commands/commandChangeMessageStatus';
-import { commandPublishP2POffer } from 'src/app/models/commands/commandPublishP2POffer';
 import { ErrorModel } from 'src/app/models/errorModel';
 import { MessagesList } from 'src/app/models/MessagesList';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { SocketService } from 'src/app/services/socket/socket.service';
-import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
   selector: 'app-messages',
@@ -17,7 +15,6 @@ export class MessagesComponent implements OnInit {
   constructor(
     private betaRequest: BetarequestService,
     private alphaRequest: RequestService,
-    private state: StateService,
     private socketService: SocketService
   ) {}
 

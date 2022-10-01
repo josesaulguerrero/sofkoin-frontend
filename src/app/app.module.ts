@@ -29,6 +29,9 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AuthGuardService } from './services/authguard/auth-guard.service';
 import { LoadscreenComponent } from './components/loadscreen/loadscreen/loadscreen.component';
 import { SingleuserComponent } from './components/p2p/users/singleuser/singleuser.component';
+import { StoreModule } from '@ngrx/store';
+import { userReducer } from './services/state/ngrx/reducers/user-reducer';
+import { marketReducer } from './services/state/ngrx/reducers/market-reducer';
 
 @NgModule({
   declarations: [
@@ -63,6 +66,7 @@ import { SingleuserComponent } from './components/p2p/users/singleuser/singleuse
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     AppRoutingModule,
+    StoreModule.forRoot({ user: userReducer, market: marketReducer }),
   ],
   providers: [AuthGuardService],
   bootstrap: [AppComponent],

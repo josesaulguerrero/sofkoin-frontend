@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RxStomp, RxStompConfig } from '@stomp/rx-stomp';
+import { environment } from '../../../environments/environment.dev';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +10,7 @@ export class StompService extends RxStomp {
 
   constructor() {
     super();
-    this.WSEndpoint = 'wss://sofkoin-gamma-1117.herokuapp.com/ws';
-    // this.WSEndpoint = 'ws://localhost:8090/ws';
+    this.WSEndpoint = environment.gammaURl;
     super.configure(this.getConfig());
   }
 

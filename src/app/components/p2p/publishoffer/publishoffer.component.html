@@ -1,4 +1,4 @@
-<div *ngIf="user.cryptos.length != 0; else elseBlock">
+<div *ngIf="userCryptos.length != 0; else elseBlock">
   <div class="container">
     <form (submit)="publishOffer()">
       <h2>Publish a global offer:</h2>
@@ -8,7 +8,7 @@
           id="offerCryptoAmount" placeholder="Insert amount to sell" type="number" required />
         <select name="cryptos" id="userCryptos" [(ngModel)]="selectedCrypto">
           <option disabled selected>--</option>
-          <option *ngFor="let crypto of user.cryptos" [ngValue]="crypto">
+          <option *ngFor="let crypto of userCryptos" [ngValue]="crypto">
             {{ crypto.symbol }}
           </option>
         </select>

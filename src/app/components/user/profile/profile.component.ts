@@ -1,65 +1,48 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ErrorModel } from 'src/app/models/errorModel';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { BetarequestService } from 'src/app/services/request/betarequest.service';
-import { StateService } from 'src/app/services/state/state.service';
-import { UserCryptosList } from 'src/app/models/CryptoUsrList';
+import { Store } from '@ngrx/store';
+import { selectProfileUserData } from 'src/app/services/state/ngrx/selectors/user-selectors';
+import { UserCrypto } from 'src/app/models/UserCrypto';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  constructor(
-    private betarequest: BetarequestService,
-    private state: StateService
-  ) {}
+  constructor(private store: Store) {}
 
-  userIsLoaded: boolean = false;
+  // Profile Customize Selector
+  profileDataSelector = this.store.select(selectProfileUserData);
 
-  name: string = '';
-  surname: string = '';
+  // Component necessary data
+  avatarUrl: string = '';
+  fullName: string = '';
   email: string = '';
-  phone: string = '';
-  cash?: number;
-  avatarurl: string = '';
-  usercryptolist?: UserCryptosList[];
+  phoneNumber: string = '';
+  currentCash: number = 0;
+  cryptos: UserCrypto[] = [];
+
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
-    this.asyncgetUserData();
-    this.updateProfileUser();
+    this.getProfileData();
   }
 
-  updateProfileUser() {
-    this.state.user.subscribe((currentUser) => {
-      this.cash = currentUser.currentCash;
-      this.usercryptolist = currentUser.cryptos;
-    });
-  }
-
-  async asyncgetUserData() {
-    let userId = localStorage.getItem('userId')!;
-    this.betarequest.getUserByIdMethod(userId).subscribe({
-      next: (user) => {
-        if (user) {
-          this.state.user.next(user);
-          this.name = this.state.user.value.fullName;
-          this.surname = '';
-          this.email = this.state.user.value.email;
-          this.phone = this.state.user.value.phoneNumber;
-          this.cash = this.state.user.value.currentCash;
-          this.avatarurl = this.state.user.value.avatarUrl;
-          this.usercryptolist = this.state.user.value.cryptos;
-          this.userIsLoaded = true;
+  getProfileData() {
+    this.profileDataSelector.subscribe((profile) => {
+      this.avatarUrl = profile.avatarUrl;
+      this.fullName = profile.fullName;
+      this.email = profile.email;
+      this.phoneNumber = profile.phoneNumber;
+      this.currentCash = profile.currentCash;
+      this.cryptos = profile.cryptos;
+      if (this.cryptos.length) {
+        try {
           this.renderPie();
-        }
-      },
-      error: (err: ErrorModel) => {
-        alert('The user is not registered: ' + err.error.errorMessage);
-      },
+        } catch (_error) {}
+      }
     });
   }
+
   renderPie() {
     var canvas = document.getElementById('can') as HTMLCanvasElement;
     var ctx = canvas.getContext('2d')!;
@@ -67,7 +50,7 @@ export class ProfileComponent implements OnInit {
     var data: number[] = [];
     var labels: string[] = [];
 
-    this.usercryptolist?.forEach((crypto) => {
+    this.cryptos.forEach((crypto) => {
       data.push(crypto.priceUsd);
       labels.push(crypto.symbol);
     });

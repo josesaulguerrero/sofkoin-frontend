@@ -10,11 +10,7 @@ import { StateService } from 'src/app/services/state/state.service';
   styleUrls: ['./transactions.component.css'],
 })
 export class TransactionsComponent implements OnInit {
-  constructor(
-    private route: Router,
-    private state: StateService,
-    private betaRequest: BetarequestService
-  ) {}
+  constructor(private betaRequest: BetarequestService) {}
   transactions?: TransactionsList[];
   isLoaded: boolean = false;
 

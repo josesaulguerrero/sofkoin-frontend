@@ -1,61 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ErrorModel } from 'src/app/models/errorModel';
 import { OfferModel } from 'src/app/models/offerModel';
-import { BetarequestService } from 'src/app/services/request/betarequest.service';
-import { StateService } from 'src/app/services/state/state.service';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { SocketService } from 'src/app/services/socket/socket.service';
-import { UserModel } from 'src/app/models/UserModel';
-import { UserCryptosList } from 'src/app/models/CryptoUsrList';
-import { count } from 'rxjs';
+import { UserCrypto } from 'src/app/models/UserCrypto';
+import { Store } from '@ngrx/store';
+import { buyCryptoAction } from 'src/app/services/state/ngrx/actions/user/buyCryptoAction';
+import { selectMarket } from 'src/app/services/state/ngrx/selectors/market-selectors';
+import { MarketModel } from 'src/app/models/marketmodel';
+import { publishOfferAction } from 'src/app/services/state/ngrx/actions/market/publishOfferAction';
+import { deleteOfferAction } from 'src/app/services/state/ngrx/actions/market/deleteOfferAction';
+import { Observable, Subscription } from 'rxjs';
+import { BetarequestService } from 'src/app/services/request/betarequest.service';
+import { getMarketAction } from 'src/app/services/state/ngrx/actions/market/getMarketAction';
+
 @Component({
   selector: 'app-activeoffers',
   templateUrl: './activeoffers.component.html',
   styleUrls: ['./activeoffers.component.css'],
 })
-export class ActiveoffersComponent implements OnInit {
+export class ActiveoffersComponent implements OnInit, OnDestroy {
   private CONFIRMATION_MSG_BUY = 'Are you sure you want to buy this offer?';
   private CONFIRMATION_MSG_DEL = 'Are you sure you want to delete this offer?';
 
   constructor(
-    private state: StateService,
-    private betarequest: BetarequestService,
+    private store: Store,
     private alphaservice: RequestService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private betarequest: BetarequestService
   ) {}
 
-  user?: UserModel;
-  offers: OfferModel[] = [];
+  marketSelector = this.store.select(selectMarket);
+  market?: MarketModel;
+  deleteOfferSocket?: Subscription;
+  publishOfferSocket?: Subscription;
 
   ngOnInit(): void {
     this.getMarket();
+    this.getCurrentMarket();
     this.deleteOfferListener();
     this.publishOfferListener();
-    this.getCurrentUser();
   }
 
-  getCurrentUser() {
-    this.state.user.subscribe((currentUser) => (this.user = currentUser));
+  ngOnDestroy(): void {
+    this.deleteOfferSocket?.unsubscribe();
+    this.publishOfferSocket?.unsubscribe();
   }
 
-  async deleteOfferListener() {
-    this.socketService.P2POfferDeletedListener().subscribe({
-      next: (offerToBeDeleted) => {
-        this.offers = this.offers.filter(
-          (offer) => offer.offerId !== offerToBeDeleted.offerId
-        );
-      },
-    });
-  }
-
-  async publishOfferListener() {
-    this.socketService
-      .P2POfferPublished(localStorage.getItem('userId') as string)
-      .subscribe({
-        next: (offerPublished) => {
-          this.offers.unshift(offerPublished);
-        },
-      });
+  public getCurrentMarket() {
+    this.marketSelector.subscribe((market) => (this.market = market));
   }
 
   getMarket() {
@@ -63,9 +56,13 @@ export class ActiveoffersComponent implements OnInit {
       next: (markets) => {
         const market = markets[0];
 
-        this.state.market.next(market);
-
-        this.offers = market.offers.reverse();
+        this.store.dispatch(
+          getMarketAction({
+            marketId: market.marketId,
+            offers: market.offers.reverse(),
+            cryptoSymbols: market.cryptoSymbols,
+          })
+        );
       },
       error: (err: ErrorModel) => {
         if (
@@ -79,17 +76,43 @@ export class ActiveoffersComponent implements OnInit {
       },
     });
   }
+
+  async deleteOfferListener() {
+    this.deleteOfferSocket = this.socketService
+      .P2POfferDeletedListener()
+      .subscribe({
+        next: (offerToBeDeleted) => {
+          if (this.market) {
+            this.store.dispatch(deleteOfferAction({ offer: offerToBeDeleted }));
+          }
+        },
+      });
+  }
+
+  async publishOfferListener() {
+    this.publishOfferSocket = this.socketService
+      .P2POfferPublished(localStorage.getItem('userId') as string)
+      .subscribe({
+        next: (offerPublished) => {
+          this.store.dispatch(publishOfferAction({ offer: offerPublished }));
+        },
+      });
+  }
+
   deleteoffer(offer: OfferModel) {
-    if (confirm(this.CONFIRMATION_MSG_DEL)) {
+    if (confirm(this.CONFIRMATION_MSG_DEL) && this.market) {
       this.alphaservice
         .deleteOfferMethod(
           {
-            marketId: this.state.market.value.marketId,
+            marketId: this.market.marketId,
             offerId: offer.offerId,
           },
           localStorage.getItem('token')!
         )
         .subscribe({
+          next: () => {
+            alert('Offer succesfully deleted');
+          },
           error: (err: ErrorModel) => {
             if (
               err.error.errorMessage === null ||
@@ -103,6 +126,7 @@ export class ActiveoffersComponent implements OnInit {
         });
     }
   }
+
   showOffer(offer: OfferModel): Boolean {
     let currentUserId = localStorage.getItem('userId')!;
 
@@ -115,6 +139,7 @@ export class ActiveoffersComponent implements OnInit {
     }
     return false;
   }
+
   changeOfferclass(offer: OfferModel): Boolean {
     let currentUserId = localStorage.getItem('userId')!;
     let currentoffer = document.getElementById(offer.offerId);
@@ -135,6 +160,7 @@ export class ActiveoffersComponent implements OnInit {
     }
     return false;
   }
+
   showasmine(publisherId: string): Boolean {
     let currentUserId = localStorage.getItem('userId')!;
     if (currentUserId === publisherId) {
@@ -142,6 +168,7 @@ export class ActiveoffersComponent implements OnInit {
     }
     return false;
   }
+
   showasgeneral(offer: OfferModel): Boolean {
     let currentUserId = localStorage.getItem('userId')!;
     if (offer.targetAudienceId === '-' && offer.publisherId !== currentUserId) {
@@ -149,6 +176,7 @@ export class ActiveoffersComponent implements OnInit {
     }
     return false;
   }
+
   showasforme(publisherId: string): Boolean {
     let currentUserId = localStorage.getItem('userId')!;
     if (currentUserId === publisherId) {
@@ -156,13 +184,14 @@ export class ActiveoffersComponent implements OnInit {
     }
     return false;
   }
+
   buyoffer(offer: OfferModel) {
-    if (confirm(this.CONFIRMATION_MSG_BUY)) {
+    if (confirm(this.CONFIRMATION_MSG_BUY) && this.market) {
       this.alphaservice
         .p2pTransactionMethod(
           {
             buyerId: localStorage.getItem('userId')!,
-            marketId: this.state.market.value.marketId,
+            marketId: this.market.marketId,
             offerId: offer.offerId,
           },
           localStorage.getItem('token')!
@@ -173,20 +202,18 @@ export class ActiveoffersComponent implements OnInit {
               (res) => res.transactionType === 'BUY'
             );
 
-            if (this.user && isBuying) {
+            if (isBuying && this.market) {
               const event = response[0];
 
-              const crypto: UserCryptosList = {
+              const crypto: UserCrypto = {
                 symbol: event.cryptoSymbol,
                 amount: event.cryptoAmount,
                 priceUsd: event.cryptoPrice,
               };
 
-              this.offers = this.offers.filter(function (e) {
-                return e.offerId !== offer.offerId;
-              });
-
-              this.state.buyCryptoEvent(event.cash, crypto, this.user);
+              this.store.dispatch(
+                buyCryptoAction({ cash: event.cash, crypto })
+              );
               alert('You bought successfully this offer.');
             }
           },

@@ -1,26 +1,33 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserModel } from 'src/app/models/UserModel';
-import { UserCryptosList } from 'src/app/models/CryptoUsrList';
+import { UserCrypto } from 'src/app/models/UserCrypto';
 import { ErrorModel } from 'src/app/models/errorModel';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
-import { BetarequestService } from 'src/app/services/request/betarequest.service';
-import { StateService } from 'src/app/services/state/state.service';
 import { HostListener } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { MarketModel } from 'src/app/models/marketmodel';
+import { selectMarket } from 'src/app/services/state/ngrx/selectors/market-selectors';
 @Component({
   selector: 'app-singleuser',
   templateUrl: './singleuser.component.html',
   styleUrls: ['./singleuser.component.css'],
 })
 export class SingleuserComponent implements OnInit {
-  constructor(
-    private request: RequestService,
-    private state: StateService,
-    private betarequest: BetarequestService
-  ) {}
+  @Input() singleuser?: UserModel;
+  usercoins?: UserCrypto[];
+  message: string = '';
+  newammount: string = '';
+  newprice: string = '';
+  currentcoin: string = '';
+  total: string = '';
+
+  marketSelector = this.store.select(selectMarket);
+  market?: MarketModel;
+
+  constructor(private request: RequestService, private store: Store) {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
-    this.getMarket();
     if (
       this.singleuser?.cryptos !== undefined &&
       this.singleuser?.cryptos.length >= 1
@@ -28,6 +35,11 @@ export class SingleuserComponent implements OnInit {
       this.usercoins = this.singleuser.cryptos;
     }
   }
+
+  public getCurrentMarket() {
+    this.marketSelector.subscribe((market) => (this.market = market));
+  }
+
   @HostListener('keyup')
   onkeypress() {
     if (this.newammount !== '' && this.newprice !== '') {
@@ -36,13 +48,6 @@ export class SingleuserComponent implements OnInit {
       this.total = String(amount * price);
     }
   }
-  @Input() singleuser?: UserModel;
-  usercoins?: UserCryptosList[];
-  message: string = '';
-  newammount: string = '';
-  newprice: string = '';
-  currentcoin: string = '';
-  total: string = '';
   makeOffer(cryptosymbol: string) {
     let offerForm = document.getElementById(
       'offerform' + this.singleuser!.userId
@@ -71,11 +76,11 @@ export class SingleuserComponent implements OnInit {
       );
       return;
     }
-    if (this.validation()) {
+    if (this.validation() && this.market) {
       this.request
         .saveMessageMethod(
           {
-            marketId: localStorage.getItem('marketId'),
+            marketId: this.market.marketId,
             senderId: localStorage.getItem('userId')!,
             receiverId: this.singleuser?.userId,
             cryptoSymbol: this.currentcoin,
@@ -110,30 +115,6 @@ export class SingleuserComponent implements OnInit {
             }
           },
         });
-    }
-  }
-  getMarket() {
-    if (
-      localStorage.getItem('marketId') === null ||
-      localStorage.getItem('marketId') === undefined
-    ) {
-      this.betarequest.geAllMarketsMethod().subscribe({
-        next: (market) => {
-          localStorage.setItem('marketId', market[0].marketId);
-          console.log('conected to market');
-          this.state.market.next(market[0]);
-        },
-        error: (err: ErrorModel) => {
-          if (
-            err.error.errorMessage === null ||
-            err.error.errorMessage === undefined
-          ) {
-            alert('Something went wrong with the market');
-          } else {
-            alert(err.error.errorMessage);
-          }
-        },
-      });
     }
   }
 

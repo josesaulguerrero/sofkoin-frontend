@@ -9,6 +9,8 @@ import { commandCommitTradeTransaction } from 'src/app/models/commands/commandCo
 import { walletFunded } from 'src/app/models/events/walletFunded';
 import { commandCommitP2PTransaction } from 'src/app/models/commands/commandCommitP2PTransaction';
 import { p2pTransactionCommited } from 'src/app/models/events/p2pTransactionCommited';
+import { environment } from '../../../environments/environment.dev';
+import { publishP2POffer } from 'src/app/models/events/publishP2POffer';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +21,7 @@ export class RequestService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  host: string = 'https://sofkoin-alpha-1117.herokuapp.com';
-  // host: string = 'http://localhost:8070';
+  host: string = environment.alphaURl;
 
   signUpMethod(command: any): Observable<Object> {
     return this.client.post<any>(
@@ -120,17 +121,19 @@ export class RequestService {
   publishOfferMethod(
     command: commandPublishP2POffer,
     token: string
-  ): Observable<Object> {
-    return this.client.post<any>(this.host + '/market/publish/offer', command, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    });
+  ): Observable<Array<publishP2POffer>> {
+    return this.client.post<Array<publishP2POffer>>(
+      this.host + '/market/publish/offer',
+      command,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }),
+      }
+    );
   }
   deleteOfferMethod(command: any, token: string): Observable<Object> {
-    console.log(command);
-
     return this.client.patch<any>(this.host + '/market/delete/offer', command, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

@@ -1,11 +1,14 @@
 import { commandPublishP2POffer } from './../../../models/commands/commandPublishP2POffer';
-import { UserCryptosList } from './../../../models/CryptoUsrList';
+import { UserCrypto } from '../../../models/UserCrypto';
 import { Component, OnInit } from '@angular/core';
-import { UserModel } from 'src/app/models/UserModel';
-import { StateService } from 'src/app/services/state/state.service';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { MarketModel } from 'src/app/models/marketmodel';
 import { ErrorModel } from 'src/app/models/errorModel';
+import { Store } from '@ngrx/store';
+import { selectUserCryptos } from 'src/app/services/state/ngrx/selectors/user-selectors';
+import { selectMarket } from 'src/app/services/state/ngrx/selectors/market-selectors';
+import { publishOfferAction } from 'src/app/services/state/ngrx/actions/market/publishOfferAction';
+import { OfferModel } from 'src/app/models/offerModel';
 
 @Component({
   selector: 'app-publishoffer',
@@ -13,29 +16,31 @@ import { ErrorModel } from 'src/app/models/errorModel';
   styleUrls: ['./publishoffer.component.css'],
 })
 export class PublishofferComponent implements OnInit {
-  user!: UserModel;
   offerCryptoPrice?: number;
   offerCryptoAmount?: number;
   offerUsdCash: number = 0;
-  selectedCrypto?: UserCryptosList;
-  market?: MarketModel;
+  selectedCrypto?: UserCrypto;
 
-  constructor(
-    private state: StateService,
-    private alphaRequest: RequestService
-  ) {}
+  userCryptosSelector = this.store.select(selectUserCryptos);
+  marketSelector = this.store.select(selectMarket);
+  market?: MarketModel;
+  userCryptos: UserCrypto[] = [];
+
+  constructor(private store: Store, private alphaRequest: RequestService) {}
 
   ngOnInit(): void {
-    this.getCurrentUser();
+    this.getUserCryptos();
     this.getCurrentMarket();
   }
 
-  public getCurrentUser() {
-    this.state.user.subscribe((currentUser) => (this.user = currentUser));
+  getUserCryptos() {
+    this.userCryptosSelector.subscribe(
+      (cryptos) => (this.userCryptos = cryptos)
+    );
   }
 
   public getCurrentMarket() {
-    this.state.market.subscribe((market) => (this.market = market));
+    this.marketSelector.subscribe((market) => (this.market = market));
   }
 
   calculateOfferCash() {
@@ -50,9 +55,10 @@ export class PublishofferComponent implements OnInit {
         'The offer needs a minimum value of 5USD and a maximum value of 100.000USD'
       );
     } else {
+      const userId: string = localStorage.getItem('userId') as string;
       const newOffer: commandPublishP2POffer = {
         marketId: this.market!.marketId,
-        publisherId: this.user!.userId,
+        publisherId: userId,
         targetAudienceId: '-',
         cryptoSymbol: this.selectedCrypto!.symbol,
         offerCryptoAmount: this.offerCryptoAmount!,
@@ -61,7 +67,18 @@ export class PublishofferComponent implements OnInit {
       this.alphaRequest
         .publishOfferMethod(newOffer, localStorage.getItem('token') as string)
         .subscribe({
-          next: () => {
+          next: (response) => {
+            const publishEvent = response[0];
+            const offer: OfferModel = {
+              offerId: publishEvent.offerId,
+              publisherId: publishEvent.publisherId,
+              targetAudienceId: publishEvent.targetAudienceId,
+              cryptoSymbol: publishEvent.cryptoSymbol,
+              cryptoAmount: publishEvent.cryptoAmount,
+              cryptoPrice: publishEvent.cryptoPrice,
+            };
+
+            this.store.dispatch(publishOfferAction({ offer }));
             alert('The offer was successfully publish.');
             this.cleanInputs();
           },

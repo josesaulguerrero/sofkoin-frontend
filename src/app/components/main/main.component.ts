@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { UserCryptosList } from 'src/app/models/CryptoUsrList';
+import { Store } from '@ngrx/store';
+import { ErrorModel } from 'src/app/models/errorModel';
+import { UserCrypto } from 'src/app/models/UserCrypto';
 import { UserModel } from 'src/app/models/UserModel';
+import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { SocketService } from 'src/app/services/socket/socket.service';
-import { StateService } from 'src/app/services/state/state.service';
+import { logInAction } from 'src/app/services/state/ngrx/actions/user/logInAction';
+import { sellCryptoAction } from 'src/app/services/state/ngrx/actions/user/sellCryptoAction';
+import { selectUser } from 'src/app/services/state/ngrx/selectors/user-selectors';
 
 @Component({
   selector: 'app-main',
@@ -10,12 +15,24 @@ import { StateService } from 'src/app/services/state/state.service';
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
+  userSelector = this.store.select(selectUser);
   user?: UserModel;
-  constructor(private socket: SocketService, private state: StateService) {}
+  userIsLoaded = false;
+
+  constructor(
+    private socket: SocketService,
+    private store: Store,
+    private betarequest: BetarequestService
+  ) {}
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
-    this.getCurrentUser();
     this.connectToP2PTranctionWebSocket();
+    this.asyncgetUserData();
+    this.getCurrentUser();
+  }
+
+  getCurrentUser() {
+    this.userSelector.subscribe((currentUser) => (this.user = currentUser));
   }
 
   connectToP2PTranctionWebSocket() {
@@ -24,7 +41,7 @@ export class MainComponent implements OnInit {
         if (!this.user) return;
 
         if (respose.userId === this.user.userId && respose.type === 'SELL') {
-          const crypto: UserCryptosList = {
+          const crypto: UserCrypto = {
             amount: respose.cryptoAmount,
             priceUsd: respose.cryptoPrice,
             symbol: respose.cryptoSymbol,
@@ -32,7 +49,7 @@ export class MainComponent implements OnInit {
 
           const cash: number = crypto.amount * crypto.priceUsd;
 
-          this.state.sellCryptoEvent(cash, crypto, this.user);
+          this.store.dispatch(sellCryptoAction({ cash, crypto }));
         }
       },
       error: (err) => {
@@ -41,7 +58,33 @@ export class MainComponent implements OnInit {
     });
   }
 
-  getCurrentUser() {
-    this.state.user.subscribe((currentUser) => (this.user = currentUser));
+  async asyncgetUserData() {
+    let userId = localStorage.getItem('userId')!;
+    this.betarequest.getUserByIdMethod(userId).subscribe({
+      next: (user) => {
+        if (user) {
+          this.store.dispatch(
+            logInAction({
+              userId,
+              fullName: user.fullName,
+              email: user.email,
+              phoneNumber: user.phoneNumber,
+              authMethod: '',
+              avatarUrl: user.avatarUrl,
+              currentCash: user.currentCash,
+              messages: user.messages,
+              cryptos: user.cryptos,
+              activities: user.activities,
+              transactions: user.transactions,
+            })
+          );
+
+          this.userIsLoaded = true;
+        }
+      },
+      error: (err: ErrorModel) => {
+        alert('The user is not registered: ' + err.error.errorMessage);
+      },
+    });
   }
 }

@@ -9,4 +9,7 @@ export const environment = {
     measurementId: 'G-QMY0VSFQJ3',
   },
   production: true,
+  alphaURl: 'https://sofkoin-alpha-1117.herokuapp.com',
+  betaURl: 'https://sofkoin-beta-5466.herokuapp.com',
+  gammaURl: 'wss://sofkoin-gamma-1117.herokuapp.com/ws',
 };

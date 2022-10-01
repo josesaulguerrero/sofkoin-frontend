@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --configuration=development",
     "build:dev": "ng build --configuration=development",
     "build:prod": "ng build --configuration=production",
     "predeploy": "npm run build:prod",
@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
     "@auth0/angular-jwt": "^5.0.2",
+    "@ngrx/store": "^14.3.1",
     "@stomp/rx-stomp": "^1.1.4",
     "firebase": "^9.10.0",
     "normalize.css": "^8.0.1",
@@ -54,6 +55,7 @@
     "karma-jasmine-html-reporter": "~2.0.0",
     "prettier": "^2.7.1",
     "prettier-eslint": "^15.0.1",
-    "typescript": "~4.7.2"
+    "typescript": "~4.7.2",
+    "@ngrx/eslint-plugin": "^14.3.1"
   }
 }

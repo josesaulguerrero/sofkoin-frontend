@@ -1,22 +1,8 @@
-<!--Loader div-->
-<div class="loader" *ngIf="!userIsLoaded">
-  <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
-    <circle
-      id="c"
-      fill="none"
-      stroke-width="4"
-      stroke-linecap="round"
-      cx="45"
-      cy="45"
-      r="43" />
-  </svg>
-</div>
-
 <!--Loader div ends-->
 <div class="usertopcontainer">
-  <img class="avatar" src="{{ avatarurl }}" />
+  <img class="avatar" src="{{ avatarUrl }}" />
   <div class="infocontainer">
-    <p class="username">{{ name }} {{ surname }}</p>
+    <p class="username">{{ fullName }}</p>
     <div class="rowcontainer">
       <div class="column">
         <p>Email:</p>
@@ -24,13 +10,13 @@
       </div>
       <div class="column">
         <p>Phone:</p>
-        <p>{{ phone }}</p>
+        <p>{{ phoneNumber }}</p>
       </div>
     </div>
   </div>
   <div class="cash">
     <p>Cash available</p>
-    <p class="cashavalible">${{ cash | number: '1.0-3' }} USD</p>
+    <p class="cashavalible">${{ currentCash| number: '1.0-3' }} USD</p>
   </div>
 </div>
 <div class="ballancecontainer">
@@ -45,11 +31,11 @@
         <p class="columntitle">Amount</p>
         <p class="columntitle">Price in USD</p>
       </div>
-      <div class="row" *ngFor="let usercrypto of usercryptolist">
-        <p class="rowitem">{{ usercrypto.symbol }}</p>
-        <p class="rowitem">{{ usercrypto.amount | number: '1.0-6' }}</p>
+      <div class="row" *ngFor="let crypto of cryptos">
+        <p class="rowitem">{{ crypto.symbol }}</p>
+        <p class="rowitem">{{ crypto.amount | number: '1.0-6' }}</p>
         <p class="rowitem">
-          {{ usercrypto.priceUsd | number: '1.0-3' }}
+          {{ crypto.priceUsd | number: '1.0-3' }}
         </p>
       </div>
     </div>

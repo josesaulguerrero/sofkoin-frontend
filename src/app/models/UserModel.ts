@@ -1,5 +1,5 @@
 import { ActivitiesList } from './activitieslist';
-import { UserCryptosList } from './CryptoUsrList';
+import { UserCrypto } from './UserCrypto';
 import { TransactionsList } from './transactionList';
 import { MessagesList } from './MessagesList';
 export type UserModel = {
@@ -11,7 +11,7 @@ export type UserModel = {
   avatarUrl: string;
   currentCash: number;
   messages: MessagesList[];
-  cryptos: UserCryptosList[];
+  cryptos: UserCrypto[];
   activities: ActivitiesList[];
   transactions: TransactionsList[];
 };

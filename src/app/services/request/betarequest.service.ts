@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UserModel } from 'src/app/models/UserModel';
 import { CryptoPriceModel } from 'src/app/models/CryptoPriceModel';
 import { MarketModel } from 'src/app/models/marketmodel';
+import { environment } from '../../../environments/environment.dev';
 @Injectable({
   providedIn: 'root',
 })
@@ -12,8 +13,7 @@ export class BetarequestService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
-  host: string = 'https://sofkoin-beta-5466.herokuapp.com';
-  // host: string = 'http://localhost:8080';
+  host: string = environment.betaURl;
 
   getUserByIdMethod(id: string): Observable<UserModel> {
     return this.client.get<UserModel>(this.host + '/view/user/' + id);

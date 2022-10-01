@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { delay, interval, mergeMap, repeat, tap } from 'rxjs';
+import { interval, mergeMap } from 'rxjs';
 import { commandCommitTradeTransaction } from 'src/app/models/commands/commandCommitTradeTransaction';
-import { CryptoPrice } from 'src/app/models/cryptoprice';
 import { CryptoPriceModel } from 'src/app/models/CryptoPriceModel';
-import { UserCryptosList } from 'src/app/models/CryptoUsrList';
+import { UserCrypto } from 'src/app/models/UserCrypto';
 import { ErrorModel } from 'src/app/models/errorModel';
-import { UserModel } from 'src/app/models/UserModel';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
-import { StateService } from 'src/app/services/state/state.service';
+import { Store } from '@ngrx/store';
+import { selectUserCryptos } from 'src/app/services/state/ngrx/selectors/user-selectors';
+import { sellCryptoAction } from 'src/app/services/state/ngrx/actions/user/sellCryptoAction';
 
 @Component({
   selector: 'app-sell',
@@ -16,24 +16,27 @@ import { StateService } from 'src/app/services/state/state.service';
   styleUrls: ['./sell.component.css'],
 })
 export class SellComponent implements OnInit {
-  constructor(
-    private requestBeta: BetarequestService,
-    private requestAlpha: RequestService,
-    private state: StateService
-  ) {}
   newAmount?: number;
   cryptoBalanceSelected?: number;
   cryptoSelected: string = '--';
   cryptoSelectedTotalPrice: number = 0;
   cashAvailable?: number;
   isLoaded: boolean = true;
-  user?: UserModel;
   cryptos?: CryptoPriceModel[];
+
+  userCryptosSelector = this.store.select(selectUserCryptos);
+  userCryptos: UserCrypto[] = [];
+
+  constructor(
+    private requestBeta: BetarequestService,
+    private requestAlpha: RequestService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     this.getFirstCryptoPrices();
     this.getCryptoPrices();
-    this.getCurrentUser();
+    this.getUserCryptos();
   }
 
   async getCryptoPrices() {
@@ -46,8 +49,13 @@ export class SellComponent implements OnInit {
       });
   }
 
-  getCurrentUser() {
-    this.state.user.subscribe((currentUser) => (this.user = currentUser));
+  getUserCryptos() {
+    this.userCryptosSelector.subscribe({
+      next: (cryptos) => {
+        this.userCryptos = cryptos;
+        this.getAmountAndBalance();
+      },
+    });
   }
 
   getAmountAndBalance() {
@@ -81,7 +89,7 @@ export class SellComponent implements OnInit {
   }
 
   private setCryptoBalance() {
-    const cryptoUser = this.user?.cryptos?.find(
+    const cryptoUser = this.userCryptos?.find(
       (crypto) => crypto.symbol === this.cryptoSelected
     );
 
@@ -102,15 +110,17 @@ export class SellComponent implements OnInit {
     if (this.validation()) {
       this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
         next: (data) => {
-          if (this.user) {
+          if (this.userCryptos.length) {
             const sellEvent = data[0];
-            const crypto: UserCryptosList = {
+            const crypto: UserCrypto = {
               symbol: sellEvent.cryptoSymbol,
               amount: sellEvent.cryptoAmount,
               priceUsd: sellEvent.cryptoPrice,
             };
 
-            this.state.sellCryptoEvent(sellEvent.cash, crypto, this.user);
+            this.store.dispatch(
+              sellCryptoAction({ cash: sellEvent.cash, crypto })
+            );
             alert('You successfully sell ' + this.cryptoSelected);
           }
 
@@ -122,8 +132,6 @@ export class SellComponent implements OnInit {
         },
       });
     }
-
-    //TODO: ACTUALIZAR EL ESTADO DEL USUARIO/MOSTRAR USD
   }
 
   private cleanInputs() {

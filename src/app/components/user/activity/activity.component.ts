@@ -9,26 +9,17 @@ import { BetarequestService } from 'src/app/services/request/betarequest.service
   styleUrls: ['./activity.component.css'],
 })
 export class ActivityComponent implements OnInit {
-  constructor(
-    private state: StateService,
-    private betaRequest: BetarequestService
-  ) {}
+  constructor(private betaRequest: BetarequestService) {}
 
   activities?: ActivitiesList[];
   isLoaded: boolean = false;
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
-    this.getActivity();
+    this.getUserActivities();
   }
 
-  //getUserActivity() {
-  //  this.state.user.subscribe((data) => {
-  //    this.activities = data.activities;
-  //  });
-  //}
-
-  async getActivity() {
+  async getUserActivities() {
     this.betaRequest
       .getUserByIdMethod(localStorage.getItem('userId') as string)
       .subscribe((data) => {

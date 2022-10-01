@@ -1,4 +1,4 @@
-export type UserCryptosList = {
+export type UserCrypto = {
   symbol: string;
   amount: number;
   priceUsd: number;

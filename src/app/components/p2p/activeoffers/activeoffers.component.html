@@ -8,7 +8,7 @@
         <p>Total USD</p>
         <p></p>
       </div>
-      <div *ngFor="let offer of offers">
+      <div *ngFor="let offer of market?.offers">
         <div class="offercontainer" *ngIf="showOffer(offer)">
           <div class="mine" *ngIf="showasmine(offer.publisherId)">
             <p>{{ offer.cryptoSymbol }}</p>

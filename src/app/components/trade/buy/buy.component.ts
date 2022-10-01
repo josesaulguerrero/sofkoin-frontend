@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { interval, mergeMap } from 'rxjs';
 import { commandCommitTradeTransaction } from 'src/app/models/commands/commandCommitTradeTransaction';
 import { CryptoPriceModel } from 'src/app/models/CryptoPriceModel';
-import { UserCryptosList } from 'src/app/models/CryptoUsrList';
+import { UserCrypto } from 'src/app/models/UserCrypto';
 import { ErrorModel } from 'src/app/models/errorModel';
-import { UserModel } from 'src/app/models/UserModel';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
-import { StateService } from 'src/app/services/state/state.service';
+import { buyCryptoAction } from 'src/app/services/state/ngrx/actions/user/buyCryptoAction';
+import { selectUserCash } from 'src/app/services/state/ngrx/selectors/user-selectors';
 
 @Component({
   selector: 'app-buy',
@@ -15,16 +16,6 @@ import { StateService } from 'src/app/services/state/state.service';
   styleUrls: ['./buy.component.css'],
 })
 export class BuyComponent implements OnInit {
-  constructor(
-    private requestBeta: BetarequestService,
-    private requestAlpha: RequestService,
-    private state: StateService
-  ) {}
-
-  isLoaded: boolean = true;
-  user?: UserModel;
-  newCryptoBuy?: number;
-  cryptoSelected: string = '--';
   newCryptolist: string[] = [
     'BTC',
     'ETH',
@@ -38,10 +29,28 @@ export class BuyComponent implements OnInit {
     'ETC',
   ];
 
+  newCryptoBuy?: number;
+  cryptoSelected: string = '--';
   cryptos?: CryptoPriceModel[];
-
   USDCryptoValue?: number;
   currencyConverterFactor: number = 0;
+
+  userCashSelector = this.store.select(selectUserCash);
+  currentCash: number = 0;
+
+  constructor(
+    private requestBeta: BetarequestService,
+    private requestAlpha: RequestService,
+    private store: Store
+  ) {}
+
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
+  ngOnInit(): void {
+    this.getCryptoPricesFirstTime();
+    this.getCryptoPrices();
+    this.getCurrentUserCash();
+    this.startPrice();
+  }
 
   startPrice() {
     this.currencyConverterFactor = this.cryptos?.filter(
@@ -58,14 +67,13 @@ export class BuyComponent implements OnInit {
   getCryptoPrices() {
     interval(6000)
       .pipe(mergeMap(() => this.requestBeta.geAllCryptoPriceMethod()))
-      .subscribe((data: CryptoPriceModel[]) => {
-        this.cryptos = data;
-        this.isLoaded = true;
-      });
+      .subscribe((data: CryptoPriceModel[]) => (this.cryptos = data));
   }
 
-  getCurrentUser() {
-    this.state.user.subscribe((currentUser) => (this.user = currentUser));
+  getCurrentUserCash() {
+    this.userCashSelector.subscribe(
+      (currentUserCash) => (this.currentCash = currentUserCash)
+    );
   }
 
   changeConversionFactor() {
@@ -74,17 +82,6 @@ export class BuyComponent implements OnInit {
         this.cryptos?.find((coin) => coin.symbol === this.cryptoSelected)
           ?.price ?? 0;
     }
-  }
-
-  //Settea el precio de btc por defecto y luego hacer una funcion que en on change cambie el valor por el que se opera
-
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {
-    //If cashUser = '' then make a get request to get user cash
-    this.getCryptoPricesFirstTime();
-    this.getCryptoPrices();
-    this.getCurrentUser();
-    this.startPrice();
   }
 
   private getCryptoSelectedPrice(): number | undefined {
@@ -116,14 +113,16 @@ export class BuyComponent implements OnInit {
 
     this.requestAlpha.tradeTransactionMethod(command, token).subscribe({
       next: (data) => {
-        if (this.user) {
+        if (this.currentCash) {
           const buyEvent = data[0];
-          const crypto: UserCryptosList = {
+          const crypto: UserCrypto = {
             symbol: buyEvent.cryptoSymbol,
             amount: buyEvent.cryptoAmount,
             priceUsd: buyEvent.cryptoPrice,
           };
-          this.state.buyCryptoEvent(buyEvent.cash, crypto, this.user);
+
+          this.store.dispatch(buyCryptoAction({ cash: buyEvent.cash, crypto }));
+
           alert('You successfully bought ' + this.cryptoSelected);
         }
 

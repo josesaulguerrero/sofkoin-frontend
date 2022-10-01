@@ -3,12 +3,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 import {
   Auth,
-  signOut,
   signInWithPopup,
   GoogleAuthProvider,
   GithubAuthProvider,
 } from '@angular/fire/auth';
-import { Token } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',

@@ -13,6 +13,9 @@ export const environment = {
     measurementId: 'G-QMY0VSFQJ3',
   },
   production: false,
+  alphaURl: 'http://localhost:8070',
+  betaURl: 'http://localhost:8080',
+  gammaURl: 'ws://localhost:8090/ws',
 };
 
 /*
