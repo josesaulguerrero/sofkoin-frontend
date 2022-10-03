@@ -100,14 +100,14 @@ export class ActiveoffersComponent implements OnInit {
           )
           .subscribe({
             next: () => {
-              successAlert('Offer succesfully deleted');
+              successAlert('Offer successfully deleted.');
             },
             error: (err: ErrorModel) => {
               if (
                 err.error.errorMessage === null ||
                 err.error.errorMessage === undefined
               ) {
-                errorAlert('Something went wrong with the market');
+                errorAlert('Something went wrong with the market.');
               } else {
                 errorAlert(err.error.errorMessage);
               }
@@ -204,7 +204,7 @@ export class ActiveoffersComponent implements OnInit {
                 });
 
                 this.state.buyCryptoEvent(event.cash, crypto, this.user);
-                successAlert('You bought successfully this offer.');
+                successAlert('You have successfully bought this offer.');
               }
             },
             error: (err: ErrorModel) => {

@@ -138,8 +138,5 @@ export class BuyComponent implements OnInit {
         this.cleanInputs();
       },
     });
-
-    // Update user state
-    // Toca hacer un get de la info del user o hacer la resta pero es más peligroso por decimales
   }
 }

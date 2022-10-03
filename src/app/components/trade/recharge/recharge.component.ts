@@ -42,7 +42,8 @@ export class RechargeComponent implements OnInit {
             const fundEvent = data[0];
             this.newRecharge = undefined;
             this.state.fundEvent(fundEvent.cashAmount, this.user);
-            successAlert('You fund succesfully!');
+            successAlert('You fund successfully!');
+            this.cleanInputs();
           }
         },
         error: (err: ErrorModel) => {
@@ -50,14 +51,21 @@ export class RechargeComponent implements OnInit {
             err.error.errorMessage === null ||
             err.error.errorMessage === undefined
           ) {
-            errorAlert('Something went wrong');
+            errorAlert('Something went wrong.');
+            this.cleanInputs();
           } else {
             errorAlert(err.error.errorMessage);
+            this.cleanInputs();
           }
         },
       });
     } else {
-      errorAlert('Something went wrong');
+      errorAlert('Something went wrong.');
+      this.cleanInputs();
     }
+  }
+
+  private cleanInputs() {
+    this.newRecharge = undefined;
   }
 }

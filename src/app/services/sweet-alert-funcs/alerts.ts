@@ -4,13 +4,13 @@ const getBasicAlert = (msg: string) => ({
   color: '#009bff',
   background: '#090947',
   [msg.length > 30 ? 'text' : 'title']: msg,
-  timer: 1500,
+  confirmButtonColor: '#6f00d0',
 });
 
 export function errorAlert(msg: string) {
   Swal.fire({
     ...getBasicAlert(msg),
-    timer: undefined,
+    timer: 5000,
     icon: 'error',
   });
 }
@@ -18,7 +18,7 @@ export function errorAlert(msg: string) {
 export function infoAlert(msg: string) {
   Swal.fire({
     ...getBasicAlert(msg),
-    timer: undefined,
+    timer: 3000,
     icon: 'info',
   });
 }
@@ -26,8 +26,9 @@ export function infoAlert(msg: string) {
 export function successAlert(msg: string) {
   Swal.fire({
     ...getBasicAlert(msg),
-    position: 'bottom-left',
+    position: 'center',
     icon: 'success',
+    timer: 2500,
   });
 }
 
@@ -44,5 +45,22 @@ export function confirmAlert({
     showDenyButton: true,
     showConfirmButton: true,
     confirmButtonText: confMsg,
+    denyButtonColor: '#ed3131',
+  });
+}
+
+export function signUpAlert() {
+  Swal.fire({
+    icon: 'success',
+    title: 'Signed in successfully.',
+    position: 'top-end',
+    timer: 2000,
+    toast: true,
+    showConfirmButton: false,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
   });
 }

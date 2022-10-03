@@ -6,7 +6,7 @@ import { ErrorModel } from 'src/app/models/errorModel';
 import {
   errorAlert,
   infoAlert,
-  successAlert,
+  signUpAlert,
 } from 'src/app/services/sweet-alert-funcs/alerts';
 import { Observable } from 'rxjs';
 
@@ -61,7 +61,7 @@ export class SignUpComponent implements OnInit {
           email: response.user.email,
           name: response.user.displayName
             ? response.user.displayName?.split(' ')[0]
-            : 'Anonymus',
+            : 'Anonymous',
           password: response.user.email,
           surname: response.user.displayName
             ? response.user.displayName?.split(' ')[1]
@@ -133,10 +133,10 @@ export class SignUpComponent implements OnInit {
     }
   }
 
-  afterSignUp(resgiterPromise: Observable<any>) {
-    resgiterPromise.subscribe({
+  afterSignUp(registerPromise: Observable<any>) {
+    registerPromise.subscribe({
       next: (_data) => {
-        successAlert('User registered');
+        signUpAlert();
         this.router.navigateByUrl('/login');
       },
       error: (err: ErrorModel) => {
@@ -147,7 +147,7 @@ export class SignUpComponent implements OnInit {
 
   validation(): boolean {
     if (this.newName.length < 4) {
-      errorAlert('The name must have at least 4 characters');
+      errorAlert('The name must have at least 4 characters.');
       return false;
     }
 
