@@ -6,6 +6,10 @@ import { StateService } from 'src/app/services/state/state.service';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { MarketModel } from 'src/app/models/marketmodel';
 import { ErrorModel } from 'src/app/models/errorModel';
+import {
+  errorAlert,
+  successAlert,
+} from 'src/app/services/sweet-alert-funcs/alerts';
 
 @Component({
   selector: 'app-publishoffer',
@@ -44,9 +48,9 @@ export class PublishofferComponent implements OnInit {
 
   public publishOffer() {
     if (this.offerCryptoAmount! > this.selectedCrypto!.amount) {
-      alert('You do not have enough crypto to publish this offer.');
+      errorAlert('You do not have enough crypto to publish this offer.');
     } else if (this.offerUsdCash < 5 || this.offerUsdCash > 100000) {
-      alert(
+      errorAlert(
         'The offer needs a minimum value of 5USD and a maximum value of 100.000USD'
       );
     } else {
@@ -62,11 +66,11 @@ export class PublishofferComponent implements OnInit {
         .publishOfferMethod(newOffer, localStorage.getItem('token') as string)
         .subscribe({
           next: () => {
-            alert('The offer was successfully publish.');
+            successAlert('The offer was successfully publish.');
             this.cleanInputs();
           },
           error: (err: ErrorModel) => {
-            alert(err.error.errorMessage);
+            errorAlert(err.error.errorMessage);
             this.cleanInputs();
           },
         });

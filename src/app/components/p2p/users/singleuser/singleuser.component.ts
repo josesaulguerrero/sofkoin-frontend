@@ -6,6 +6,10 @@ import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { StateService } from 'src/app/services/state/state.service';
 import { HostListener } from '@angular/core';
+import {
+  errorAlert,
+  successAlert,
+} from 'src/app/services/sweet-alert-funcs/alerts';
 @Component({
   selector: 'app-singleuser',
   templateUrl: './singleuser.component.html',
@@ -66,8 +70,8 @@ export class SingleuserComponent implements OnInit {
     debugger;
     const total = Number(this.total);
     if (total < 5 || total > 100000) {
-      alert(
-        'Error: The offer needs a minimum value of 5USD and a maximum value of 100.000USD'
+      errorAlert(
+        'The offer needs a minimum value of 5USD and a maximum value of 100.000USD'
       );
       return;
     }
@@ -86,7 +90,7 @@ export class SingleuserComponent implements OnInit {
         )
         .subscribe({
           next: (response) => {
-            alert('Message Sended');
+            successAlert('Message Sended');
             this.message = '';
             this.newammount = '';
             this.newprice = '';
@@ -104,9 +108,9 @@ export class SingleuserComponent implements OnInit {
                 err.error.errorMessage === undefined
               )
             ) {
-              alert(err.error.errorMessage);
+              errorAlert(err.error.errorMessage);
             } else {
-              alert('Something went wrong');
+              errorAlert('Something went wrong');
             }
           },
         });

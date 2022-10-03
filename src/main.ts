@@ -12,6 +12,6 @@ platformBrowserDynamic()
   .bootstrapModule(AppModule)
   .catch((err) => console.error(err));
 
-window.onbeforeunload = (ev) => {
+window.onbeforeunload = (_ev) => {
   localStorage.clear();
 };

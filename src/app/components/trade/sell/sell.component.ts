@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { delay, interval, mergeMap, repeat, tap } from 'rxjs';
+import { interval, mergeMap } from 'rxjs';
 import { commandCommitTradeTransaction } from 'src/app/models/commands/commandCommitTradeTransaction';
-import { CryptoPrice } from 'src/app/models/cryptoprice';
 import { CryptoPriceModel } from 'src/app/models/CryptoPriceModel';
 import { UserCryptosList } from 'src/app/models/CryptoUsrList';
 import { ErrorModel } from 'src/app/models/errorModel';
@@ -9,6 +8,11 @@ import { UserModel } from 'src/app/models/UserModel';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { StateService } from 'src/app/services/state/state.service';
+
+import {
+  errorAlert,
+  successAlert,
+} from 'src/app/services/sweet-alert-funcs/alerts';
 
 @Component({
   selector: 'app-sell',
@@ -111,19 +115,17 @@ export class SellComponent implements OnInit {
             };
 
             this.state.sellCryptoEvent(sellEvent.cash, crypto, this.user);
-            alert('You successfully sell ' + this.cryptoSelected);
+            successAlert('You successfully sell ' + this.cryptoSelected);
           }
 
           this.cleanInputs();
         },
         error: (err: ErrorModel) => {
-          alert(err.error.errorMessage);
+          errorAlert(err.error.errorMessage);
           this.cleanInputs();
         },
       });
     }
-
-    //TODO: ACTUALIZAR EL ESTADO DEL USUARIO/MOSTRAR USD
   }
 
   private cleanInputs() {
@@ -138,7 +140,7 @@ export class SellComponent implements OnInit {
       this.newAmount! > 100000 ||
       this.newAmount === undefined
     ) {
-      alert('The amount must be a number between 0.000001 and 100000');
+      errorAlert('The amount must be a number between 0.000001 and 100000');
       return false;
     }
     return true;

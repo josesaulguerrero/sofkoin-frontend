@@ -8,6 +8,10 @@ import { UserModel } from 'src/app/models/UserModel';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { StateService } from 'src/app/services/state/state.service';
+import {
+  errorAlert,
+  successAlert,
+} from 'src/app/services/sweet-alert-funcs/alerts';
 
 @Component({
   selector: 'app-buy',
@@ -124,13 +128,13 @@ export class BuyComponent implements OnInit {
             priceUsd: buyEvent.cryptoPrice,
           };
           this.state.buyCryptoEvent(buyEvent.cash, crypto, this.user);
-          alert('You successfully bought ' + this.cryptoSelected);
+          successAlert('You successfully bought ' + this.cryptoSelected);
         }
 
         this.cleanInputs();
       },
       error: (err: ErrorModel) => {
-        alert(err.error.errorMessage);
+        errorAlert(err.error.errorMessage);
         this.cleanInputs();
       },
     });

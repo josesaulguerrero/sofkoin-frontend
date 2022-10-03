@@ -4,6 +4,11 @@ import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { ErrorModel } from 'src/app/models/errorModel';
 import { UserModel } from 'src/app/models/UserModel';
 import { StateService } from 'src/app/services/state/state.service';
+import {
+  errorAlert,
+  successAlert,
+} from 'src/app/services/sweet-alert-funcs/alerts';
+
 @Component({
   selector: 'app-recharge',
   templateUrl: './recharge.component.html',
@@ -37,7 +42,7 @@ export class RechargeComponent implements OnInit {
             const fundEvent = data[0];
             this.newRecharge = undefined;
             this.state.fundEvent(fundEvent.cashAmount, this.user);
-            alert('Transaction complete');
+            successAlert('You fund succesfully!');
           }
         },
         error: (err: ErrorModel) => {
@@ -45,14 +50,14 @@ export class RechargeComponent implements OnInit {
             err.error.errorMessage === null ||
             err.error.errorMessage === undefined
           ) {
-            alert('Something went wrong');
+            errorAlert('Something went wrong');
           } else {
-            alert(err.error.errorMessage);
+            errorAlert(err.error.errorMessage);
           }
         },
       });
     } else {
-      alert('Something went wrong');
+      errorAlert('Something went wrong');
     }
   }
 }

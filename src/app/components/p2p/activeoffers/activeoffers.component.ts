@@ -7,7 +7,12 @@ import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { SocketService } from 'src/app/services/socket/socket.service';
 import { UserModel } from 'src/app/models/UserModel';
 import { UserCryptosList } from 'src/app/models/CryptoUsrList';
-import { count } from 'rxjs';
+import {
+  confirmAlert,
+  errorAlert,
+  successAlert,
+} from 'src/app/services/sweet-alert-funcs/alerts';
+
 @Component({
   selector: 'app-activeoffers',
   templateUrl: './activeoffers.component.html',
@@ -80,28 +85,36 @@ export class ActiveoffersComponent implements OnInit {
     });
   }
   deleteoffer(offer: OfferModel) {
-    if (confirm(this.CONFIRMATION_MSG_DEL)) {
-      this.alphaservice
-        .deleteOfferMethod(
-          {
-            marketId: this.state.market.value.marketId,
-            offerId: offer.offerId,
-          },
-          localStorage.getItem('token')!
-        )
-        .subscribe({
-          error: (err: ErrorModel) => {
-            if (
-              err.error.errorMessage === null ||
-              err.error.errorMessage === undefined
-            ) {
-              alert('Something went wrong with the market');
-            } else {
-              alert(err.error.errorMessage);
-            }
-          },
-        });
-    }
+    confirmAlert({
+      msg: this.CONFIRMATION_MSG_DEL,
+      confMsg: 'Delete!',
+    }).then((response) => {
+      if (response.isConfirmed) {
+        this.alphaservice
+          .deleteOfferMethod(
+            {
+              marketId: this.state.market.value.marketId,
+              offerId: offer.offerId,
+            },
+            localStorage.getItem('token')!
+          )
+          .subscribe({
+            next: () => {
+              successAlert('Offer succesfully deleted');
+            },
+            error: (err: ErrorModel) => {
+              if (
+                err.error.errorMessage === null ||
+                err.error.errorMessage === undefined
+              ) {
+                errorAlert('Something went wrong with the market');
+              } else {
+                errorAlert(err.error.errorMessage);
+              }
+            },
+          });
+      }
+    });
   }
   showOffer(offer: OfferModel): Boolean {
     let currentUserId = localStorage.getItem('userId')!;
@@ -157,50 +170,55 @@ export class ActiveoffersComponent implements OnInit {
     return false;
   }
   buyoffer(offer: OfferModel) {
-    if (confirm(this.CONFIRMATION_MSG_BUY)) {
-      this.alphaservice
-        .p2pTransactionMethod(
-          {
-            buyerId: localStorage.getItem('userId')!,
-            marketId: this.state.market.value.marketId,
-            offerId: offer.offerId,
-          },
-          localStorage.getItem('token')!
-        )
-        .subscribe({
-          next: (response) => {
-            const isBuying = response.some(
-              (res) => res.transactionType === 'BUY'
-            );
+    confirmAlert({
+      msg: this.CONFIRMATION_MSG_BUY,
+      confMsg: 'Buy!',
+    }).then((response) => {
+      if (response.isConfirmed) {
+        this.alphaservice
+          .p2pTransactionMethod(
+            {
+              buyerId: localStorage.getItem('userId')!,
+              marketId: this.state.market.value.marketId,
+              offerId: offer.offerId,
+            },
+            localStorage.getItem('token')!
+          )
+          .subscribe({
+            next: (response) => {
+              const isBuying = response.some(
+                (res) => res.transactionType === 'BUY'
+              );
 
-            if (this.user && isBuying) {
-              const event = response[0];
+              if (isBuying && this.user) {
+                const event = response[0];
 
-              const crypto: UserCryptosList = {
-                symbol: event.cryptoSymbol,
-                amount: event.cryptoAmount,
-                priceUsd: event.cryptoPrice,
-              };
+                const crypto: UserCryptosList = {
+                  symbol: event.cryptoSymbol,
+                  amount: event.cryptoAmount,
+                  priceUsd: event.cryptoPrice,
+                };
 
-              this.offers = this.offers.filter(function (e) {
-                return e.offerId !== offer.offerId;
-              });
+                this.offers = this.offers.filter(function (e) {
+                  return e.offerId !== offer.offerId;
+                });
 
-              this.state.buyCryptoEvent(event.cash, crypto, this.user);
-              alert('You bought successfully this offer.');
-            }
-          },
-          error: (err: ErrorModel) => {
-            if (
-              err.error.errorMessage === null ||
-              err.error.errorMessage === undefined
-            ) {
-              alert('Something went wrong with the market');
-            } else {
-              alert(err.error.errorMessage);
-            }
-          },
-        });
-    }
+                this.state.buyCryptoEvent(event.cash, crypto, this.user);
+                successAlert('You bought successfully this offer.');
+              }
+            },
+            error: (err: ErrorModel) => {
+              if (
+                err.error.errorMessage === null ||
+                err.error.errorMessage === undefined
+              ) {
+                errorAlert('Something went wrong with the market');
+              } else {
+                errorAlert(err.error.errorMessage);
+              }
+            },
+          });
+      }
+    });
   }
 }
