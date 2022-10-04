@@ -5,6 +5,13 @@ import { ErrorModel } from 'src/app/models/errorModel';
 import { Store } from '@ngrx/store';
 import { selectUser } from 'src/app/services/state/ngrx/selectors/user-selectors';
 import { fundAction } from 'src/app/services/state/ngrx/actions/user/fundAction';
+import { UserModel } from 'src/app/models/UserModel';
+import { StateService } from 'src/app/services/state/state.service';
+import {
+  errorAlert,
+  successAlert,
+} from 'src/app/services/sweet-alert-funcs/alerts';
+
 @Component({
   selector: 'app-recharge',
   templateUrl: './recharge.component.html',
@@ -32,21 +39,29 @@ export class RechargeComponent implements OnInit {
           const fundEvent = data[0];
           this.newRecharge = undefined;
           this.store.dispatch(fundAction({ cash: fundEvent.cashAmount }));
-          alert('Transaction complete');
+          successAlert('You fund successfully!');
+          this.cleanInputs();
         },
         error: (err: ErrorModel) => {
           if (
             err.error.errorMessage === null ||
             err.error.errorMessage === undefined
           ) {
-            alert('Something went wrong');
+            errorAlert('Something went wrong.');
+            this.cleanInputs();
           } else {
-            alert(err.error.errorMessage);
+            errorAlert(err.error.errorMessage);
+            this.cleanInputs();
           }
         },
       });
     } else {
-      alert('Something went wrong');
+      errorAlert('Something went wrong.');
+      this.cleanInputs();
     }
+  }
+
+  private cleanInputs() {
+    this.newRecharge = undefined;
   }
 }

@@ -9,7 +9,10 @@ export const environment = {
     measurementId: 'G-QMY0VSFQJ3',
   },
   production: false,
-  alphaURl: 'http://localhost:8070',
-  betaURl: 'http://localhost:8080',
-  gammaURl: 'ws://localhost:8090/ws',
+  // alphaURl: 'http://localhost:8070',
+  // betaURl: 'http://localhost:8080',
+  // gammaURl: 'ws://localhost:8090/ws',
+  alphaURl: 'https://sofkoin-alpha-1117.herokuapp.com',
+  betaURl: 'https://sofkoin-beta-5466.herokuapp.com',
+  gammaURl: 'wss://sofkoin-gamma-1117.herokuapp.com/ws',
 };

@@ -44,19 +44,19 @@ export class ProfileComponent implements OnInit {
   }
 
   renderPie() {
-    var canvas = document.getElementById('can') as HTMLCanvasElement;
-    var ctx = canvas.getContext('2d')!;
-    var lastend = 0;
-    var data: number[] = [];
-    var labels: string[] = [];
+    let canvas = document.getElementById('can') as HTMLCanvasElement;
+    let ctx = canvas.getContext('2d')!;
+    let lastend = 0;
+    let data: number[] = [];
+    let labels: string[] = [];
 
     this.cryptos.forEach((crypto) => {
       data.push(crypto.priceUsd);
       labels.push(crypto.symbol);
     });
 
-    var myTotal = 0;
-    var myColor = [
+    let myTotal = 0;
+    let myColor = [
       '#6f00d0',
       '#ff3eaf',
       '#090947',
@@ -68,24 +68,24 @@ export class ProfileComponent implements OnInit {
       '#009bff',
       '#2a358c',
     ];
-    //var labels = ['A', 'B', 'C', 'D'];
+    //let labels = ['A', 'B', 'C', 'D'];
 
-    for (var e = 0; e < data.length; e++) {
+    for (let e = 0; e < data.length; e++) {
       myTotal += data[e];
     }
 
     // make the chart 10 px smaller to fit on canvas
-    var off = 10;
-    var w = (canvas.width - off) / 2;
-    var h = (canvas.height - off) / 2;
-    for (var i = 0; i < data.length; i++) {
+    let off = 10;
+    let w = (canvas.width - off) / 2;
+    let h = (canvas.height - off) / 2;
+    for (let i = 0; i < data.length; i++) {
       ctx.fillStyle = myColor[i];
       ctx.strokeStyle = 'white';
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(w, h);
-      var len = (data[i] / myTotal) * 2 * Math.PI;
-      var r = h - off / 2;
+      let len = (data[i] / myTotal) * 2 * Math.PI;
+      let r = h - off / 2;
       ctx.arc(w, h, r, lastend, lastend + len, false);
       ctx.lineTo(w, h);
       ctx.fill();
@@ -94,7 +94,7 @@ export class ProfileComponent implements OnInit {
       ctx.font = '20px Arial';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      var mid = lastend + len / 2;
+      let mid = lastend + len / 2;
       ctx.fillText(
         labels[i],
         w + Math.cos(mid) * (r / 2),

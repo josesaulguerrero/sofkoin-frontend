@@ -10,9 +10,14 @@ import { selectMarket } from 'src/app/services/state/ngrx/selectors/market-selec
 import { MarketModel } from 'src/app/models/marketmodel';
 import { publishOfferAction } from 'src/app/services/state/ngrx/actions/market/publishOfferAction';
 import { deleteOfferAction } from 'src/app/services/state/ngrx/actions/market/deleteOfferAction';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { getMarketAction } from 'src/app/services/state/ngrx/actions/market/getMarketAction';
+import {
+  confirmAlert,
+  errorAlert,
+  successAlert,
+} from 'src/app/services/sweet-alert-funcs/alerts';
 
 @Component({
   selector: 'app-activeoffers',
@@ -100,31 +105,36 @@ export class ActiveoffersComponent implements OnInit, OnDestroy {
   }
 
   deleteoffer(offer: OfferModel) {
-    if (confirm(this.CONFIRMATION_MSG_DEL) && this.market) {
-      this.alphaservice
-        .deleteOfferMethod(
-          {
-            marketId: this.market.marketId,
-            offerId: offer.offerId,
-          },
-          localStorage.getItem('token')!
-        )
-        .subscribe({
-          next: () => {
-            alert('Offer succesfully deleted');
-          },
-          error: (err: ErrorModel) => {
-            if (
-              err.error.errorMessage === null ||
-              err.error.errorMessage === undefined
-            ) {
-              alert('Something went wrong with the market');
-            } else {
-              alert(err.error.errorMessage);
-            }
-          },
-        });
-    }
+    confirmAlert({
+      msg: this.CONFIRMATION_MSG_DEL,
+      confMsg: 'Delete!',
+    }).then((response) => {
+      if (response.isConfirmed) {
+        this.alphaservice
+          .deleteOfferMethod(
+            {
+              marketId: this.market?.marketId,
+              offerId: offer.offerId,
+            },
+            localStorage.getItem('token')!
+          )
+          .subscribe({
+            next: () => {
+              successAlert('Offer successfully deleted.');
+            },
+            error: (err: ErrorModel) => {
+              if (
+                err.error.errorMessage === null ||
+                err.error.errorMessage === undefined
+              ) {
+                errorAlert('Something went wrong with the market.');
+              } else {
+                errorAlert(err.error.errorMessage);
+              }
+            },
+          });
+      }
+    });
   }
 
   showOffer(offer: OfferModel): Boolean {
@@ -186,48 +196,53 @@ export class ActiveoffersComponent implements OnInit, OnDestroy {
   }
 
   buyoffer(offer: OfferModel) {
-    if (confirm(this.CONFIRMATION_MSG_BUY) && this.market) {
-      this.alphaservice
-        .p2pTransactionMethod(
-          {
-            buyerId: localStorage.getItem('userId')!,
-            marketId: this.market.marketId,
-            offerId: offer.offerId,
-          },
-          localStorage.getItem('token')!
-        )
-        .subscribe({
-          next: (response) => {
-            const isBuying = response.some(
-              (res) => res.transactionType === 'BUY'
-            );
-
-            if (isBuying && this.market) {
-              const event = response[0];
-
-              const crypto: UserCrypto = {
-                symbol: event.cryptoSymbol,
-                amount: event.cryptoAmount,
-                priceUsd: event.cryptoPrice,
-              };
-
-              this.store.dispatch(
-                buyCryptoAction({ cash: event.cash, crypto })
+    confirmAlert({
+      msg: this.CONFIRMATION_MSG_BUY,
+      confMsg: 'Buy!',
+    }).then((response) => {
+      if (response.isConfirmed && this.market) {
+        this.alphaservice
+          .p2pTransactionMethod(
+            {
+              buyerId: localStorage.getItem('userId')!,
+              marketId: this.market?.marketId,
+              offerId: offer.offerId,
+            },
+            localStorage.getItem('token')!
+          )
+          .subscribe({
+            next: (response) => {
+              const isBuying = response.some(
+                (res) => res.transactionType === 'BUY'
               );
-              alert('You bought successfully this offer.');
-            }
-          },
-          error: (err: ErrorModel) => {
-            if (
-              err.error.errorMessage === null ||
-              err.error.errorMessage === undefined
-            ) {
-              alert('Something went wrong with the market');
-            } else {
-              alert(err.error.errorMessage);
-            }
-          },
-        });
-    }
+
+              if (isBuying) {
+                const event = response[0];
+
+                const crypto: UserCrypto = {
+                  symbol: event.cryptoSymbol,
+                  amount: event.cryptoAmount,
+                  priceUsd: event.cryptoPrice,
+                };
+
+                this.store.dispatch(
+                  buyCryptoAction({ cash: event.cash, crypto })
+                );
+                successAlert('You have successfully bought this offer.');
+              }
+            },
+            error: (err: ErrorModel) => {
+              if (
+                err.error.errorMessage === null ||
+                err.error.errorMessage === undefined
+              ) {
+                errorAlert('Something went wrong with the market');
+              } else {
+                errorAlert(err.error.errorMessage);
+              }
+            },
+          });
+      }
+    });
   }
 }

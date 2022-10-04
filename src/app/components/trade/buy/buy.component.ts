@@ -9,6 +9,11 @@ import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { buyCryptoAction } from 'src/app/services/state/ngrx/actions/user/buyCryptoAction';
 import { selectUserCash } from 'src/app/services/state/ngrx/selectors/user-selectors';
+import { StateService } from 'src/app/services/state/state.service';
+import {
+  errorAlert,
+  successAlert,
+} from 'src/app/services/sweet-alert-funcs/alerts';
 
 @Component({
   selector: 'app-buy',
@@ -122,19 +127,15 @@ export class BuyComponent implements OnInit {
           };
 
           this.store.dispatch(buyCryptoAction({ cash: buyEvent.cash, crypto }));
-
-          alert('You successfully bought ' + this.cryptoSelected);
+          successAlert('You successfully bought ' + this.cryptoSelected);
         }
 
         this.cleanInputs();
       },
       error: (err: ErrorModel) => {
-        alert(err.error.errorMessage);
+        errorAlert(err.error.errorMessage);
         this.cleanInputs();
       },
     });
-
-    // Update user state
-    // Toca hacer un get de la info del user o hacer la resta pero es más peligroso por decimales
   }
 }

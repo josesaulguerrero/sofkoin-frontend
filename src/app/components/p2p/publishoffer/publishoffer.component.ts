@@ -9,6 +9,10 @@ import { selectUserCryptos } from 'src/app/services/state/ngrx/selectors/user-se
 import { selectMarket } from 'src/app/services/state/ngrx/selectors/market-selectors';
 import { publishOfferAction } from 'src/app/services/state/ngrx/actions/market/publishOfferAction';
 import { OfferModel } from 'src/app/models/offerModel';
+import {
+  errorAlert,
+  successAlert,
+} from 'src/app/services/sweet-alert-funcs/alerts';
 
 @Component({
   selector: 'app-publishoffer',
@@ -49,9 +53,9 @@ export class PublishofferComponent implements OnInit {
 
   public publishOffer() {
     if (this.offerCryptoAmount! > this.selectedCrypto!.amount) {
-      alert('You do not have enough crypto to publish this offer.');
+      errorAlert('You do not have enough crypto to publish this offer.');
     } else if (this.offerUsdCash < 5 || this.offerUsdCash > 100000) {
-      alert(
+      errorAlert(
         'The offer needs a minimum value of 5USD and a maximum value of 100.000USD'
       );
     } else {
@@ -79,11 +83,11 @@ export class PublishofferComponent implements OnInit {
             };
 
             this.store.dispatch(publishOfferAction({ offer }));
-            alert('The offer was successfully publish.');
+            successAlert('The offer was successfully publish.');
             this.cleanInputs();
           },
           error: (err: ErrorModel) => {
-            alert(err.error.errorMessage);
+            errorAlert(err.error.errorMessage);
             this.cleanInputs();
           },
         });

@@ -10,6 +10,11 @@ import { Store } from '@ngrx/store';
 import { selectUserCryptos } from 'src/app/services/state/ngrx/selectors/user-selectors';
 import { sellCryptoAction } from 'src/app/services/state/ngrx/actions/user/sellCryptoAction';
 
+import {
+  errorAlert,
+  successAlert,
+} from 'src/app/services/sweet-alert-funcs/alerts';
+
 @Component({
   selector: 'app-sell',
   templateUrl: './sell.component.html',
@@ -121,13 +126,13 @@ export class SellComponent implements OnInit {
             this.store.dispatch(
               sellCryptoAction({ cash: sellEvent.cash, crypto })
             );
-            alert('You successfully sell ' + this.cryptoSelected);
+            successAlert('You successfully sell ' + this.cryptoSelected);
           }
 
           this.cleanInputs();
         },
         error: (err: ErrorModel) => {
-          alert(err.error.errorMessage);
+          errorAlert(err.error.errorMessage);
           this.cleanInputs();
         },
       });
@@ -146,7 +151,7 @@ export class SellComponent implements OnInit {
       this.newAmount! > 100000 ||
       this.newAmount === undefined
     ) {
-      alert('The amount must be a number between 0.000001 and 100000');
+      errorAlert('The amount must be a number between 0.000001 and 100000');
       return false;
     }
     return true;

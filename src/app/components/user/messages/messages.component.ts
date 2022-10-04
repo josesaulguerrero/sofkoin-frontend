@@ -5,6 +5,7 @@ import { MessagesList } from 'src/app/models/MessagesList';
 import { RequestService } from 'src/app/services/request/alpharequest.service';
 import { BetarequestService } from 'src/app/services/request/betarequest.service';
 import { SocketService } from 'src/app/services/socket/socket.service';
+import { errorAlert } from 'src/app/services/sweet-alert-funcs/alerts';
 
 @Component({
   selector: 'app-messages',
@@ -84,7 +85,7 @@ export class MessagesComponent implements OnInit {
           console.log(data);
         },
         error: (err) => {
-          alert(err);
+          errorAlert(err);
         },
       });
   }
