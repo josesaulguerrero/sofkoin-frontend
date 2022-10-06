@@ -9,5 +9,6 @@ export class LoadscreenComponent implements OnInit {
   constructor() {}
 
   @Input() isLoaded: boolean = false;
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {}
 }

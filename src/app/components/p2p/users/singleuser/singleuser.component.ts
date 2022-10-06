@@ -38,6 +38,7 @@ export class SingleuserComponent implements OnInit {
     ) {
       this.usercoins = this.singleuser.cryptos;
     }
+    this.getCurrentMarket();
   }
 
   public getCurrentMarket() {
@@ -80,6 +81,7 @@ export class SingleuserComponent implements OnInit {
       );
       return;
     }
+    console.log(this.market);
     if (this.validation() && this.market) {
       this.request
         .saveMessageMethod(
