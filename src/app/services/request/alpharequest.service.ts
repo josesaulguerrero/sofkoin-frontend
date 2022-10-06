@@ -97,7 +97,7 @@ export class RequestService {
   }
 
   saveMessageMethod(command: any, token: string): Observable<Object> {
-    console.log(command);
+    console.log(command + ' ' + token);
     return this.client.post<any>(this.host + '/message/save', command, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

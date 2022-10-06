@@ -74,12 +74,12 @@ app-sign-up {
 }
 
 :root {
-  --color-label: #ed3131;
+  --color-label: rgb(237, 49, 49);
   --e-global-color-primary: #090947;
   --e-global-color-secondary: #ff3eaf;
   --e-global-color-text: #6f00d0;
   --e-global-color-accent: #009bff;
   --e-global-color-8ba86b6: #2a358c;
-  --e-global-color-buy: rgb(40, 186, 32);
+  --e-global-color-buy: #28ba20;
   --e-global-color-sell: #d11f1f;
 }
